@@ -131,7 +131,8 @@ h1 { margin: 0; font-size: clamp(30px, 4.4vw, 40px); line-height: 1.1; letter-sp
 .ib { flex: none; width: 44px; height: 44px; border-radius: 50%; border: 0; padding: 0; background: var(--fill-2); color: var(--ink); display: grid; place-items: center; cursor: pointer; font-family: var(--f-jp); font-weight: 700; font-size: 17px; transition: background-color .25s, color .25s, transform .45s var(--pop); }
 .ib:active { transform: scale(.92); }
 .ib svg { width: 22px; height: 22px; }
-.ib[aria-pressed="true"], .ib[aria-expanded="true"] { background: var(--accent); color: #FFFFFF; }
+.ib[aria-pressed="true"] { background: var(--accent-soft); color: var(--accent-ink); }
+.ib[aria-expanded="true"] { background: var(--accent); color: #FFFFFF; }
 @media (max-width: 700px) { .bar-brand { display: none; } .tabs a span { display: none; } .tabs a { padding: 0 13px; } .slowbadge span { display: none; } .slowbadge { padding: 0 10px; } }
 
 /* sections and cards */
@@ -156,7 +157,9 @@ details.why ul { margin: 6px 0 0; padding-left: 18px; display: grid; gap: 4px; m
 .col { width: 100%; max-width: var(--task-w); margin-inline: auto; }
 .task { display: flex; flex-direction: column; align-items: center; gap: 14px; text-align: center; min-width: 0; }
 .split { display: grid; grid-template-columns: minmax(0, 1fr); gap: 20px; align-items: center; }
-@media (min-width: 1000px) { .split { grid-template-columns: minmax(0, 1.12fr) minmax(0, 1fr); gap: 28px; } .split .task .col, .split .task .rows, .split .task .opts { max-width: none; } }
+@media (min-width: 1000px) { .split { grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); gap: 28px; align-items: start; } .split .task .col, .split .task .rows, .split .task .opts { max-width: none; } }
+.qhead { display: flex; flex-direction: column; align-items: center; gap: 4px; text-align: center; }
+.qhead .q-task { margin: 0; }
 .lead-row { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 20px; }
 .lead-row .q-task { margin: 0; text-align: left; flex: 1 1 280px; }
 .lead-row .pl-group { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
@@ -270,8 +273,8 @@ details.why ul { margin: 6px 0 0; padding-left: 18px; display: grid; gap: 4px; m
 
 /* audio: one player for the whole page. A pill for short clips, a long player with a track for the dialogue,
    a tortoise button next to each that plays the other tempo once. */
-.pg { display: inline-flex; align-items: center; gap: 8px; flex-wrap: wrap; }
-.pp { position: relative; display: inline-flex; align-items: center; gap: 10px; height: 52px; min-width: 240px; max-width: 100%; padding: 0 16px 0 6px; border-radius: 26px; border: 0; cursor: pointer; text-align: left; color: var(--accent-ink); font-weight: 600; font-size: 16.5px;
+.pg { display: inline-flex; align-items: center; gap: 8px; flex-wrap: nowrap; max-width: 100%; min-width: 0; }
+.pp { position: relative; display: inline-flex; align-items: center; gap: 10px; height: 52px; flex: 1 1 auto; min-width: 0; width: 280px; max-width: 100%; padding: 0 16px 0 6px; border-radius: 26px; border: 0; cursor: pointer; text-align: left; color: var(--accent-ink); font-weight: 600; font-size: 16.5px;
   background: linear-gradient(90deg, var(--prog) calc(var(--p, 0) * 100%), var(--accent-soft) calc(var(--p, 0) * 100%)); transition: transform .45s var(--pop); }
 .pp:active { transform: scale(.97); }
 .pp:disabled { opacity: .4; cursor: default; }
@@ -288,6 +291,7 @@ details.why ul { margin: 6px 0 0; padding-left: 18px; display: grid; gap: 4px; m
 .tort:active { transform: scale(.92); }
 .tort svg { width: 26px; height: 26px; }
 .tort.on { box-shadow: inset 0 0 0 2px var(--accent); color: var(--accent-ink); background: var(--accent-soft); }
+.tort.txt { width: auto; padding: 0 14px; border-radius: 22px; font-size: 14px; font-weight: 600; }
 .icon-t { fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
 .lp { display: flex; align-items: center; gap: 12px; min-height: 68px; padding: 8px 8px 8px 8px; border-radius: 22px; background: var(--fill); }
 .lp .pcb { flex: none; width: 52px; height: 52px; border: 0; padding: 0; border-radius: 50%; background: var(--accent); color: #FFFFFF; display: grid; place-items: center; cursor: pointer; transition: transform .45s var(--pop); }
@@ -319,27 +323,28 @@ details.why ul { margin: 6px 0 0; padding-left: 18px; display: grid; gap: 4px; m
 .say { font-family: var(--f-jp); font-size: clamp(21px, 2.7vw, 26px); line-height: 2.05; text-align: center; text-wrap: balance; margin: 0; }
 .nofuri .say { line-height: 1.7; }
 /* listening tasks: until the answer the text is a row of stripes that light up with the voice */
-.listen { width: 100%; max-width: var(--task-w); display: grid; }
-.listen > * { grid-area: 1 / 1; transition: opacity .3s; }
+.listen { width: 100%; max-width: var(--task-w); display: flex; flex-direction: column; align-items: stretch; gap: 2px; }
+.listen .txt { align-self: center; }
+.listen:not(.heard) .strp { display: none; }
 .listen .say { font-size: clamp(19px, 2.4vw, 22px); }
 .listen:not(.shown) .say { display: none; }
 .listen.shown .strp { display: none; }
-.strp { display: flex; flex-wrap: nowrap; gap: 6px; align-items: center; align-self: center; min-height: 40px; }
+.strp { display: flex; flex-wrap: nowrap; gap: 6px; align-items: center; min-height: 40px; animation: rise .4s var(--spring) both; }
 .strp i { height: 12px; border-radius: 6px; background: var(--fill-2); flex: var(--w) 1 0px; min-width: 18px; transition: background-color .2s, opacity .2s; }
 .strp i.now { background: var(--accent); opacity: .75; }
 .strp i.past { background: var(--seg); }
 .voiceline { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 10px 14px; }
 .seg.ui button { font-family: var(--f-ui); font-size: 15.5px; font-weight: 600; padding: 0 14px; }
-.vnote { font-size: 14.5px; color: var(--ink-2); text-align: center; margin: 0; max-width: 56ch; }
+.vnote { font-size: 14.5px; color: var(--ink-2); text-align: center; margin: 0 auto; max-width: 56ch; }
 /* dialogue: a chat panel; the line being spoken gets a ring, its speaker too */
 .dlg { display: flex; flex-direction: column; gap: 10px; padding: 18px clamp(12px, 3vw, 22px); border-radius: 22px; background: var(--chat-bg); }
 .dl { display: flex; gap: 10px; align-items: flex-end; }
 .dl.r { flex-direction: row-reverse; }
 .dl .bub { cursor: pointer; transition: box-shadow .25s ease, color .25s ease; }
 .dl.r .bub { background: var(--bub-ken); border-radius: 22px 22px 6px 22px; }
-.dl .av { transition: box-shadow .25s ease; }
+.dlg .av { background: var(--card); box-shadow: inset 0 0 0 1.5px currentColor; transition: box-shadow .25s ease; }
 .dl.now .bub { box-shadow: 0 0 0 2px var(--accent); }
-.dl.now .av { box-shadow: 0 0 0 3px var(--chat-bg), 0 0 0 5px var(--accent); }
+.dl.now .av { box-shadow: inset 0 0 0 1.5px currentColor, 0 0 0 3px var(--chat-bg), 0 0 0 5px var(--accent); }
 .dl.past .bub { color: var(--ink-2); }
 .dl.past .ft { color: var(--ink-3); }
 /* partial dictation */
@@ -413,7 +418,7 @@ details.why ul { margin: 6px 0 0; padding-left: 18px; display: grid; gap: 4px; m
 .inbar .icon { width: 24px; height: 24px; }
 .inbar .field { flex: 1; height: 38px; border-radius: 19px; background: var(--fill); display: flex; align-items: center; padding: 0 16px; font-family: var(--f-jp); font-size: 15px; }
 /* words in a bubble are plain text that reacts to a tap: no gaps, normal line breaks */
-.tk { cursor: pointer; border-radius: 6px; padding-block: 3px; -webkit-box-decoration-break: clone; box-decoration-break: clone; transition: background-color .25s ease, box-shadow .25s ease; outline: none; }
+.tk { cursor: pointer; border-radius: 6px; padding: 4px 3px; margin: 0 -3px; -webkit-box-decoration-break: clone; box-decoration-break: clone; transition: background-color .25s ease, box-shadow .25s ease; outline: none; }
 @media (hover: hover) { .tk:hover { background: var(--fill-2); } .msg.me .tk:hover { background: var(--on-acc-fill); } }
 .tk:focus-visible { box-shadow: 0 0 0 2px var(--accent-ring); }
 .tk.sel { background: var(--accent-soft); box-shadow: 0 0 0 2px var(--accent); }
@@ -438,13 +443,14 @@ details.why ul { margin: 6px 0 0; padding-left: 18px; display: grid; gap: 4px; m
 .rr { display: grid; grid-template-columns: 26px minmax(0, 1fr); gap: 10px; align-items: start; padding: 12px 14px; border-radius: 16px; background: var(--fill); text-align: left; }
 .rr .ic { width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center; color: #FFFFFF; font-weight: 700; font-size: 13.5px; }
 .rr.ok .ic { background: var(--ok); } .rr.half .ic { background: var(--warn); } .rr.bad .ic { background: var(--bad); }
-.rr p { margin: 0; font-size: 15.5px; line-height: 1.9; }
+.rr p { margin: 0; font-size: 15.5px; line-height: 1.5; }
+.rr p:has(.fr) { line-height: 1.95; }
 .rr p .jp { font-size: 17px; }
 .rr .wh { display: block; font-size: 13.5px; line-height: 1.4; color: var(--ink-2); }
 .score { display: inline-flex; align-items: center; gap: 8px; justify-self: start; height: 34px; padding: 0 14px; border-radius: 999px; background: var(--accent-soft); color: var(--accent-ink); font-weight: 700; font-variant-numeric: tabular-nums; }
 .explain { display: grid; grid-template-columns: minmax(0, 1fr); gap: 10px; padding: 18px; border-radius: 20px; background: var(--fill); }
 .explain h4 { margin: 0; font-size: 18px; }
-.explain p { margin: 0; font-size: 15.5px; color: var(--ink-2); }
+.explain > p { margin: 0; font-size: 15.5px; color: var(--ink-2); }
 .ex-row { display: flex; gap: 10px; align-items: flex-start; min-width: 0; }
 .ex-row textarea { flex: 1; min-width: 0; min-height: 96px; padding: 12px 14px; border-radius: 16px; border: 2px solid transparent; background: var(--card); resize: none; overflow: hidden; font-size: 16px; line-height: 1.5; outline: none; }
 .ex-row textarea:focus { border-color: var(--accent); }
@@ -460,7 +466,7 @@ details.why ul { margin: 6px 0 0; padding-left: 18px; display: grid; gap: 4px; m
 .ai-h b { font-size: 16px; }
 .verdict { margin-left: auto; display: inline-flex; align-items: center; height: 30px; padding: 0 12px; border-radius: 999px; font-weight: 700; font-size: 14.5px; }
 .verdict.ok { background: var(--ok-soft); color: var(--ok-ink); } .verdict.half { background: var(--warn-soft); color: var(--warn-ink); } .verdict.bad { background: var(--bad-soft); color: var(--bad-ink); }
-.ai p { margin: 0; }
+.ai p { margin: 0; color: var(--ink); font-size: 16px; line-height: 1.55; }
 .ai .tr { font-size: 14.5px; color: var(--ink-2); }
 .think { display: inline-flex; gap: 5px; }
 .think i { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); animation: dot 1.1s ease-in-out infinite; }
@@ -566,7 +572,7 @@ footer { color: var(--ink-3); font-size: 13.5px; text-align: center; padding-top
   </div>
 </div>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
-  <symbol id="i-tort" viewBox="0 0 32 32"><path d="M4.5 21 C4.5 14 9.5 9.5 15.5 9.5 C21.5 9.5 26.5 14 26.5 21 Z"/><path d="M10.5 21 L12.6 14.6 H18.4 L20.5 21"/><path d="M26.5 18.2 C27.2 15.6 30.6 15.8 30.6 18.4 C30.6 20.2 29 21 26.6 21"/><path d="M8.6 21 V24.6 M22.4 21 V24.6 M4.5 21 L2 22.4"/></symbol>
+  <symbol id="i-tort" viewBox="0 0 32 32"><path d="M4.6 20.2 C4.6 13.4 9.6 9.2 15.4 9.2 C21.2 9.2 26.2 13.4 26.2 20.2 Z"/><path d="M11.6 20.2 L12.9 14.3 H17.9 L19.2 20.2 M12.9 14.3 L10.4 11 M17.9 14.3 L20.4 11 M3.4 20.2 H27.4"/><circle cx="28.8" cy="17.2" r="2.7"/><path d="M26.2 19.4 L26.8 18.6"/><circle cx="29.6" cy="16.6" r=".5" fill="currentColor" stroke="none"/><path d="M8.2 20.2 V23.6 H9.8 M21.4 20.2 V23.6 H23 M4.6 20.2 L2.4 21.6"/></symbol>
 </svg>
 
 <main class="wrap gut">
@@ -576,11 +582,13 @@ footer { color: var(--ink-3); font-size: 13.5px; text-align: center; padding-top
 
     <article class="card" id="cardCount">
       <div class="card-h"><div class="eyebrow">Рисунок <span class="tag">助数詞</span></div><h3 class="task-t">Что на столе?</h3></div>
+      <div class="qhead">
+        <div class="q-jp"><ruby>机<rt>つくえ</rt></ruby>の<ruby>上<rt>うえ</rt></ruby>に<ruby>何<rt>なに</rt></ruby>がありますか。</div>
+        <p class="q-task">Сосчитай: выбери счётчик и впиши чтение каной.</p>
+      </div>
       <div class="split">
         <div class="ill" id="tableIll"></div>
         <div class="task">
-          <div class="q-jp"><ruby>机<rt>つくえ</rt></ruby>の<ruby>上<rt>うえ</rt></ruby>に<ruby>何<rt>なに</rt></ruby>がありますか。</div>
-          <p class="q-task">Сосчитай: выбери счётчик и впиши чтение каной.</p>
           <div class="rows" id="countRows"></div>
           <div class="acts"><button type="button" class="btnp" id="countCheck">Проверить</button><button type="button" class="btnp sec" id="countNew">Другая картинка</button></div>
           <div class="col" id="countFb"></div>
@@ -595,11 +603,13 @@ footer { color: var(--ink-3); font-size: 13.5px; text-align: center; padding-top
 
     <article class="card" id="cardGive">
       <div class="card-h"><div class="eyebrow">Схема <span class="tag plum">あげる・くれる・もらう</span></div><h3 class="task-t">Кто кому?</h3></div>
+      <div class="qhead">
+        <div class="q-jp" id="giveQ"></div>
+        <p class="q-task">Синяя рамка — うち: ты и твоя семья.</p>
+      </div>
       <div class="split">
         <div class="ill" id="giveIll"></div>
         <div class="task">
-          <p class="q-task">Синяя рамка — うち: ты и твоя семья.</p>
-          <div class="q-jp" id="giveQ"></div>
           <div class="opts three" id="giveOpts"></div>
           <div class="col" id="giveFb"></div>
           <button type="button" class="btnp next" id="giveNext" hidden>Следующая схема</button>
@@ -1022,7 +1032,8 @@ function buildDialog() {
 function makeListen(id, clipId) {
   const el = $('#' + id), kara = CLIP[clipId].kara, ph = []; let p = [];
   kara.forEach((t, i) => { p.push(i); if (strengthOf(t) > 0 || i === kara.length - 1) { ph.push(p); p = []; } });
-  el.innerHTML = `<div class="strp" aria-hidden="true">${ph.map(q => `<i style="--w:${q.reduce((s, i) => s + moraOf(kara[i]), 0)}"></i>`).join('')}</div><p class="say kara" id="${id}-t">${kara.map((t, i) => `<span class="kc" data-i="${i}">${rb(t)}</span>`).join('')}</p>`;
+  el.innerHTML = `<div class="strp" aria-hidden="true">${ph.map(q => `<i style="--w:${q.reduce((s, i) => s + moraOf(kara[i]), 0)}"></i>`).join('')}</div><p class="say kara" id="${id}-t">${kara.map((t, i) => `<span class="kc" data-i="${i}">${rb(t)}</span>`).join('')}</p><button type="button" class="linkbtn txt">Показать текст</button>`;
+  el.querySelector('.txt').onclick = () => lv.show(!lv.shown);
   const kv = makeKara(`${id}-t`, kara, true), stripes = $$('.strp i', el);
   const lv = {
     el, kv, shown: false,
@@ -1031,7 +1042,7 @@ function makeListen(id, clipId) {
       const pi = i >= 0 ? ph.findIndex(q => q.includes(i)) : -1;
       stripes.forEach((s, j) => { s.classList.toggle('now', mode !== 'clear' && j === pi); s.classList.toggle('past', mode === 'play' && pi >= 0 && j < pi); });
     },
-    show(on = true) { lv.shown = on; el.classList.toggle('shown', on); stripes.forEach(s => s.classList.remove('now', 'past')); kv.update(-1, 'clear'); $$(`[data-listen="${id}"] .txt`).forEach(b => { b.textContent = on ? 'Скрыть текст' : 'Текст'; }); }
+    show(on = true) { lv.shown = on; el.classList.toggle('shown', on); stripes.forEach(s => s.classList.remove('now', 'past')); kv.update(-1, 'clear'); el.querySelector('.txt').textContent = on ? 'Скрыть текст' : 'Показать текст'; }
   };
   VIEWS[id] = lv;
 }
@@ -1102,9 +1113,11 @@ function paintTime(P) {
 function paintTort(P) {
   if (!P.tortB) return;
   P.tortB.classList.toggle('on', P.alt && (P.state === 'play' || P.state === 'pause' || P.state === 'load'));
-  const html = SET.slow ? '1×' : IC.tort;
+  const html = SET.slow ? 'Обычно' : IC.tort;
   if (P.tortB._h !== html) { P.tortB.innerHTML = html; P.tortB._h = html; }
+  P.tortB.classList.toggle('txt', SET.slow);
   P.tortB.setAttribute('aria-label', SET.slow ? 'Послушать в обычном темпе' : 'Послушать медленно');
+  P.tortB.title = SET.slow ? 'Один раз в обычном темпе' : 'Один раз медленно';
 }
 function paintSub(P) {
   if (!P.sub) return;
@@ -1159,6 +1172,7 @@ function start(P, { alt = false, fromChunk = null, at = null } = {}) {
   P.alt = alt; P.rec = rec; P.track = tr; P.slowNow = slow && !tr.device;
   if (rec.tts) { speakFallback(P, tr, rec); return; }
   const url = clipURL(rec.id), al = alignNow(rec.id);
+  if (P.listen) P.listen.el.classList.add('heard');
   P.seg = tr.lines ? segOf(al, tr) : null;
   let t0 = at != null ? at : P.seg ? P.seg[0] : 0;
   if (fromChunk != null && al && al.marks[fromChunk]) t0 = Math.max(P.seg ? P.seg[0] : 0, al.marks[fromChunk][0] - .06);
@@ -1228,9 +1242,8 @@ function makePlayer(host) {
     P.aria = 'Послушать диалог';
     bindTrack(P);
   } else {
-    host.innerHTML = `<button type="button" class="pp"><span class="pc">${IC.play}</span><span class="pt"><b>${esc(P.label)}</b><small hidden></small></span><span class="tm"></span></button><button type="button" class="tort"></button>${P.listen ? '<button type="button" class="linkbtn txt">Текст</button>' : ''}`;
+    host.innerHTML = `<button type="button" class="pp"><span class="pc">${IC.play}</span><span class="pt"><b>${esc(P.label)}</b><small hidden></small></span><span class="tm"></span></button><button type="button" class="tort"></button>`;
     P.btn = $('.pp', host); P.ic = $('.pc', host); P.tm = $('.tm', host); P.tortB = $('.tort', host); P.sub = $('.pt small', host);
-    const tb = $('.txt', host); if (tb) tb.onclick = () => P.listen.show(!P.listen.shown);
   }
   P.btn.addEventListener('click', () => toggle(P));
   if (P.tortB) P.tortB.addEventListener('click', () => playAlt(P));
@@ -1409,7 +1422,7 @@ function clockSVG(cx, cy, r, h, m, sec) {
 }
 function plantSVG() {
   const leaf = (deg, len, col) => `<path transform="rotate(${deg})" d="M0 0 C11 ${-len * .3} 11 ${-len * .72} 0 ${-len} C-11 ${-len * .72} -11 ${-len * .3} 0 0 Z" style="fill:var(${col})"/>`;
-  return `<g transform="translate(684 294)">${leaf(-30, 82, '--il-plant-2')}${leaf(-12, 100, '--il-plant')}${leaf(6, 92, '--il-plant-2')}${leaf(24, 84, '--il-plant')}${leaf(-2, 70, '--il-plant')}${leaf(40, 66, '--il-plant-2')}
+  return `<g transform="translate(660 294)">${leaf(-30, 82, '--il-plant-2')}${leaf(-12, 100, '--il-plant')}${leaf(6, 92, '--il-plant-2')}${leaf(24, 84, '--il-plant')}${leaf(-2, 70, '--il-plant')}${leaf(40, 66, '--il-plant-2')}
     <ellipse cx="2" cy="60" rx="30" ry="5" style="fill:var(--il-shade)" filter="url(#ilsoft)"/>
     <path d="M-24 2 L-19 54 Q-18 58 -14 58 H14 Q18 58 19 54 L24 2 Z" style="fill:var(--il-pot)"/><rect x="-27" y="-4" width="54" height="9" rx="3" style="fill:var(--il-pot)"/><rect x="-27" y="-4" width="54" height="3" rx="1.5" style="fill:#FFFFFF;opacity:.18"/><path d="M-21 16 L-19 54 Q-18 58 -14 58 H-8 L-11 16 Z" style="fill:#000000;opacity:.08"/></g>`;
 }
@@ -1541,7 +1554,7 @@ const PEOPLE = {
   imo: { jp: '妹', ru: 'сестра', hair: 'pony', cloth: 'var(--il-cloth-3)' }
 };
 const GL = {
-  wide: { vb: [600, 260], out: [110, 112], me: [382, 112], imo: [512, 112], frame: [302, 14, 284, 232], tag: [318, 210], q: { 'out>imo': [300, -6], 'me>out': [246, 30] } },
+  wide: { vb: [600, 260], out: [110, 112], me: [382, 112], imo: [512, 112], frame: [302, 14, 284, 232], tag: [318, 210], q: { 'out>imo': [300, 24], 'me>out': [246, 34] } },
   tall: { vb: [340, 440], out: [170, 74], me: [96, 282], imo: [244, 282], frame: [14, 182, 312, 244], tag: [30, 388], q: { 'out>imo': [262, 150], 'me>out': [78, 160] } }
 };
 const GR = 38;
@@ -1592,7 +1605,7 @@ function giftAt(f) {
   const L = path.getTotalLength(), l = L * (.06 + .78 * f), p = path.getPointAtLength(l), q = path.getPointAtLength(Math.min(L, l + 1));
   const tx = q.x - p.x, ty = q.y - p.y, d = Math.hypot(tx, ty) || 1, m = path.getPointAtLength(L / 2), a = path.getPointAtLength(0), b = path.getPointAtLength(L);
   let nx = ty / d, ny = -tx / d; const cx = m.x - (a.x + b.x) / 2, cy = m.y - (a.y + b.y) / 2; if (nx * cx + ny * cy < 0) { nx = -nx; ny = -ny; }
-  g.setAttribute('transform', `translate(${(p.x + nx * 26).toFixed(1)} ${(p.y + ny * 26).toFixed(1)})`);
+  g.setAttribute('transform', `translate(${(p.x + nx * 26).toFixed(1)} ${Math.max(24, p.y + ny * 26).toFixed(1)})`);
   g.style.opacity = String(Math.min(1, f * 6));
 }
 function placeGift(f) { giftAt(f); }
@@ -1621,14 +1634,22 @@ function sakura() {
   let s = ''; for (let i = 0; i < 5; i++) s += `<path transform="rotate(${i * 72} 20 20)" d="M20 20 C14 14 14 6 20 3.5 C22 5 22.6 6 23.2 5 C26 9 25.5 15 20 20 Z" style="fill:var(--il-flower)"/>`;
   $('#sakura').innerHTML = s + '<circle cx="20" cy="20" r="3.6" style="fill:var(--il-flower-2)"/>';
 }
+let cafeMiss = 0;
+function cafeHint() {
+  $('#cafeFb').innerHTML = `<div class="fb wide bad"><span class="fb-h">Не сходится</span><p>Послушай заказ ещё раз — можно медленно — и проверь: что заказали и сколько штук каждого. Потом сложи цены по меню.</p><div class="acts" style="justify-content:flex-start"><button type="button" class="linkbtn" id="cafeSolve">Показать решение</button></div></div>`;
+  $('#cafeSolve').onclick = () => cafeSolution(false);
+}
+function cafeSolution(ok) {
+  $('#cafeFb').innerHTML = `<div class="fb wide ${ok ? 'ok' : 'bad'}"><span class="fb-h">${ok ? 'Верно' : 'Решение'}</span><p>Заказали <span class="jp">コーヒーを二つ</span> и <span class="jp">チーズケーキを一つ</span>: 450 × 2 + 520 = 1 420 иен — <span class="jp">千四百二十円</span>, <span class="jp">せんよんひゃくにじゅうえん</span>.</p><div class="pg" data-player="cafe-sum" data-label="Как скажет кассир"></div></div>`;
+  $$('#cafeFb [data-player]').forEach(makePlayer);
+  VIEWS.cafeListen.show(true);
+}
 function checkCafe() {
   const raw = norm($('#cafeIn').value).replace(/円|えん/g, ''), field = $('#cafeField');
   if (!raw) { $('#cafeIn').focus(); return; }
   const ok = raw === '1420' || raw === '1,420' || raw === 'せんよんひゃくにじゅう' || raw === '千四百二十';
   field.classList.toggle('v-ok', ok); field.classList.toggle('v-bad', !ok);
-  $('#cafeFb').innerHTML = `<div class="fb wide ${ok ? 'ok' : 'bad'}"><span class="fb-h">${ok ? 'Верно' : 'Не сходится'}</span><p>Заказали <span class="jp">コーヒーを二つ</span> и <span class="jp">チーズケーキを一つ</span>: 450 × 2 + 520 = 1 420 иен — <span class="jp">千四百二十円</span>, <span class="jp">せんよんひゃくにじゅうえん</span>.</p><div class="pg" data-player="cafe-sum" data-label="Как скажет кассир"></div></div>`;
-  $$('#cafeFb [data-player]').forEach(makePlayer);
-  VIEWS.cafeListen.show(true);
+  if (ok) cafeSolution(true); else if (++cafeMiss >= 2) cafeSolution(false); else cafeHint();
   $('#cafeFb').firstElementChild.scrollIntoView({ block: 'nearest', behavior: RM.matches ? 'auto' : 'smooth' });
 }
 
@@ -1652,7 +1673,7 @@ function drawStation() {
       <pattern id="stdots" width="8" height="8" patternUnits="userSpaceOnUse"><circle cx="4" cy="4" r="1.6" style="fill:var(--il-dot)"/></pattern>
       <filter id="stsoft" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="3"/></filter>
     </defs>
-    <style>.trainG{transform:translateX(-1040px)}.go .trainG{animation:arrive 3.6s cubic-bezier(.16,.84,.3,1) forwards}@keyframes arrive{to{transform:none}}@media (prefers-reduced-motion: reduce){.trainG{transform:none}.go .trainG{animation:none}}</style>
+    <style>.trainG{transform:translateX(-1040px)}.go .trainG{animation:arrive 3.6s cubic-bezier(.16,.84,.3,1) forwards}@keyframes arrive{to{transform:none}}@media (prefers-reduced-motion: reduce){.go .trainG{animation:none;transform:none}}</style>
     <rect width="960" height="320" style="fill:url(#stsky)"/>
     <circle cx="170" cy="96" r="100" style="fill:url(#sthalo)"/><circle cx="170" cy="96" r="32" style="fill:var(--il-sun)"/>
     <path d="M0 176 L110 128 L200 152 L320 104 L430 150 L540 116 L660 158 L790 110 L900 146 L960 132 V232 H0 Z" style="fill:var(--il-mount-3)"/>
@@ -1696,6 +1717,7 @@ function buildTrain() {
     const r = $('#r815'); r.classList.add('hi', 'moved');
     if (!$('.tr-to', r)) r.lastElementChild.insertAdjacentHTML('beforeend', '<span class="tr-to">3</span>');
     VIEWS.trainListen.show(true);
+    const sv = $('#stationIll svg'); if (sv) sv.classList.add('go');
   });
 }
 
@@ -2156,7 +2178,7 @@ async function runChecks() {
 
 /* ================= bar, tabs, things that start when seen ================= */
 function observe() {
-  if (!('IntersectionObserver' in window)) { giveSeen = true; $('#stationIll svg').classList.add('go'); return; }
+  if (!('IntersectionObserver' in window)) { giveSeen = true; return; }
   new IntersectionObserver(es => es.forEach(e => $('#bar').classList.toggle('stuck', !e.isIntersecting)), { rootMargin: '-8px 0px 0px 0px' }).observe($('#top'));
   const tabs = $$('.tabs a'), cur = {};
   const io = new IntersectionObserver(es => {
@@ -2168,10 +2190,9 @@ function observe() {
   const once = new IntersectionObserver(es => es.forEach(e => {
     if (!e.isIntersecting) return;
     once.unobserve(e.target);
-    if (e.target.id === 'stationIll') $('svg', e.target).classList.add('go');
     if (e.target.id === 'giveIll') { giveSeen = true; runGift(); }
   }), { threshold: .45 });
-  once.observe($('#stationIll')); once.observe($('#giveIll'));
+  once.observe($('#giveIll'));
 }
 
 /* ================= boot ================= */
