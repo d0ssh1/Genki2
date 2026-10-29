@@ -7,6 +7,8 @@
 <style>
 /* Layout: "Calm C" — header, sticky topic pills, title + segmented control, block chips; workspace = focus card (left) + history & cheat sheet (right column), stacking below 980px. Motion: spring curves (JS writes linear() into --spring*). */
 :root {
+  /* corner radii: one scale for the whole course; rule by kind of element (see the design rules) */
+  --r-xs: 6px; --r-sm: 12px; --r-md: 18px; --r-lg: 24px; --r-xl: 28px; --r-full: 999px;
   --bg: #F2F3F7; --card: #FFFFFF; --fill: #F4F5F9; --fill-2: #EBEDF2; --track: #E3E5EB; --sep: #E8EAF0; --seg: #DADDE5;
   --ink: #0F1115; --ink-2: #636977; --ink-3: #989EAB;
   --accent: #3150D8; --accent-ink: #2238A8; --accent-soft: #E7ECFD; --accent-ring: rgba(49, 80, 216, .16);
@@ -73,7 +75,7 @@ svg.ic { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-wid
 .brand { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 14px; }
 /* lesson switcher: one pill in the header opens the list of lessons; scales to all of Genki II */
 .brand { position: relative; }
-.lsn-btn { display: inline-flex; align-items: center; gap: 7px; height: 42px; padding: 0 11px 0 15px; border: 0; border-radius: 999px; background: var(--card); color: var(--ink); cursor: pointer; transition: transform .45s var(--spring-pop), background-color .2s ease, box-shadow .3s ease; }
+.lsn-btn { display: inline-flex; align-items: center; gap: 7px; height: 42px; padding: 0 11px 0 15px; border: 0; border-radius: var(--r-full); background: var(--card); color: var(--ink); cursor: pointer; transition: transform .45s var(--spring-pop), background-color .2s ease, box-shadow .3s ease; }
 .lsn-btn:hover { background: var(--fill); }
 .lsn-btn:active { transform: scale(.95); }
 .lsn-btn[aria-expanded="true"] { background: var(--card); box-shadow: 0 0 0 4px var(--accent-ring); }
@@ -83,14 +85,14 @@ svg.ic { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-wid
 .lb-t.ghost { position: absolute; left: 0; top: 0; }
 .lb-c { width: 18px; height: 18px; flex: none; fill: none; stroke: var(--ink-2); stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; transition: transform .55s var(--spring); }
 .lsn-btn[aria-expanded="true"] .lb-c { transform: rotate(180deg); }
-.ls-bar { display: block; height: 3px; border-radius: 2px; background: color-mix(in srgb, var(--ink-3) 26%, transparent); overflow: hidden; }
+.ls-bar { display: block; height: 3px; border-radius: var(--r-full); background: color-mix(in srgb, var(--ink-3) 26%, transparent); overflow: hidden; }
 .ls-bar b { display: block; height: 100%; width: 0; border-radius: inherit; background: var(--accent); transition: width 1.1s var(--spring-soft); }
-.lsn-pop { position: absolute; left: 0; top: calc(100% + 8px); z-index: 40; width: min(400px, calc(100vw - 32px)); max-height: calc(100vh - 120px); max-height: calc(100dvh - 120px); overflow-x: hidden; overflow-y: auto; overscroll-behavior: contain; background: var(--card); border-radius: 22px; padding: 8px; box-shadow: 0 26px 70px -22px var(--shadow), 0 0 0 1px var(--sep); transform-origin: 48px 0; }
+.lsn-pop { position: absolute; left: 0; top: calc(100% + 8px); z-index: 40; width: min(400px, calc(100vw - 32px)); max-height: calc(100vh - 120px); max-height: calc(100dvh - 120px); overflow-x: hidden; overflow-y: auto; overscroll-behavior: contain; background: var(--card); border-radius: var(--r-lg); padding: 8px; box-shadow: 0 26px 70px -22px var(--shadow), 0 0 0 1px var(--sep); transform-origin: 48px 0; }
 .lp-h { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; padding: 6px 12px 6px; }
 .lp-h h2 { margin: 0; font-size: 13px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: var(--ink-2); }
 .lp-sum { font-size: 13px; color: var(--ink-3); font-variant-numeric: tabular-nums; }
 .lp-list { display: flex; flex-direction: column; gap: 2px; }
-.lp-row { position: relative; display: flex; align-items: center; gap: 13px; width: 100%; min-height: 64px; padding: 10px 12px; border: 0; border-radius: 16px; background: none; color: var(--ink); font: inherit; text-align: left; cursor: pointer; transition: background-color .25s ease, transform .45s var(--spring-pop); }
+.lp-row { position: relative; display: flex; align-items: center; gap: 13px; width: 100%; min-height: 64px; padding: 10px 12px; border: 0; border-radius: var(--r-md); background: none; color: var(--ink); font: inherit; text-align: left; cursor: pointer; transition: background-color .25s ease, transform .45s var(--spring-pop); }
 .lp-row:hover { background: var(--fill); }
 .lp-row:active { transform: scale(.985); }
 .lp-row:focus-visible { outline-offset: -2px; }
@@ -108,7 +110,7 @@ svg.ic { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-wid
 .lp-row[aria-current="true"] .lp-ring b { color: var(--accent-ink); }
 .lp-b { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 5px; }
 .lp-t { display: flex; flex-wrap: wrap; gap: 4px; }
-.lp-t span { padding: 2px 8px; border-radius: 8px; background: var(--fill); font-size: 13.5px; font-weight: 600; line-height: 1.45; white-space: nowrap; transition: background-color .25s ease; }
+.lp-t span { padding: 2px 8px; border-radius: var(--r-full); background: var(--fill); font-size: 13.5px; font-weight: 600; line-height: 1.45; white-space: nowrap; transition: background-color .25s ease; }
 .lp-row[aria-current="true"] .lp-t span { background: var(--card); }
 .lp-m { font-size: 13px; color: var(--ink-2); font-variant-numeric: tabular-nums; }
 .lp-ck { flex: none; width: 22px; height: 22px; fill: none; stroke: var(--accent); stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; opacity: 0; transform: scale(.4); transition: opacity .2s ease, transform .5s var(--spring-pop); }
@@ -116,7 +118,7 @@ svg.ic { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-wid
 .lp-soon { display: flex; flex-direction: column; gap: 9px; margin: 6px 4px 2px; padding: 12px 8px 8px; border-top: 1px solid var(--sep); }
 .lp-soon > span { font-size: 13px; color: var(--ink-3); }
 .lp-nums { display: flex; flex-wrap: wrap; gap: 6px; }
-.lp-nums i { width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; font-style: normal; font-size: 13px; font-weight: 600; color: var(--ink-3); box-shadow: inset 0 0 0 1.5px var(--track); font-variant-numeric: tabular-nums; }
+.lp-nums i { width: 34px; height: 34px; border-radius: var(--r-full); display: grid; place-items: center; font-style: normal; font-size: 13px; font-weight: 600; color: var(--ink-3); box-shadow: inset 0 0 0 1.5px var(--track); font-variant-numeric: tabular-nums; }
 .lp-h2 { margin: 8px 4px 0; padding: 12px 8px 6px; border-top: 1px solid var(--sep); }
 .lp-n { font-size: 13px; color: var(--ink-2); line-height: 1.35; }
 .lp-n b { color: var(--ink); font-size: 15px; font-weight: 700; }
@@ -124,18 +126,18 @@ svg.ic { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-wid
 .lp-row.tr .lp-ring b.t2 { font-size: 14px; letter-spacing: -.04em; }
 /* a block can point to a trainer topic: «перейти» pill under the intro and the card */
 .q-link { display: flex; justify-content: center; margin-top: 2px; }
-.go-link { display: inline-flex; align-items: center; gap: 9px; min-height: 40px; padding: 5px 14px 5px 6px; border: 0; border-radius: 999px; background: var(--fill); color: var(--ink); font: inherit; font-size: 14.5px; font-weight: 600; text-align: left; cursor: pointer; transition: background-color .2s ease, transform .45s var(--spring-pop); }
+.go-link { display: inline-flex; align-items: center; gap: 9px; min-height: 40px; padding: 5px 14px 5px 6px; border: 0; border-radius: var(--r-full); background: var(--fill); color: var(--ink); font: inherit; font-size: 14.5px; font-weight: 600; text-align: left; cursor: pointer; transition: background-color .2s ease, transform .45s var(--spring-pop); }
 .go-link:hover { background: var(--fill-2); }
 .go-link:active { transform: scale(.96); }
-.go-link .gl-c { flex: none; width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center; background: var(--t); color: #FFFFFF; font-size: 13px; font-weight: 700; }
+.go-link .gl-c { flex: none; width: 28px; height: 28px; border-radius: var(--r-full); display: grid; place-items: center; background: var(--t); color: #FFFFFF; font-size: 13px; font-weight: 700; }
 .go-link svg { width: 16px; height: 16px; flex: none; fill: none; stroke: var(--ink-2); stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; transition: transform .45s var(--spring); }
 .go-link:hover svg { transform: translateX(3px); }
 /* «Счёт»: number wheels */
 .nmw { display: flex; flex-direction: column; align-items: center; gap: 14px; width: 100%; }
 .nmw-cols { display: flex; gap: 8px; }
-.nmw-col { display: flex; flex-direction: column; align-items: center; gap: 2px; width: 60px; padding: 6px 0 9px; border-radius: 18px; background: var(--fill); transition: opacity .3s ease; }
+.nmw-col { display: flex; flex-direction: column; align-items: center; gap: 2px; width: 60px; padding: 6px 0 9px; border-radius: var(--r-md); background: var(--fill); transition: opacity .3s ease; }
 .nmw-col.zero { opacity: .42; }
-.nmw-b { width: 46px; height: 34px; border: 0; border-radius: 12px; background: none; color: var(--ink-2); cursor: pointer; display: grid; place-items: center; transition: background-color .2s, color .2s, transform .4s var(--spring-pop); }
+.nmw-b { width: 46px; height: 34px; border: 0; border-radius: var(--r-sm); background: none; color: var(--ink-2); cursor: pointer; display: grid; place-items: center; transition: background-color .2s, color .2s, transform .4s var(--spring-pop); }
 .nmw-b:hover { background: var(--fill-2); color: var(--ink); }
 .nmw-b:active { transform: scale(.86); }
 .nmw-b svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
@@ -155,11 +157,11 @@ svg.ic { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-wid
 @media (max-width: 560px) { .ck { grid-template-columns: 1fr; justify-items: center; } }
 /* calendar */
 .cl { display: grid; grid-template-columns: minmax(0, 340px) minmax(0, 1fr); gap: 18px; align-items: center; width: 100%; }
-.cl-cal { background: var(--fill); border-radius: 20px; padding: 12px; }
+.cl-cal { background: var(--fill); border-radius: var(--r-md); padding: 12px; }
 .cl-m { margin: 2px 6px 8px; font-size: 17px; font-weight: 700; }
 .cl-m span { margin-left: 6px; font-size: 14px; font-weight: 500; color: var(--ink-2); }
 .cl-g { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 4px; }
-.cl-w, .cl-d { height: 38px; border: 0; border-radius: 10px; background: none; color: var(--ink); font: inherit; font-size: 15px; font-variant-numeric: tabular-nums; cursor: pointer; transition: background-color .2s ease, color .2s ease, transform .45s var(--spring-pop); }
+.cl-w, .cl-d { height: 38px; border: 0; border-radius: var(--r-sm); background: none; color: var(--ink); font: inherit; font-size: 15px; font-variant-numeric: tabular-nums; cursor: pointer; transition: background-color .2s ease, color .2s ease, transform .45s var(--spring-pop); }
 .cl-w { font-size: 14px; font-weight: 700; color: var(--ink-2); }
 .cl-w.su, .cl-d.su { color: var(--sun); }
 .cl-w.sa, .cl-d.sa { color: var(--sat); }
@@ -168,7 +170,7 @@ svg.ic { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-wid
 .cl-w:not([aria-pressed="true"]):hover, .cl-d:not(.spc):not([aria-pressed="true"]):hover { background: var(--fill-2); }
 .cl-d[aria-pressed="true"], .cl-w[aria-pressed="true"] { background: var(--accent); color: #FFFFFF; }
 .cl-key { display: flex; align-items: center; gap: 6px; margin: 10px 6px 2px; font-size: 12.5px; color: var(--ink-2); }
-.cl-key i { width: 12px; height: 12px; border-radius: 4px; background: var(--accent-soft); }
+.cl-key i { width: 12px; height: 12px; border-radius: var(--r-xs); background: var(--accent-soft); }
 .cl-key i.now { margin-left: 10px; background: none; box-shadow: inset 0 0 0 1.5px var(--ink-3); }
 @media (max-width: 760px) { .cl { grid-template-columns: 1fr; } }
 /* counter grid */
@@ -177,10 +179,10 @@ svg.ic { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-wid
 .ct-h b { font-size: 22px; }
 .ct-h span { font-size: 15px; color: var(--ink-2); }
 .ct-g { display: grid; grid-template-columns: repeat(auto-fill, minmax(108px, 1fr)); gap: 8px; }
-.ct-c { display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 10px 6px 11px; border-radius: 16px; background: var(--fill); }
+.ct-c { display: flex; flex-direction: column; align-items: center; gap: 2px; padding: 10px 6px 11px; border-radius: var(--r-md); background: var(--fill); }
 .ct-n { font-size: 14px; color: var(--ink-2); font-variant-numeric: tabular-nums; }
 .ct-r { font-size: 19px; font-weight: 500; white-space: nowrap; }
-.ct-r i { font-style: normal; border-radius: 5px; padding: 0 1px; }
+.ct-r i { font-style: normal; border-radius: var(--r-xs); padding: 0 1px; }
 .ct-r i.cut, .ct-key i.cut { color: var(--seal); background: var(--seal-soft); }
 .ct-r i.cp, .ct-key i.cp { color: var(--accent-ink); background: var(--accent-soft); }
 .ct-r i.cb, .ct-key i.cb { color: var(--ok); background: var(--ok-soft); }
@@ -189,10 +191,10 @@ svg.ic { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-wid
 .ct-r i.nat, .ct-key i.nat { color: var(--accent-ink); background: var(--accent-soft); }
 .ct-key { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 16px; font-size: 13px; color: var(--ink-2); }
 .ct-key span { display: inline-flex; align-items: center; gap: 6px; }
-.ct-key i { width: 14px; height: 14px; border-radius: 5px; }
+.ct-key i { width: 14px; height: 14px; border-radius: var(--r-xs); }
 /* 弱点: one lesson open, the others folded into a summary row */
 .g-grp { margin-top: -4px; }
-.g-grp > .g-lh { width: 100%; margin: 0; gap: 4px; padding: 12px 14px; border: 0; border-radius: 18px; background: var(--card); color: var(--ink); font: inherit; font-size: 16px; font-weight: 700; text-align: left; cursor: pointer; transition: background-color .2s ease, transform .45s var(--spring-pop); }
+.g-grp > .g-lh { width: 100%; margin: 0; gap: 4px; padding: 12px 14px; border: 0; border-radius: var(--r-md); background: var(--card); color: var(--ink); font: inherit; font-size: 16px; font-weight: 700; text-align: left; cursor: pointer; transition: background-color .2s ease, transform .45s var(--spring-pop); }
 .g-grp > .g-lh:hover { background: color-mix(in srgb, var(--card) 70%, var(--fill)); }
 .g-grp > .g-lh:active { transform: scale(.99); }
 .g-lm { margin-left: auto; padding-left: 10px; font-size: 13.5px; font-weight: 500; color: var(--ink-2); text-align: right; font-variant-numeric: tabular-nums; }
@@ -201,7 +203,7 @@ svg.ic { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-wid
 .g-lb { display: flex; flex-direction: column; gap: 12px; overflow: hidden; }
 .g-lb[hidden] { display: none; }
 .g-lb > .sk-card:first-child { margin-top: 12px; }
-.ltag { display: inline-flex; align-items: center; height: 19px; padding: 0 7px; margin-right: 7px; border-radius: 6px; background: var(--fill-2); color: var(--ink-2); font-size: 11.5px; font-weight: 700; letter-spacing: .02em; vertical-align: 1px; white-space: nowrap; }
+.ltag { display: inline-flex; align-items: center; height: 19px; padding: 0 7px; margin-right: 7px; border-radius: var(--r-full); background: var(--fill-2); color: var(--ink-2); font-size: 11.5px; font-weight: 700; letter-spacing: .02em; vertical-align: 1px; white-space: nowrap; }
 .g-lh { display: flex; align-items: center; margin: 22px 4px 10px; font-size: 15px; font-weight: 700; color: var(--ink-2); }
 .lg-m { font-size: 12.5px; color: var(--ink-2); }
 .q-topic i { font-style: normal; font-size: 12px; font-weight: 700; color: var(--ink-2); margin-left: 1px; }
@@ -219,41 +221,43 @@ svg.ic { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-wid
 .gv-ln, .gv-hd { fill: none; stroke: var(--accent); stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
 .gv-gift { fill: var(--accent); }
 .gv-rows { display: flex; flex-direction: column; gap: 8px; }
-.gv-r { display: grid; grid-template-columns: 74px 26px minmax(0, 1fr); align-items: start; gap: 10px; padding: 11px 14px; border-radius: 14px; background: var(--fill); text-align: left; }
+.gv-r { display: grid; grid-template-columns: 74px 26px minmax(0, 1fr); align-items: start; gap: 10px; padding: 11px 14px; border-radius: var(--r-sm); background: var(--fill); text-align: left; }
 .gv-v { font-family: var(--f-jp); font-size: 17px; font-weight: 700; line-height: 26px; }
-.gv-ic { width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center; }
+.gv-ic { width: 26px; height: 26px; border-radius: var(--r-full); display: grid; place-items: center; }
 .gv-ic svg { width: 15px; height: 15px; fill: none; stroke: currentColor; stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; }
 .gv-r.ok .gv-ic { background: var(--ok-soft); color: var(--ok); }
 .gv-r.no .gv-ic { background: var(--bad-soft); color: var(--bad-ink); }
+.gv-r.warn .gv-ic { background: var(--warn-soft); color: var(--warn); font-weight: 800; font-size: 15px; }
 .gv-r.no .gv-v { color: var(--ink-3); text-decoration: line-through; text-decoration-thickness: 1.5px; }
 .gv-b { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
 .gv-s { font-size: 16.5px; line-height: 1.6; }
 .gv-w { font-size: 14px; line-height: 1.45; color: var(--ink-2); padding-top: 3px; }
+.gv-tr { font-size: 15px; line-height: 1.45; color: var(--ink); font-weight: 500; }
 .gv-swap { display: inline-flex; align-items: center; gap: 6px; margin: 2px auto 0; text-decoration: none; font-weight: 600; color: var(--accent-ink); }
 .gv-swap svg { width: 16px; height: 16px; }
 @media (max-width: 520px) { .gv-r { grid-template-columns: 26px minmax(0, 1fr); } .gv-v { grid-column: 1 / -1; line-height: 1.2; } }
 .b-name { font-size: 22px; font-weight: 700; letter-spacing: -.01em; }
 .b-sub { font-size: 15.5px; color: var(--ink-2); }
 .top-r { position: relative; display: flex; align-items: center; gap: 8px; margin-left: auto; }
-.prog { display: flex; align-items: center; gap: 9px; background: var(--card); border-radius: 999px; padding: 5px 14px 5px 6px; font-size: 15.5px; font-variant-numeric: tabular-nums; }
+.prog { display: flex; align-items: center; gap: 9px; background: var(--card); border-radius: var(--r-full); padding: 5px 14px 5px 6px; font-size: 15.5px; font-variant-numeric: tabular-nums; }
 .pr { width: 30px; height: 30px; transform: rotate(-90deg); flex: none; }
 .pr circle { fill: none; stroke-width: 5; }
 .pr-t { stroke: var(--track); }
 .pr-v { stroke: var(--accent); stroke-linecap: round; transition: stroke-dasharray 1.1s var(--spring-soft); }
 .today { color: var(--ok); font-weight: 600; }
 .today:empty { display: none; }
-.icon-btn { width: 42px; height: 42px; border-radius: 50%; border: 0; background: var(--card); display: grid; place-items: center; cursor: pointer; color: var(--ink); transition: transform .45s var(--spring-pop), background-color .2s, color .2s; }
+.icon-btn { width: 42px; height: 42px; border-radius: var(--r-full); border: 0; background: var(--card); display: grid; place-items: center; cursor: pointer; color: var(--ink); transition: transform .45s var(--spring-pop), background-color .2s, color .2s; }
 .icon-btn:active { transform: scale(.9); }
 .icon-btn[aria-expanded="true"] { background: var(--accent-soft); color: var(--accent-ink); }
 .icon-btn svg { transition: transform .6s var(--spring); }
-.icon-btn[aria-expanded="true"] svg { transform: rotate(60deg); }
-.sheet { position: absolute; right: 0; top: 52px; z-index: 30; width: min(360px, calc(100vw - 32px)); background: var(--card); border-radius: 22px; padding: 8px; box-shadow: 0 26px 70px -22px var(--shadow), 0 0 0 1px var(--sep); transform-origin: top right; }
+.icon-btn[aria-expanded="true"] svg { transform: rotate(90deg); }
+.sheet { position: absolute; right: 0; top: 52px; z-index: 30; width: min(360px, calc(100vw - 32px)); background: var(--card); border-radius: var(--r-lg); padding: 8px; box-shadow: 0 26px 70px -22px var(--shadow), 0 0 0 1px var(--sep); transform-origin: top right; }
 .sheet h2 { margin: 6px 12px 4px; font-size: 13px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: var(--ink-2); }
 .th-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 8px 12px 10px; font-size: 16px; }
-.sw { display: flex; width: 100%; align-items: center; justify-content: space-between; gap: 14px; padding: 10px 12px; border: 0; background: none; font-size: 16px; color: var(--ink); cursor: pointer; border-radius: 14px; text-align: left; min-height: 48px; transition: background-color .2s; }
+.sw { display: flex; width: 100%; align-items: center; justify-content: space-between; gap: 14px; padding: 10px 12px; border: 0; background: none; font-size: 16px; color: var(--ink); cursor: pointer; border-radius: var(--r-md); text-align: left; min-height: 48px; transition: background-color .2s; }
 .sw:hover { background: var(--fill); }
-.sw-t { position: relative; width: 51px; height: 31px; border-radius: 16px; background: var(--track); transition: background-color .3s ease; flex: none; }
-.sw-k { position: absolute; top: 2px; left: 2px; width: 27px; height: 27px; border-radius: 14px; background: #FFFFFF; box-shadow: 0 2px 4px rgba(0, 0, 0, .22), 0 0 0 .5px rgba(0, 0, 0, .05); transition: transform .5s var(--spring-pop), width .3s var(--spring); }
+.sw-t { position: relative; width: 51px; height: 31px; border-radius: var(--r-full); background: var(--track); transition: background-color .3s ease; flex: none; }
+.sw-k { position: absolute; top: 2px; left: 2px; width: 27px; height: 27px; border-radius: var(--r-full); background: #FFFFFF; box-shadow: 0 2px 4px rgba(0, 0, 0, .22), 0 0 0 .5px rgba(0, 0, 0, .05); transition: transform .5s var(--spring-pop), width .3s var(--spring); }
 .sw[aria-checked="true"] .sw-t { background: var(--ok); }
 .sw[aria-checked="true"] .sw-k { transform: translateX(20px); }
 .sw:active .sw-k { width: 33px; }
@@ -261,48 +265,48 @@ svg.ic { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-wid
 .sheet { width: min(380px, calc(100vw - 32px)); max-height: calc(100vh - 110px); max-height: calc(100dvh - 110px); overflow-x: hidden; overflow-y: auto; overscroll-behavior: contain; }
 .sp { display: flex; flex-direction: column; }
 .sp[hidden], .gem[hidden], .sw[hidden] { display: none; }
-.nav-row { display: flex; align-items: center; gap: 12px; width: 100%; padding: 10px 12px; border: 0; background: none; border-radius: 14px; color: var(--ink); text-align: left; cursor: pointer; min-height: 56px; transition: background-color .2s ease; }
+.nav-row { display: flex; align-items: center; gap: 12px; width: 100%; padding: 10px 12px; border: 0; background: none; border-radius: var(--r-md); color: var(--ink); text-align: left; cursor: pointer; min-height: 56px; transition: background-color .2s ease; }
 .nav-row:hover { background: var(--fill); }
 .nav-row:active .nr-c { transform: translateX(3px); }
 .nr-t { display: flex; flex-direction: column; flex: 1; min-width: 0; line-height: 1.3; }
 .nr-t b { font-size: 16px; font-weight: 600; }
 .nr-t span { font-size: 13.5px; color: var(--ink-2); }
-.nr-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--ink-3); flex: none; transition: background-color .3s ease; }
+.nr-dot { width: 8px; height: 8px; border-radius: var(--r-full); background: var(--ink-3); flex: none; transition: background-color .3s ease; }
 .nr-dot[data-s="ok"] { background: var(--ok); } .nr-dot[data-s="warn"] { background: var(--warn); }
 .nr-c { width: 18px; height: 18px; fill: none; stroke: var(--ink-3); stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; flex: none; transition: transform .45s var(--spring); }
-.sp-back { align-self: flex-start; display: inline-flex; align-items: center; gap: 2px; border: 0; background: none; padding: 6px 10px 6px 4px; border-radius: 10px; color: var(--accent-ink); font-size: 15.5px; font-weight: 600; cursor: pointer; min-height: 40px; }
+.sp-back { align-self: flex-start; display: inline-flex; align-items: center; gap: 2px; border: 0; background: none; padding: 6px 10px 6px 4px; border-radius: var(--r-full); color: var(--accent-ink); font-size: 15.5px; font-weight: 600; cursor: pointer; min-height: 40px; }
 .sp-back:hover { background: var(--fill); }
 .sp-back svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
 .sp-title { margin: 2px 12px 0 !important; font-size: 21px !important; letter-spacing: 0 !important; text-transform: none !important; color: var(--ink) !important; }
 .sp-lead { margin: 4px 12px 12px; font-size: 14.5px; line-height: 1.45; color: var(--ink-2); }
 .sp-seg { padding: 0 12px; }
 .sp-seg .segc button { flex: 1; }
-.prov { display: flex; align-items: flex-start; gap: 10px; margin: 10px 12px 4px; padding: 11px 13px; border-radius: 14px; background: var(--fill); font-size: 14.5px; line-height: 1.45; color: var(--ink); }
-.pv-dot { width: 8px; height: 8px; margin-top: 7px; border-radius: 50%; background: var(--ink-3); flex: none; transition: background-color .3s ease; }
+.prov { display: flex; align-items: flex-start; gap: 10px; margin: 10px 12px 4px; padding: 11px 13px; border-radius: var(--r-md); background: var(--fill); font-size: 14.5px; line-height: 1.45; color: var(--ink); }
+.pv-dot { width: 8px; height: 8px; margin-top: 7px; border-radius: var(--r-full); background: var(--ink-3); flex: none; transition: background-color .3s ease; }
 .prov[data-s="ok"] .pv-dot { background: var(--ok); } .prov[data-s="warn"] .pv-dot { background: var(--warn); } .prov[data-s="bad"] .pv-dot { background: var(--bad); }
 .gem { display: flex; flex-direction: column; gap: 8px; padding: 8px 12px 4px; }
 .fld { font-size: 13px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: var(--ink-2); margin-top: 6px; }
-.key { display: flex; align-items: center; gap: 4px; padding: 4px 4px 4px 14px; border-radius: 14px; background: var(--fill); box-shadow: inset 0 0 0 1.5px transparent; transition: box-shadow .25s ease, background-color .25s ease; }
+.key { display: flex; align-items: center; gap: 4px; padding: 4px 4px 4px 14px; border-radius: var(--r-sm); background: var(--fill); box-shadow: inset 0 0 0 1.5px transparent; transition: box-shadow .25s ease, background-color .25s ease; }
 .key:focus-within { background: var(--card); box-shadow: inset 0 0 0 1.5px var(--accent), 0 0 0 4px var(--accent-ring); }
 .key input { flex: 1; min-width: 0; height: 40px; border: 0; padding: 0; background: none; font: 500 16px/1 ui-monospace, "SF Mono", Menlo, monospace; color: var(--ink); outline: none; letter-spacing: .02em; }
 .key input::placeholder { color: var(--ink-3); font-family: var(--f-ui); letter-spacing: 0; }
-.key-eye { width: 40px; height: 40px; border: 0; border-radius: 10px; background: none; color: var(--ink-2); display: grid; place-items: center; cursor: pointer; flex: none; }
+.key-eye { width: 40px; height: 40px; border: 0; border-radius: var(--r-full); background: none; color: var(--ink-2); display: grid; place-items: center; cursor: pointer; flex: none; }
 .key-eye:hover { background: var(--fill-2); }
 .key-eye svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
 .key-eye.on { color: var(--accent-ink); }
 .models { display: grid; gap: 6px; }
-.mdl { position: relative; display: flex; flex-direction: column; gap: 1px; padding: 10px 40px 10px 13px; border: 0; border-radius: 14px; background: var(--fill); color: var(--ink); text-align: left; cursor: pointer; box-shadow: inset 0 0 0 1.5px transparent; transition: box-shadow .25s ease, background-color .25s ease, transform .45s var(--spring-pop); }
+.mdl { position: relative; display: flex; flex-direction: column; gap: 1px; padding: 10px 40px 10px 13px; border: 0; border-radius: var(--r-md); background: var(--fill); color: var(--ink); text-align: left; cursor: pointer; box-shadow: inset 0 0 0 1.5px transparent; transition: box-shadow .25s ease, background-color .25s ease, transform .45s var(--spring-pop); }
 .mdl:active { transform: scale(.98); }
 .mdl b { font-size: 15px; font-weight: 600; }
 .mdl span { font-size: 13px; color: var(--ink-2); line-height: 1.35; }
-.mdl::after { content: ""; position: absolute; right: 13px; top: 50%; width: 18px; height: 18px; margin-top: -9px; border-radius: 50%; box-shadow: inset 0 0 0 1.8px var(--ink-3); transition: box-shadow .3s var(--spring-pop); }
+.mdl::after { content: ""; position: absolute; right: 13px; top: 50%; width: 18px; height: 18px; margin-top: -9px; border-radius: var(--r-full); box-shadow: inset 0 0 0 1.8px var(--ink-3); transition: box-shadow .3s var(--spring-pop); }
 .mdl[aria-checked="true"] { background: var(--accent-soft); box-shadow: inset 0 0 0 1.5px var(--accent-ring); }
 .mdl[aria-checked="true"]::after { box-shadow: inset 0 0 0 5.5px var(--accent); }
 .gem-acts { display: flex; align-items: center; gap: 10px; margin-top: 4px; }
-.kbtn { position: relative; display: inline-flex; align-items: center; justify-content: center; height: 44px; min-width: 172px; padding: 0 18px; border: 0; border-radius: 22px; background: var(--accent); color: #FFFFFF; font-size: 15px; font-weight: 600; cursor: pointer; transition: background-color .3s ease, transform .45s var(--spring-pop), opacity .2s; }
+.kbtn { position: relative; display: inline-flex; align-items: center; justify-content: center; height: 44px; min-width: 172px; padding: 0 18px; border: 0; border-radius: var(--r-full); background: var(--accent); color: #FFFFFF; font-size: 15px; font-weight: 600; cursor: pointer; transition: background-color .3s ease, transform .45s var(--spring-pop), opacity .2s; }
 .kbtn:active:not(:disabled) { transform: scale(.95); }
 .kbtn:disabled { cursor: default; }
-.kbtn .kb-s { position: absolute; left: 50%; top: 50%; width: 20px; height: 20px; margin: -10px; border-radius: 50%; border: 2.4px solid rgba(255, 255, 255, .35); border-top-color: #FFFFFF; opacity: 0; animation: spin .75s linear infinite; transition: opacity .2s ease; }
+.kbtn .kb-s { position: absolute; left: 50%; top: 50%; width: 20px; height: 20px; margin: -10px; border-radius: var(--r-full); border: 2.4px solid rgba(255, 255, 255, .35); border-top-color: #FFFFFF; opacity: 0; animation: spin .75s linear infinite; transition: opacity .2s ease; }
 .kbtn.busy .kb-l { opacity: 0; } .kbtn.busy .kb-s { opacity: 1; }
 .kbtn .kb-l { transition: opacity .2s ease; }
 .kbtn.ok { background: var(--ok); } .kbtn.bad { background: var(--bad); }
@@ -312,7 +316,7 @@ svg.ic { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-wid
 .gem-res.ok { color: var(--ok); } .gem-res.bad { color: var(--bad-ink); } .gem-res.warn { color: var(--warn); }
 .gem-help { margin: 4px 0 0; font-size: 13px; line-height: 1.5; color: var(--ink-3); }
 .gem-help a { color: var(--accent-ink); }
-.sp-ai > .sw { margin-top: 6px; border-top: 1px solid var(--sep); border-radius: 0 0 14px 14px; }
+.sp-ai > .sw { margin-top: 6px; border-top: 1px solid var(--sep); border-radius: 0 0 var(--r-md) var(--r-md); }
 .ask.off { opacity: .85; }
 .ask.off .ask-t span { color: var(--accent-ink); }
 .st { display: grid; gap: 4px; padding: 10px 12px 6px; margin-top: 4px; border-top: 1px solid var(--sep); font-size: 14px; line-height: 1.45; color: var(--ink-2); }
@@ -322,47 +326,47 @@ svg.ic { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-wid
 .pills { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 8; margin: 0 -6px; padding: 6px; transition: box-shadow .3s ease; }
 .pills { background: var(--bg); -webkit-transform: translateZ(0); transform: translateZ(0); -webkit-backface-visibility: hidden; backface-visibility: hidden; }
 .pills.stuck { box-shadow: 0 14px 26px -20px var(--shadow); }
-.pills-box { background: var(--card); border-radius: 20px; overflow-x: auto; scrollbar-width: none; }
+.pills-box { margin-inline: 4px; background: var(--card); border-radius: var(--r-full); overflow-x: auto; scrollbar-width: none; }
 .pills-box::-webkit-scrollbar { display: none; }
 .pills-in { position: relative; display: flex; gap: 2px; padding: 6px; min-width: max-content; }
-.pill { position: relative; z-index: 1; display: flex; align-items: center; gap: 9px; padding: 6px 12px 6px 6px; border: 0; border-radius: 14px; background: none; color: var(--ink); cursor: pointer; transition: transform .45s var(--spring-pop); }
+.pill { position: relative; z-index: 1; display: flex; align-items: center; gap: 9px; padding: 6px 12px 6px 6px; border: 0; border-radius: var(--r-full); background: none; color: var(--ink); cursor: pointer; transition: transform .45s var(--spring-pop); }
 .pill:active { transform: scale(.95); }
-.pc { width: 32px; height: 32px; border-radius: 50%; background: var(--t); color: #FFFFFF; display: grid; place-items: center; font-family: var(--f-jp); font-size: 15px; font-weight: 700; flex: none; transition: transform .5s var(--spring-pop); }
+.pc { width: 32px; height: 32px; border-radius: var(--r-full); background: var(--t); color: #FFFFFF; display: grid; place-items: center; font-family: var(--f-jp); font-size: 15px; font-weight: 700; flex: none; transition: transform .5s var(--spring-pop); }
 .pill[aria-selected="true"] .pc { transform: scale(1.06); }
-.pc.sq { border-radius: 10px; }
-.pc.ink { border-radius: 10px; background: var(--bad-soft); color: var(--bad-ink); }
-.pc.sv { border-radius: 10px; background: var(--star-soft); color: var(--star); }
+.pc.sq { border-radius: var(--r-xs); }
+.pc.ink { border-radius: var(--r-xs); background: var(--bad-soft); color: var(--bad-ink); }
+.pc.sv { border-radius: var(--r-xs); background: var(--star-soft); color: var(--star); }
 .pc.sv svg { width: 18px; height: 18px; fill: currentColor; stroke: currentColor; stroke-width: 1.2; stroke-linejoin: round; }
 .pt { display: flex; flex-direction: column; line-height: 1.2; text-align: left; }
 .pn { font-family: var(--f-jp); font-size: 15px; font-weight: 700; transition: color .25s ease; white-space: nowrap; }
 .pm { font-size: 12.5px; color: var(--ink-2); font-variant-numeric: tabular-nums; }
 .pm.done { color: var(--ok); font-weight: 600; }
 .pill[aria-selected="true"] .pn { color: var(--accent-ink); }
-.pill-thumb { position: absolute; left: 0; top: 6px; bottom: 6px; width: 0; border-radius: 14px; background: var(--accent-soft); z-index: 0; }
+.pill-thumb { position: absolute; left: 0; top: 6px; bottom: 6px; width: 0; border-radius: var(--r-full); background: var(--accent-soft); z-index: 0; }
 .pill-thumb.ready { transition: transform .6s var(--spring), width .6s var(--spring); }
 .pill-sep { width: 1px; background: var(--sep); margin: 8px 4px; flex: none; }
 .badge[hidden] { display: none; }
-.badge { min-width: 22px; height: 22px; padding: 0 6px; border-radius: 11px; background: var(--bad); color: #FFFFFF; font-size: 13px; font-weight: 700; display: grid; place-items: center; }
+.badge { min-width: 22px; height: 22px; padding: 0 6px; border-radius: var(--r-full); background: var(--bad); color: #FFFFFF; font-size: 13px; font-weight: 700; display: grid; place-items: center; }
 
 /* view head */
 .v-head { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 14px 24px; padding: 22px 4px 2px; }
 .v-t { min-width: 0; }
 .v-t h1 { margin: 0; font-family: var(--f-jp); font-size: clamp(34px, 4.6vw, 48px); line-height: 1.15; font-weight: 700; letter-spacing: .02em; text-wrap: balance; }
 .v-t p { margin: 4px 0 0; font-size: 17px; color: var(--ink-2); }
-.segc { position: relative; display: flex; background: var(--track); border-radius: 11px; padding: 3px; }
-.segc button { position: relative; z-index: 1; border: 0; background: none; padding: 7px 15px; border-radius: 8px; font-size: 15px; font-weight: 600; color: var(--ink-2); cursor: pointer; transition: color .25s ease; min-height: 38px; }
+.segc { position: relative; display: flex; background: var(--track); border-radius: var(--r-full); padding: 3px; }
+.segc button { position: relative; z-index: 1; border: 0; background: none; padding: 7px 15px; border-radius: var(--r-full); font-size: 15px; font-weight: 600; color: var(--ink-2); cursor: pointer; transition: color .25s ease; min-height: 38px; }
 .segc button[aria-selected="true"] { color: var(--ink); }
-.segc .thumb { position: absolute; top: 3px; bottom: 3px; left: 0; width: 0; border-radius: 8px; background: var(--thumb); box-shadow: 0 1px 3px rgba(15, 17, 21, .14), 0 0 0 .5px rgba(15, 17, 21, .06); z-index: 0; }
+.segc .thumb { position: absolute; top: 3px; bottom: 3px; left: 0; width: 0; border-radius: var(--r-full); background: var(--thumb); box-shadow: 0 1px 3px rgba(15, 17, 21, .14), 0 0 0 .5px rgba(15, 17, 21, .06); z-index: 0; }
 .segc .thumb.ready { transition: transform .5s var(--spring), width .5s var(--spring); }
 .segc:not(:has(.thumb.ready)) button[aria-selected="true"] { background: var(--thumb); box-shadow: 0 1px 3px rgba(15, 17, 21, .14), 0 0 0 .5px rgba(15, 17, 21, .06); }
 .segc.sm button { padding: 6px 12px; font-size: 14.5px; min-height: 34px; }
 
 /* block chips */
-.blocks { display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; padding: 14px 4px 4px; margin: 0 -4px; }
+.blocks { display: flex; gap: 6px; overflow-x: auto; scrollbar-width: none; padding: 14px 4px 4px 8px; margin: 0 -4px; scroll-padding-inline: 8px 4px; }
 .blocks::-webkit-scrollbar { display: none; }
-.chip { flex: none; display: flex; align-items: center; gap: 7px; border: 0; border-radius: 999px; background: var(--card); padding: 6px 14px 6px 6px; font-size: 14.5px; font-weight: 600; color: var(--ink); cursor: pointer; min-height: 38px; transition: background-color .35s ease, color .35s ease, transform .45s var(--spring-pop); }
+.chip { flex: none; display: flex; align-items: center; gap: 7px; border: 0; border-radius: var(--r-full); background: var(--card); padding: 6px 14px 6px 6px; font-size: 14.5px; font-weight: 600; color: var(--ink); cursor: pointer; min-height: 38px; transition: background-color .35s ease, color .35s ease, transform .45s var(--spring-pop); }
 .chip:active { transform: scale(.95); }
-.chip .cn { font-size: 12px; font-weight: 700; color: var(--ink-2); background: var(--fill-2); border-radius: 999px; padding: 2px 8px; font-variant-numeric: tabular-nums; transition: background-color .35s, color .35s; }
+.chip .cn { display: inline-flex; align-items: center; justify-content: center; height: 22px; line-height: 1; font-size: 12px; font-weight: 700; color: var(--ink-2); background: var(--fill-2); border-radius: var(--r-full); padding: 0 8px; font-variant-numeric: tabular-nums; transition: background-color .35s, color .35s; }
 .chip .cs { font-size: 13px; font-weight: 500; color: var(--ink-3); font-variant-numeric: tabular-nums; }
 .chip .cs.done { color: var(--ok); font-weight: 700; }
 .chip[aria-selected="true"] { background: var(--accent-soft); color: var(--accent-ink); box-shadow: inset 0 0 0 1.5px var(--accent-ring); }
@@ -379,13 +383,13 @@ svg.ic { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-wid
 .r-lead:empty { display: none; }
 .r-side { display: flex; align-items: center; gap: 2px; flex: none; }
 .r-n { font-size: 15.5px; color: var(--ink-2); font-variant-numeric: tabular-nums; margin-right: 4px; }
-.mini { border: 0; background: none; width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; cursor: pointer; color: var(--ink-2); transition: background-color .2s, transform .5s var(--spring-pop), color .2s; }
+.mini { border: 0; background: none; width: 40px; height: 40px; border-radius: var(--r-full); display: grid; place-items: center; cursor: pointer; color: var(--ink-2); transition: background-color .2s, transform .5s var(--spring-pop), color .2s; }
 .mini:hover { background: var(--card); color: var(--ink); }
 .mini:active { transform: scale(.88); }
 .mini.r-reset:active { transform: scale(.88) rotate(-40deg); }
 .work { display: grid; grid-template-columns: minmax(0, 1fr); gap: 14px; align-items: start; }
 .wmain { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
-.wside { display: flex; flex-direction: column; gap: 8px; min-width: 0; background: var(--card); border-radius: 22px; padding: 10px 6px 8px; }
+.wside { display: flex; flex-direction: column; gap: 8px; min-width: 0; background: var(--card); border-radius: var(--r-xl); padding: 10px 6px 8px; }
 /* side card: one card under the task at every width, with a tab switch (cheat sheet / answers) */
 .ws-tabs { display: flex; align-self: flex-start; margin: 0 6px; }
 .wside .panel { background: none; padding: 0; border-radius: 0; }
@@ -398,27 +402,27 @@ svg.ic { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-wid
 .wside .cx li { padding: 8px 0; }
 .wside .hl { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr)); align-items: start; }
 .wside .hl > .link, .wside .hl > .empty { grid-column: 1 / -1; justify-self: start; }
-.ws-n { margin-left: 6px; min-width: 20px; padding: 0 6px; border-radius: 10px; background: var(--fill-2); color: var(--ink-2); font-size: 12.5px; font-variant-numeric: tabular-nums; }
+.ws-n { margin-left: 6px; min-width: 20px; padding: 0 6px; border-radius: var(--r-xs); background: var(--fill-2); color: var(--ink-2); font-size: 12.5px; font-variant-numeric: tabular-nums; }
 .ws-n:empty { display: none; }
 .segs { display: grid; gap: 4px; padding: 0 2px; }
 .seg { height: 26px; border: 0; padding: 0; background: none; cursor: pointer; position: relative; }
-.seg::before { content: ""; position: absolute; left: 0; right: 0; top: 50%; height: 6px; margin-top: -3px; border-radius: 3px; background: var(--seg); transition: background-color .4s ease, transform .5s var(--spring-pop); }
+.seg::before { content: ""; position: absolute; left: 0; right: 0; top: 50%; height: 6px; margin-top: -3px; border-radius: var(--r-full); background: var(--seg); transition: background-color .4s ease, transform .5s var(--spring-pop); }
 .seg.ok::before { background: var(--ok); }
 .seg.half::before { background: var(--warn); }
 .seg.bad::before { background: var(--bad); }
 .seg.cur::before { transform: scaleY(1.7); }
 .seg.cur:not(.ok):not(.bad):not(.half)::before { background: var(--accent); }
 .seg:hover::before { transform: scaleY(1.5); }
-.seg:focus-visible { outline-offset: 0; border-radius: 4px; }
+.seg:focus-visible { outline-offset: 0; }
 
 /* focus card */
-.card { position: relative; background: var(--card); border-radius: 28px; box-shadow: 0 1px 2px var(--shadow-2), 0 26px 60px -40px var(--shadow); overflow: clip; }
+.card { position: relative; background: var(--card); border-radius: var(--r-xl); box-shadow: 0 1px 2px var(--shadow-2), 0 26px 60px -40px var(--shadow); overflow: clip; }
 .cin { position: relative; padding: clamp(22px, 3vw, 32px) clamp(16px, 3vw, 34px) clamp(22px, 2.8vw, 30px); }
 /* card corners */
 .q-corner { position: absolute; top: calc(clamp(22px, 3vw, 32px) - 10px); z-index: 2; display: flex; }
 .q-corner.l { left: 14px; } .q-corner.r { right: 14px; }
 .q-corner:empty { display: none; }
-.cn-btn { position: relative; display: inline-flex; align-items: center; justify-content: center; gap: 6px; min-width: 40px; height: 40px; padding: 0 10px; border-radius: 20px; border: 0; background: var(--fill); color: var(--ink-2); cursor: pointer; transition: background-color .2s ease, color .2s ease, transform .45s var(--spring-pop); }
+.cn-btn { position: relative; display: inline-flex; align-items: center; justify-content: center; gap: 6px; min-width: 40px; height: 40px; padding: 0 10px; border-radius: var(--r-full); border: 0; background: var(--fill); color: var(--ink-2); cursor: pointer; transition: background-color .2s ease, color .2s ease, transform .45s var(--spring-pop); }
 .cn-btn:hover { background: var(--fill-2); color: var(--ink); }
 .cn-btn:active { transform: scale(.9); }
 .cn-btn .ic { width: 18px; height: 18px; }
@@ -432,7 +436,7 @@ svg.ic { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-wid
 .cn-btn.star[aria-pressed="true"] { color: var(--star); background: var(--star-soft); }
 .cn-btn.star[aria-pressed="true"] .st-i { fill: currentColor; }
 .burst { position: absolute; left: 50%; top: 50%; width: 0; height: 0; pointer-events: none; }
-.burst i { position: absolute; width: 5px; height: 5px; margin: -2.5px; border-radius: 50%; background: var(--star); }
+.burst i { position: absolute; width: 5px; height: 5px; margin: -2.5px; border-radius: var(--r-full); background: var(--star); }
 .fly { position: fixed; z-index: 60; width: 20px; height: 20px; color: var(--star); pointer-events: none; }
 .fly svg { width: 20px; height: 20px; fill: currentColor; stroke: currentColor; stroke-width: 1.4; stroke-linejoin: round; }
 @media (max-width: 640px) { .q-corner.l { left: 10px; } .q-corner.r { right: 10px; } }
@@ -451,7 +455,7 @@ svg.ic { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-wid
 .q-main.ru .jp { font-weight: 500; }
 .q-need { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 8px; margin-top: -6px; font-size: 16px; }
 .qn-l { color: var(--ink-2); }
-.qn-c { padding: 4px 13px; border-radius: 999px; background: var(--accent-soft); color: var(--accent-ink); font-weight: 600; }
+.qn-c { padding: 4px 13px; border-radius: var(--r-full); background: var(--accent-soft); color: var(--accent-ink); font-weight: 600; }
 .qn-p { font-family: var(--f-jp); font-size: 18px; font-weight: 500; color: var(--ink); }
 .q-main u { text-decoration: none; color: var(--accent-ink); box-shadow: inset 0 -.08em 0 var(--accent); }
 /* a short dialogue in the question: one line per speaker, names in a column */
@@ -463,7 +467,7 @@ svg.ic { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-wid
 .blank { display: inline-block; min-width: 1.5em; border-bottom: .07em solid var(--accent); margin: 0 .1em; color: var(--accent-ink); transition: color .3s ease; }
 .blank:empty::after { content: "\00a0"; }
 .q-ans { width: 100%; display: flex; flex-direction: column; align-items: center; gap: 12px; }
-.ans { display: block; width: 100%; max-width: 560px; height: 64px; padding: 0 22px; border-radius: 18px; border: 2px solid transparent; background: var(--fill); font-family: var(--f-jp); font-size: clamp(22px, 2.8vw, 28px); line-height: normal; text-align: center; color: var(--ink); outline: none; caret-color: var(--accent); transition: border-color .25s ease, box-shadow .4s var(--spring), background-color .35s ease; }
+.ans { display: block; width: 100%; max-width: 560px; height: 64px; padding: 0 22px; border-radius: var(--r-md); border: 2px solid transparent; background: var(--fill); font-family: var(--f-jp); font-size: clamp(22px, 2.8vw, 28px); line-height: normal; text-align: center; color: var(--ink); outline: none; caret-color: var(--accent); transition: border-color .25s ease, box-shadow .4s var(--spring), background-color .35s ease; }
 .ans:focus { border-color: var(--accent); box-shadow: 0 0 0 5px var(--accent-ring); background: var(--card); }
 .ans::placeholder { font-family: var(--f-ui); font-size: 17px; font-weight: 500; letter-spacing: 0; color: var(--ink-3); opacity: 1; }
 textarea.ans { height: auto; min-height: 140px; max-width: 680px; padding: 14px 18px; text-align: left; font-size: clamp(19px, 2.2vw, 22px); line-height: 1.6; resize: vertical; }
@@ -477,7 +481,7 @@ textarea.ans { height: auto; min-height: 140px; max-width: 680px; padding: 14px 
 
 .acts { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 10px; }
 .acts:empty, .acts.pre { display: none; }
-.btn2 { display: inline-flex; align-items: center; justify-content: center; gap: 9px; height: 56px; padding: 0 22px; border-radius: 28px; border: 0; background: var(--fill-2); font-size: 16.5px; font-weight: 600; color: var(--ink); cursor: pointer; transition: transform .45s var(--spring-pop), background-color .25s ease, color .25s ease; }
+.btn2 { display: inline-flex; align-items: center; justify-content: center; gap: 9px; height: 56px; padding: 0 22px; border-radius: var(--r-full); border: 0; background: var(--fill-2); font-size: 16.5px; font-weight: 600; color: var(--ink); cursor: pointer; transition: transform .45s var(--spring-pop), background-color .25s ease, color .25s ease; }
 .btn2:active { transform: scale(.95); }
 .pen-btn { display: none; }
 .hw .pen-btn { display: inline-flex; }
@@ -489,7 +493,7 @@ textarea.ans { height: auto; min-height: 140px; max-width: 680px; padding: 14px 
 
 /* the check button: lives in a fixed-width slot, so nothing around it ever moves */
 .slot { display: inline-flex; justify-content: center; align-items: center; width: 200px; height: 56px; flex: none; }
-.cbtn { position: relative; display: block; padding: 0; width: 100%; height: 56px; border-radius: 28px; border: 0; background: var(--accent); color: #FFFFFF; font-size: 17.5px; font-weight: 600; cursor: pointer; transition: width .6s var(--spring), background-color .35s ease, color .3s ease, transform .45s var(--spring-pop), opacity .3s ease; }
+.cbtn { position: relative; display: block; padding: 0; width: 100%; height: 56px; border-radius: var(--r-full); border: 0; background: var(--accent); color: #FFFFFF; font-size: 17.5px; font-weight: 600; cursor: pointer; transition: width .6s var(--spring), background-color .35s ease, color .3s ease, transform .45s var(--spring-pop), opacity .3s ease; }
 .cbtn > .cb-l, .cbtn > .cb-spin, .cbtn > .cb-i { position: absolute; inset: 0; margin: auto; }
 .cbtn::after { content: ""; position: absolute; inset: 0; border-radius: inherit; border: 2.5px solid var(--ok); opacity: 0; pointer-events: none; }
 .cbtn.ring::after { animation: halo .9s cubic-bezier(.2, .7, .3, 1); }
@@ -498,7 +502,7 @@ textarea.ans { height: auto; min-height: 140px; max-width: 680px; padding: 14px 
 .cbtn[data-state="idle"]:disabled { opacity: .45; }
 .cb-l { display: flex; justify-content: center; align-items: center; gap: 9px; white-space: nowrap; transition: opacity .2s ease, transform .45s var(--spring); }
 .cb-l svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
-.cb-spin { width: 24px; height: 24px; border-radius: 50%; border: 2.5px solid rgba(255, 255, 255, .32); border-top-color: #FFFFFF; opacity: 0; transition: opacity .2s ease; animation: spin .75s linear infinite; }
+.cb-spin { width: 24px; height: 24px; border-radius: var(--r-full); border: 2.5px solid rgba(255, 255, 255, .32); border-top-color: #FFFFFF; opacity: 0; transition: opacity .2s ease; animation: spin .75s linear infinite; }
 .cb-i { width: 28px; height: 28px; overflow: visible; }
 .cb-i path { fill: none; stroke: #FFFFFF; stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 1; stroke-dashoffset: 1; opacity: 0; }
 .cbtn:is([data-state="busy"], [data-state="ok"], [data-state="bad"], [data-state="half"], [data-state="hide"]) { width: 56px; }
@@ -516,7 +520,7 @@ textarea.ans { height: auto; min-height: 140px; max-width: 680px; padding: 14px 
 
 /* choices */
 .opts { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; max-width: 760px; }
-.opt { position: relative; min-height: 56px; padding: 10px 22px; border-radius: 18px; border: 2px solid transparent; background: var(--fill); font-size: 16.5px; font-weight: 600; color: var(--ink); cursor: pointer; line-height: 1.45; transition: transform .45s var(--spring-pop), background-color .3s ease, opacity .4s ease, border-color .3s ease, color .3s ease; }
+.opt { position: relative; min-height: 56px; padding: 10px 22px; border-radius: var(--r-md); border: 2px solid transparent; background: var(--fill); font-size: 16.5px; font-weight: 600; color: var(--ink); cursor: pointer; line-height: 1.45; transition: transform .45s var(--spring-pop), background-color .3s ease, opacity .4s ease, border-color .3s ease, color .3s ease; }
 .opt.jp { font-family: var(--f-jp); font-size: clamp(18px, 2.2vw, 22px); font-weight: 500; }
 .opt:hover:not(:disabled) { background: var(--fill-2); }
 .opt:active:not(:disabled) { transform: scale(.95); }
@@ -530,14 +534,14 @@ textarea.ans { height: auto; min-height: 140px; max-width: 680px; padding: 14px 
 .opt .ot { background-image: linear-gradient(var(--bad), var(--bad)); background-repeat: no-repeat; background-position: 0 56%; background-size: 0% 2.5px; -webkit-box-decoration-break: clone; box-decoration-break: clone; transition: background-size .42s cubic-bezier(.6, 0, .3, 1) .12s; }
 .opt:not(.jp) .ot { background-position: 0 60%; }
 .opt.chosen:not(.right) .ot { background-size: 100% 2.5px; }
-.tick { position: absolute; right: -8px; top: -8px; width: 24px; height: 24px; border-radius: 50%; background: var(--ok); display: grid; place-items: center; box-shadow: 0 0 0 3px var(--card); }
+.tick { position: absolute; right: -8px; top: -8px; width: 24px; height: 24px; border-radius: var(--r-full); background: var(--ok); display: grid; place-items: center; box-shadow: 0 0 0 3px var(--card); }
 .tick svg { width: 14px; height: 14px; fill: none; stroke: #FFFFFF; stroke-width: 3; stroke-linecap: round; stroke-linejoin: round; }
 
 /* sentence builder */
-.line { width: 100%; max-width: 700px; min-height: 70px; display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 7px; padding: 10px; border-radius: 20px; background: var(--fill); transition: background-color .35s ease; }
+.line { width: 100%; max-width: 700px; min-height: 70px; display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 7px; padding: 10px; border-radius: var(--r-md); background: var(--fill); transition: background-color .35s ease; }
 .line:empty::before { content: "Нажимай на слова ниже по порядку"; font-size: 16px; color: var(--ink-3); }
 .bank { display: flex; flex-wrap: wrap; justify-content: center; gap: 7px; max-width: 700px; min-height: 8px; }
-.tile { font-family: var(--f-jp); font-size: clamp(18px, 2.2vw, 22px); line-height: 2.35; padding: 0 14px; border-radius: 13px; border: 0; background: var(--card); box-shadow: 0 0 0 1.5px var(--sep), 0 2px 0 var(--sep); color: var(--ink); cursor: pointer; will-change: transform; transition: box-shadow .25s ease; }
+.tile { font-family: var(--f-jp); font-size: clamp(18px, 2.2vw, 22px); line-height: 2.35; padding: 0 14px; border-radius: var(--r-sm); border: 0; background: var(--card); box-shadow: 0 0 0 1.5px var(--sep), 0 2px 0 var(--sep); color: var(--ink); cursor: pointer; will-change: transform; transition: box-shadow .25s ease; }
 .tile:hover:not(:disabled) { box-shadow: 0 0 0 1.5px var(--ink-3), 0 8px 18px -10px var(--shadow); }
 .tile:disabled { cursor: default; }
 .tile rt { line-height: 1; }
@@ -545,7 +549,7 @@ textarea.ans { height: auto; min-height: 140px; max-width: 680px; padding: 14px 
 .is-bad .line { background: var(--bad-soft); }
 /* find and fix: every piece of the sentence is tappable */
 .q-main.fx { display: flex; flex-wrap: wrap; justify-content: center; align-items: flex-end; gap: .12em .06em; }
-.ftk { font: inherit; color: inherit; letter-spacing: inherit; line-height: inherit; background: transparent; border: 0; margin: 0; padding: .02em .12em; border-radius: .2em; cursor: pointer; box-shadow: inset 0 -.06em 0 var(--sep); -webkit-tap-highlight-color: transparent; transition: background-color .25s ease, box-shadow .25s ease, color .25s ease; }
+.ftk { font: inherit; color: inherit; letter-spacing: inherit; line-height: inherit; background: transparent; border: 0; margin: 0; padding: .02em .12em; border-radius: var(--r-xs); cursor: pointer; box-shadow: inset 0 -.06em 0 var(--sep); -webkit-tap-highlight-color: transparent; transition: background-color .25s ease, box-shadow .25s ease, color .25s ease; }
 @media (hover: hover) { .ftk:not(:disabled):hover { background: var(--fill); } }
 .ftk:focus-visible { outline: 3px solid var(--accent-ring); outline-offset: 2px; }
 .ftk.sel { background: var(--accent-soft); color: var(--accent-ink); box-shadow: inset 0 -.08em 0 var(--accent); }
@@ -558,7 +562,7 @@ textarea.ans { height: auto; min-height: 140px; max-width: 680px; padding: 14px 
 .fx-l { font-size: 15.5px; color: var(--ink-2); }
 .fx-l .jp { color: var(--ink); font-weight: 500; }
 /* a short text the questions of a block are about */
-.q-story { width: 100%; max-width: 36em; text-align: left; font-size: clamp(18px, 2.1vw, 21px); line-height: 2.05; padding: 14px 20px; border-radius: 18px; background: var(--fill); color: var(--ink); text-wrap: pretty; }
+.q-story { width: 100%; max-width: 36em; text-align: left; font-size: clamp(18px, 2.1vw, 21px); line-height: 2.05; padding: 14px 20px; border-radius: var(--r-md); background: var(--fill); color: var(--ink); text-wrap: pretty; }
 .q-story p { margin: 0; }
 .q-story p + p { margin-top: .35em; }
 
@@ -576,14 +580,18 @@ textarea.ans { height: auto; min-height: 140px; max-width: 680px; padding: 14px 
 .fb-row .lbl, .fb-key .lbl { min-width: 0; font-size: 12px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: var(--ink-3); }
 .fb-key .jp { font-size: clamp(22px, 2.6vw, 26px); font-weight: 700; }
 .fb-row .jp { font-size: 19px; }
-.fb-note { margin: 0; padding: 12px 14px; border-radius: 14px; background: var(--fill); font-size: 16px; line-height: 1.55; }
+.fb-note { margin: 0; padding: 12px 14px; border-radius: var(--r-md); background: var(--fill); font-size: 16px; line-height: 1.55; }
 .fb-note .jp, .fb-ex .jp { font-size: 1.08em; }
 .fb-ex { margin: 0; padding: 0 2px; font-size: 15.5px; line-height: 1.55; color: var(--ink-2); }
+.fb-mean { display: flex; flex-direction: column; gap: 4px; padding: 12px 14px; border-radius: var(--r-md); background: var(--accent-soft); }
+.fb-mean .lbl { min-width: 0; font-size: 12px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: var(--accent-ink); }
+.fb-mean p { margin: 0; font-size: 16px; line-height: 1.55; color: var(--ink); text-wrap: pretty; }
+.fb-mean .jp { font-size: 1.08em; }
 .fb-alts { font-size: 15px; color: var(--ink-2); }
 .fb-alts .jp { font-size: 18px; color: var(--ink); }
-.refs { display: grid; gap: 4px; padding: 10px 14px; border-radius: 14px; background: var(--fill); font-family: var(--f-jp); font-size: 19px; line-height: 1.8; }
+.refs { display: grid; gap: 4px; padding: 10px 14px; border-radius: var(--r-md); background: var(--fill); font-family: var(--f-jp); font-size: 19px; line-height: 1.8; }
 .fb-acts { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
-.sbtn { min-height: 44px; padding: 0 16px; border-radius: 22px; border: 0; background: var(--fill-2); font-size: 15px; font-weight: 600; color: var(--ink); cursor: pointer; transition: transform .45s var(--spring-pop), background-color .2s; }
+.sbtn { min-height: 44px; padding: 0 16px; border-radius: var(--r-full); border: 0; background: var(--fill-2); font-size: 15px; font-weight: 600; color: var(--ink); cursor: pointer; transition: transform .45s var(--spring-pop), background-color .2s; }
 .sbtn:active { transform: scale(.95); }
 .sbtn.pri { background: var(--accent); color: #FFFFFF; }
 .err { color: var(--bad-ink); }
@@ -591,12 +599,12 @@ textarea.ans { height: auto; min-height: 140px; max-width: 680px; padding: 14px 
 .model .jp { font-size: 18px; color: var(--ink); line-height: 1.8; }
 
 /* AI teacher */
-.ai { display: flex; flex-direction: column; gap: 9px; padding: 14px 16px 16px; border-radius: 18px; background: var(--fill); }
+.ai { display: flex; flex-direction: column; gap: 9px; padding: 14px 16px 16px; border-radius: var(--r-md); background: var(--fill); }
 .ai-cap { display: flex; align-items: center; gap: 9px; font-size: 15.5px; font-weight: 700; }
 /* the sensei's seal: a small hanko, vermilion ink on paper */
-.seal { display: inline-flex; flex-direction: column; align-items: center; justify-content: center; gap: 1px; width: 30px; height: 30px; border-radius: 7px; box-shadow: inset 0 0 0 1.8px var(--seal); color: var(--seal); font-family: var(--f-jp); font-size: 10.5px; font-weight: 700; line-height: 1; transform: rotate(-5deg); flex: none; transition: transform .5s var(--spring-pop); }
+.seal { display: inline-flex; flex-direction: column; align-items: center; justify-content: center; gap: 1px; width: 30px; height: 30px; border-radius: var(--r-xs); box-shadow: inset 0 0 0 1.8px var(--seal); color: var(--seal); font-family: var(--f-jp); font-size: 10.5px; font-weight: 700; line-height: 1; transform: rotate(-5deg); flex: none; transition: transform .5s var(--spring-pop); }
 .seal i { display: block; font-style: normal; }
-.ask { display: flex; align-items: center; gap: 13px; width: 100%; padding: 12px 16px 12px 13px; border: 0; border-radius: 18px; background: var(--fill); color: var(--ink); text-align: left; cursor: pointer; transition: background-color .2s ease, transform .45s var(--spring-pop); }
+.ask { display: flex; align-items: center; gap: 13px; width: 100%; padding: 12px 16px 12px 13px; border: 0; border-radius: var(--r-md); background: var(--fill); color: var(--ink); text-align: left; cursor: pointer; transition: background-color .2s ease, transform .45s var(--spring-pop); }
 .ask:hover { background: var(--fill-2); }
 .ask:active { transform: scale(.98); }
 .ask:hover .seal { transform: rotate(0deg) scale(1.08); }
@@ -605,7 +613,7 @@ textarea.ans { height: auto; min-height: 140px; max-width: 680px; padding: 14px 
 .ask-t span { font-size: 14px; color: var(--ink-2); }
 .ask > svg { width: 18px; height: 18px; fill: none; stroke: var(--ink-3); stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; flex: none; transition: transform .45s var(--spring); }
 .ask:hover > svg { transform: translateX(3px); }
-.ss { display: flex; flex-direction: column; gap: 12px; padding: 14px 14px 12px; border-radius: 20px; background: var(--fill); }
+.ss { display: flex; flex-direction: column; gap: 12px; padding: 14px 14px 12px; border-radius: var(--r-md); background: var(--fill); }
 .ss-h { display: flex; align-items: center; gap: 12px; }
 .ss-ht { display: flex; flex-direction: column; line-height: 1.25; flex: 1; min-width: 0; }
 .ss-ht b { font-size: 16px; font-weight: 700; }
@@ -613,7 +621,7 @@ textarea.ans { height: auto; min-height: 140px; max-width: 680px; padding: 14px 
 .ss-log { display: flex; flex-direction: column; gap: 12px; }
 .ss-log:empty { display: none; }
 .msg { min-width: 0; overflow-wrap: anywhere; }
-.msg.me { align-self: flex-end; max-width: 86%; padding: 8px 14px; border-radius: 18px 18px 6px 18px; background: var(--accent); color: #FFFFFF; font-size: 15.5px; line-height: 1.45; }
+.msg.me { align-self: flex-end; max-width: 86%; padding: 8px 14px; border-radius: var(--r-md) var(--r-md) var(--r-xs) var(--r-md); background: var(--accent); color: #FFFFFF; font-size: 15.5px; line-height: 1.45; }
 .msg.t { padding: 1px 2px 1px 14px; border-left: 2px solid var(--seal-soft); font-size: 16px; line-height: 1.62; color: var(--ink); }
 .msg.t p { margin: 0 0 .55em; }
 .msg.t p:last-child, .msg.t ul:last-child { margin-bottom: 0; }
@@ -630,19 +638,19 @@ textarea.ans { height: auto; min-height: 140px; max-width: 680px; padding: 14px 
 @keyframes enso { 0% { stroke-dashoffset: 1; opacity: 1; } 58% { stroke-dashoffset: 0; opacity: 1; } 86%, 100% { stroke-dashoffset: 0; opacity: 0; } }
 .ss-sug { display: flex; flex-wrap: wrap; gap: 6px; }
 .ss-sug:empty { display: none; }
-.sug { min-height: 36px; padding: 4px 13px; border-radius: 18px; border: 0; background: var(--card); box-shadow: inset 0 0 0 1px var(--sep); font-size: 14.5px; color: var(--ink); cursor: pointer; text-align: left; transition: transform .45s var(--spring-pop), background-color .2s, box-shadow .2s; }
+.sug { min-height: 36px; padding: 4px 13px; border-radius: var(--r-full); border: 0; background: var(--card); box-shadow: inset 0 0 0 1px var(--sep); font-size: 14.5px; color: var(--ink); cursor: pointer; text-align: left; transition: transform .45s var(--spring-pop), background-color .2s, box-shadow .2s; }
 .sug:hover { box-shadow: inset 0 0 0 1px var(--ink-3); }
 .sug:active { transform: scale(.95); }
-.ss-f { display: flex; align-items: center; gap: 8px; margin: 0; background: var(--card); border-radius: 23px; padding: 4px 4px 4px 16px; box-shadow: inset 0 0 0 1px var(--sep); transition: box-shadow .25s ease; }
+.ss-f { display: flex; align-items: center; gap: 8px; margin: 0; background: var(--card); border-radius: var(--r-full); padding: 4px 4px 4px 16px; box-shadow: inset 0 0 0 1px var(--sep); transition: box-shadow .25s ease; }
 .ss-f:focus-within { box-shadow: inset 0 0 0 1.5px var(--accent), 0 0 0 4px var(--accent-ring); }
 .ss-in { flex: 1; min-width: 0; height: 40px; border: 0; padding: 0; background: none; font: inherit; font-size: 16px; color: var(--ink); outline: none; }
 .ss-in::placeholder { color: var(--ink-3); opacity: 1; }
 .ss-in:disabled { cursor: default; }
-.ss-send { width: 38px; height: 38px; border-radius: 50%; border: 0; padding: 0; background: var(--accent); color: #FFFFFF; display: grid; place-items: center; cursor: pointer; flex: none; transition: transform .45s var(--spring-pop), opacity .25s ease, background-color .25s ease; }
+.ss-send { width: 38px; height: 38px; border-radius: var(--r-full); border: 0; padding: 0; background: var(--accent); color: #FFFFFF; display: grid; place-items: center; cursor: pointer; flex: none; transition: transform .45s var(--spring-pop), opacity .25s ease, background-color .25s ease; }
 .ss-send:active:not(:disabled) { transform: scale(.88); }
 .ss-send:disabled { opacity: .3; cursor: default; }
 .ss-send svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
-.ss-mic { width: 38px; height: 38px; border-radius: 50%; border: 0; padding: 0; background: var(--fill-2); color: var(--ink-2); display: grid; place-items: center; cursor: pointer; flex: none; transition: transform .45s var(--spring-pop), background-color .25s ease, color .25s ease; }
+.ss-mic { width: 38px; height: 38px; border-radius: var(--r-full); border: 0; padding: 0; background: var(--fill-2); color: var(--ink-2); display: grid; place-items: center; cursor: pointer; flex: none; transition: transform .45s var(--spring-pop), background-color .25s ease, color .25s ease; }
 .ss-mic:active { transform: scale(.88); }
 .ss-mic svg { width: 19px; height: 19px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
 .ss-mic.rec { background: var(--bad); color: #FFFFFF; animation: ssRec 1.4s ease-in-out infinite; }
@@ -663,17 +671,17 @@ textarea.ans { height: auto; min-height: 140px; max-width: 680px; padding: 14px 
 .errs .why { display: block; font-size: 15px; color: var(--ink-2); }
 .cmt { margin: 0; font-size: 16px; line-height: 1.55; }
 .ai-wait .sk { display: grid; gap: 8px; }
-.ai-wait .sk i { display: block; height: 11px; border-radius: 6px; background: linear-gradient(90deg, var(--fill-2) 20%, var(--seg) 45%, var(--fill-2) 70%); background-size: 260% 100%; animation: shimmer 1.4s cubic-bezier(.4, 0, .6, 1) infinite; }
+.ai-wait .sk i { display: block; height: 11px; border-radius: var(--r-xs); background: linear-gradient(90deg, var(--fill-2) 20%, var(--seg) 45%, var(--fill-2) 70%); background-size: 260% 100%; animation: shimmer 1.4s cubic-bezier(.4, 0, .6, 1) infinite; }
 .ai-wait .sk i:nth-child(2) { width: 82%; animation-delay: .12s; }
 .ai-wait .sk i:nth-child(3) { width: 56%; animation-delay: .24s; }
-.mini-spin { width: 16px; height: 16px; border-radius: 50%; border: 2px solid var(--accent); border-right-color: transparent; animation: spin .7s linear infinite; flex: none; }
+.mini-spin { width: 16px; height: 16px; border-radius: var(--r-full); border: 2px solid var(--accent); border-right-color: transparent; animation: spin .7s linear infinite; flex: none; }
 
 /* animated demo (intro cards and rules) */
 .demo { display: flex; flex-direction: column; align-items: center; gap: 12px; width: 100%; }
-.d-stage { width: 100%; min-height: 132px; display: grid; place-items: center; border-radius: 20px; background: var(--fill); padding: 22px 14px 18px; perspective: 700px; overflow: hidden; cursor: pointer; touch-action: pan-y; -webkit-user-select: none; user-select: none; transition: transform .45s var(--spring-pop); }
+.d-stage { width: 100%; min-height: 132px; display: grid; place-items: center; border-radius: var(--r-md); background: var(--fill); padding: 22px 14px 18px; perspective: 700px; overflow: hidden; cursor: pointer; touch-action: pan-y; -webkit-user-select: none; user-select: none; transition: transform .45s var(--spring-pop); }
 .d-stage:active { transform: scale(.992); }
 .d-line { position: relative; display: flex; flex-wrap: wrap; justify-content: center; align-items: flex-end; gap: 2px; font-size: clamp(30px, 4.4vw, 46px); font-weight: 500; line-height: 1.55; min-height: 1.55em; }
-.tk { display: inline-block; padding: 0 .08em; border-radius: .2em; white-space: nowrap; transition: background-color .35s ease, color .35s ease, box-shadow .35s ease; }
+.tk { display: inline-block; padding: 0 .08em; border-radius: var(--r-xs); white-space: nowrap; transition: background-color .35s ease, color .35s ease, box-shadow .35s ease; }
 .tk.hi { background: var(--accent-soft); color: var(--accent-ink); }
 .tk.add { color: var(--ok); box-shadow: inset 0 -.07em 0 var(--ok); }
 .tk.del { color: var(--bad-ink); text-decoration: line-through; text-decoration-thickness: .06em; text-decoration-color: var(--bad); }
@@ -692,12 +700,12 @@ textarea.ans { height: auto; min-height: 140px; max-width: 680px; padding: 14px 
 .d-bar { display: flex; align-items: center; gap: 8px; width: 100%; max-width: 520px; }
 .d-dots { display: flex; gap: 5px; flex: 1; min-width: 0; padding: 0 4px; }
 .d-dot { flex: 1; min-width: 8px; height: 30px; border: 0; background: none; padding: 0; cursor: pointer; position: relative; }
-.d-dot::before, .d-dot i { content: ""; position: absolute; left: 1px; right: 1px; top: 13px; height: 4px; border-radius: 2px; }
+.d-dot::before, .d-dot i { content: ""; position: absolute; left: 1px; right: 1px; top: 13px; height: 4px; border-radius: var(--r-full); }
 .d-dot::before { background: var(--seg); transition: transform .4s var(--spring-pop); }
 .d-dot i { display: block; background: var(--accent); transform: scaleX(0); transform-origin: left center; }
 .d-dot.cur::before, .d-dot:hover::before { transform: scaleY(1.5); }
 .d-dot.cur i { height: 4px; }
-.d-nav { width: 38px; height: 38px; border-radius: 50%; border: 0; padding: 0; background: var(--fill); color: var(--ink); display: grid; place-items: center; cursor: pointer; flex: none; transition: transform .45s var(--spring-pop), opacity .25s ease, background-color .2s ease; }
+.d-nav { width: 38px; height: 38px; border-radius: var(--r-full); border: 0; padding: 0; background: var(--fill); color: var(--ink); display: grid; place-items: center; cursor: pointer; flex: none; transition: transform .45s var(--spring-pop), opacity .25s ease, background-color .2s ease; }
 .d-nav:hover:not(:disabled) { background: var(--fill-2); }
 .d-nav:active:not(:disabled) { transform: scale(.86); }
 .d-nav:disabled { opacity: .3; cursor: default; }
@@ -716,7 +724,7 @@ textarea.ans { height: auto; min-height: 140px; max-width: 680px; padding: 14px 
 .q-task, .d-note, .q-sit, .q-hint { text-wrap: balance; }
 .iv-p { text-wrap: pretty; }
 .fb-ex, .fb-note, .rx-card p, .gv-w, .tr-why, .rx-lead, .sk-p { text-wrap: pretty; }
-.iv-fs { display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 10px 18px; border-radius: 16px; background: var(--fill); }
+.iv-fs { display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 10px 18px; border-radius: var(--r-md); background: var(--fill); }
 .iv-f { display: flex; flex-wrap: wrap; justify-content: center; align-items: baseline; gap: 0 8px; font-size: clamp(18px, 2vw, 21px); line-height: 1.7; }
 .iv-f .op { font-style: normal; font-family: var(--f-ui); font-weight: 600; color: var(--ink-3); }
 .iv-f b { color: var(--accent-ink); font-weight: 600; }
@@ -725,18 +733,32 @@ textarea.ans { height: auto; min-height: 140px; max-width: 680px; padding: 14px 
 .iv-demo { width: 100%; max-width: 640px; }
 .iv-demo:empty { display: none; }
 .iv-acts { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-top: 4px; }
+.iv-acts [hidden], .iv-skip[hidden] { display: none; }
+/* intro with several pages */
+.iv-sl { width: 100%; display: flex; flex-direction: column; align-items: center; gap: 14px; touch-action: pan-y; }
+.iv-sh { margin: 4px 0 -4px; font-size: clamp(17px, 1.8vw, 19px); font-weight: 700; color: var(--ink); text-wrap: balance; }
+.iv-ul { margin: 0; padding: 12px 18px 12px 34px; max-width: 64ch; text-align: left; border-radius: var(--r-md); background: var(--fill); display: flex; flex-direction: column; gap: 6px; font-size: clamp(16px, 1.7vw, 18px); line-height: 1.55; }
+.iv-ul li { text-wrap: pretty; }
+.iv-ul li::marker { color: var(--accent-ink); }
+.iv-dots { display: flex; gap: 4px; justify-content: center; }
+.iv-dot { width: 32px; height: 32px; border: 0; padding: 0; background: none; display: grid; place-items: center; cursor: pointer; }
+.iv-dot i { width: 8px; height: 8px; border-radius: var(--r-full); background: var(--seg); transition: width .25s ease, background-color .25s ease; }
+.iv-dot[aria-selected="true"] i { width: 22px; background: var(--accent); }
+.iv-back { display: inline-flex; transform: scaleX(-1); }
+.iv-back svg { width: 18px; height: 18px; }
+.iv-skip { margin-top: -6px; }
 
 /* stroke order popover */
-.kp { position: absolute; z-index: 50; width: 340px; display: flex; flex-direction: column; align-items: center; gap: 10px; padding: 10px 14px 14px; background: var(--card); border-radius: 24px; box-shadow: 0 30px 80px -24px var(--shadow), 0 0 0 1px var(--sep); }
-.kp.sheet-b { position: fixed; left: 0; right: 0; bottom: 0; width: auto; border-radius: 26px 26px 0 0; padding: 10px 16px calc(18px + env(safe-area-inset-bottom, 0px)); }
+.kp { position: absolute; z-index: 50; width: 340px; display: flex; flex-direction: column; align-items: center; gap: 10px; padding: 10px 14px 14px; background: var(--card); border-radius: var(--r-lg); box-shadow: 0 30px 80px -24px var(--shadow), 0 0 0 1px var(--sep); }
+.kp.sheet-b { position: fixed; left: 0; right: 0; bottom: 0; width: auto; border-radius: var(--r-xl) var(--r-xl) 0 0; padding: 10px 16px calc(18px + env(safe-area-inset-bottom, 0px)); }
 .kp-bd { position: fixed; inset: 0; z-index: 49; background: rgba(10, 12, 20, .32); }
 .kp-h { display: flex; align-items: center; justify-content: space-between; width: 100%; padding-left: 6px; }
 .kp-t { font-size: 13px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: var(--ink-2); }
 .kp-tabs { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px; }
-.kp-tab { min-width: 44px; height: 44px; border-radius: 14px; border: 0; background: var(--fill); font-size: 22px; color: var(--ink); cursor: pointer; transition: background-color .25s ease, color .25s ease, transform .45s var(--spring-pop); }
+.kp-tab { min-width: 44px; height: 44px; border-radius: var(--r-full); border: 0; background: var(--fill); font-size: 22px; color: var(--ink); cursor: pointer; transition: background-color .25s ease, color .25s ease, transform .45s var(--spring-pop); }
 .kp-tab:active { transform: scale(.92); }
 .kp-tab[aria-selected="true"] { background: var(--accent-soft); color: var(--accent-ink); box-shadow: inset 0 0 0 1.5px var(--accent-ring); }
-.kp-stage { width: min(260px, 72vw); aspect-ratio: 1; border-radius: 22px; background: var(--fill); cursor: pointer; -webkit-user-select: none; user-select: none; transition: transform .45s var(--spring-pop); }
+.kp-stage { width: min(260px, 72vw); aspect-ratio: 1; border-radius: var(--r-lg); background: var(--fill); cursor: pointer; -webkit-user-select: none; user-select: none; transition: transform .45s var(--spring-pop); }
 .kp-stage:active { transform: scale(.985); }
 .kp-stage svg { width: 100%; height: 100%; overflow: visible; }
 .kp-grid rect { fill: none; stroke: var(--seg); stroke-width: .6; }
@@ -762,10 +784,10 @@ textarea.ans { height: auto; min-height: 140px; max-width: 680px; padding: 14px 
 .l-top { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; }
 .l-sub { font-size: 14.5px; color: var(--ink-2); }
 .l-list { padding: 6px !important; display: flex; flex-direction: column; }
-.l-row { display: flex; align-items: center; gap: 6px; overflow: hidden; border-radius: 16px; transition: background-color .2s; }
+.l-row { display: flex; align-items: center; gap: 6px; overflow: hidden; border-radius: var(--r-md); transition: background-color .2s; }
 .l-row:hover { background: var(--fill); }
-.l-open { display: flex; align-items: center; gap: 12px; flex: 1; min-width: 0; padding: 10px 10px; border: 0; background: none; color: var(--ink); text-align: left; cursor: pointer; border-radius: 16px; }
-.l-dot { width: 32px; height: 32px; border-radius: 50%; background: var(--t); color: #FFFFFF; display: grid; place-items: center; font-size: 15px; font-weight: 700; flex: none; }
+.l-open { display: flex; align-items: center; gap: 12px; flex: 1; min-width: 0; padding: 10px 10px; border: 0; background: none; color: var(--ink); text-align: left; cursor: pointer; border-radius: var(--r-md); }
+.l-dot { width: 32px; height: 32px; border-radius: var(--r-full); background: var(--t); color: #FFFFFF; display: grid; place-items: center; font-size: 15px; font-weight: 700; flex: none; }
 .l-b { display: flex; flex-direction: column; min-width: 0; }
 .l-q { font-size: 16.5px; line-height: 1.45; overflow-wrap: anywhere; }
 .l-q.jp { font-size: 18px; }
@@ -774,7 +796,7 @@ textarea.ans { height: auto; min-height: 140px; max-width: 680px; padding: 14px 
 .l-row .cn-btn.star { flex: none; margin-right: 6px; }
 .l-empty { display: flex; align-items: center; gap: 16px; }
 .l-empty p { margin: 0; color: var(--ink-2); font-size: 16.5px; line-height: 1.5; max-width: 60ch; }
-.l-big { width: 52px; height: 52px; border-radius: 16px; background: var(--star-soft); color: var(--star); display: grid; place-items: center; flex: none; }
+.l-big { width: 52px; height: 52px; border-radius: var(--r-md); background: var(--star-soft); color: var(--star); display: grid; place-items: center; flex: none; }
 .l-big svg { width: 26px; height: 26px; fill: currentColor; stroke: currentColor; stroke-width: 1.2; stroke-linejoin: round; }
 
 /* summary */
@@ -794,7 +816,7 @@ textarea.ans { height: auto; min-height: 140px; max-width: 680px; padding: 14px 
 .sum-t { margin: 4px 0 0; font-size: clamp(22px, 2.6vw, 28px); font-weight: 700; text-wrap: balance; }
 .sum-s { margin: 0; font-size: 17px; color: var(--ink-2); }
 .sum-acts { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-top: 8px; }
-.btnp { display: inline-flex; align-items: center; gap: 9px; height: 54px; padding: 0 24px; border-radius: 27px; border: 0; background: var(--accent); color: #FFFFFF; font-size: 16.5px; font-weight: 600; cursor: pointer; transition: transform .45s var(--spring-pop), background-color .2s; }
+.btnp { display: inline-flex; align-items: center; gap: 9px; height: 54px; padding: 0 24px; border-radius: var(--r-full); border: 0; background: var(--accent); color: #FFFFFF; font-size: 16.5px; font-weight: 600; cursor: pointer; transition: transform .45s var(--spring-pop), background-color .2s; }
 .btnp:active:not(:disabled) { transform: scale(.95); }
 .btnp:disabled { opacity: .4; cursor: default; }
 .btnp.sec { background: var(--fill-2); color: var(--ink); }
@@ -806,9 +828,9 @@ textarea.ans { height: auto; min-height: 140px; max-width: 680px; padding: 14px 
 .empty-card p { margin: 0; max-width: 46ch; color: var(--ink-2); font-size: 17px; }
 
 /* side panels */
-.panel { min-width: 0; background: var(--card); border-radius: 22px; padding: 12px 6px 8px; }
+.panel { min-width: 0; background: var(--card); border-radius: var(--r-xl); padding: 12px 6px 8px; }
 .cap { margin: 0; padding: 4px 12px 6px; font-size: 12.5px; font-weight: 700; letter-spacing: .07em; text-transform: uppercase; color: var(--ink-2); }
-.hrow { display: flex; align-items: flex-start; gap: 10px; width: 100%; padding: 8px 12px; border: 0; background: none; border-radius: 12px; color: var(--ink); text-align: left; cursor: pointer; transition: background-color .2s ease; }
+.hrow { display: flex; align-items: flex-start; gap: 10px; width: 100%; padding: 8px 12px; border: 0; background: none; border-radius: var(--r-sm); color: var(--ink); text-align: left; cursor: pointer; transition: background-color .2s ease; }
 .hrow:hover { background: var(--fill); }
 .hrow > svg { width: 22px; height: 22px; flex: none; margin-top: 2px; }
 .hr-b { display: flex; flex-direction: column; min-width: 0; gap: 0; }
@@ -822,7 +844,7 @@ textarea.ans { height: auto; min-height: 140px; max-width: 680px; padding: 14px 
 .cx li { display: flex; flex-direction: column; gap: 3px; min-width: 0; padding: 10px 0; }
 .cx li + li { border-top: 1px solid var(--sep); }
 .cx-top { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 8px; }
-.cx-p { font-size: 12.5px; font-weight: 700; line-height: 1.5; padding: 1px 9px; border-radius: 999px; background: var(--pb, var(--fill-2)); color: var(--pc, var(--ink-2)); white-space: nowrap; }
+.cx-p { font-size: 12.5px; font-weight: 700; line-height: 1.5; padding: 1px 9px; border-radius: var(--r-full); background: var(--pb, var(--fill-2)); color: var(--pc, var(--ink-2)); white-space: nowrap; }
 .cx-p .jp { font-size: 1.05em; }
 .cx-l { font-size: 13.5px; line-height: 1.4; color: var(--ink-2); }
 .cx-l .jp { font-size: 1.08em; color: var(--ink); }
@@ -856,12 +878,12 @@ textarea.ans { height: auto; min-height: 140px; max-width: 680px; padding: 14px 
 /* rules */
 .pane { padding-top: 12px; }
 .rx { display: flex; flex-direction: column; gap: 12px; }
-.rx-hero { background: var(--card); border-radius: 26px; padding: clamp(18px, 2.6vw, 26px); display: flex; flex-direction: column; gap: 14px; }
+.rx-hero { background: var(--card); border-radius: var(--r-xl); padding: clamp(18px, 2.6vw, 26px); display: flex; flex-direction: column; gap: 14px; }
 .rx-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 4px 16px; }
 .rx-t { margin: 0; font-size: 20px; font-weight: 700; }
 .rx-lead { margin: 0; color: var(--ink-2); font-size: 15.5px; }
 .rx-chips { display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; }
-.rx-chip { min-height: 42px; padding: 4px 15px; border-radius: 999px; border: 0; background: var(--fill-2); font-size: 18px; cursor: pointer; color: var(--ink); transition: background-color .25s ease, color .25s ease, transform .45s var(--spring-pop); }
+.rx-chip { min-height: 42px; padding: 4px 15px; border-radius: var(--r-full); border: 0; background: var(--fill-2); font-size: 18px; cursor: pointer; color: var(--ink); transition: background-color .25s ease, color .25s ease, transform .45s var(--spring-pop); }
 .rx-chip:active { transform: scale(.94); }
 .rx-chip.ru { font-size: 15px; font-weight: 600; }
 .rx-chip[aria-pressed="true"] { background: var(--accent-soft); color: var(--accent-ink); box-shadow: inset 0 0 0 1.5px var(--accent-ring); }
@@ -873,16 +895,16 @@ textarea.ans { height: auto; min-height: 140px; max-width: 680px; padding: 14px 
 .rx-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 10px; }
 /* five or six cards: three a row on a wide screen (3 + 3, 3 + 2), never 4 + 2 with holes */
 .rx-cards:has(> :nth-child(5):last-child), .rx-cards:has(> :nth-child(6):last-child) { grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr)); }
-.rx-card { background: var(--card); border-radius: 20px; padding: 16px 18px; display: flex; flex-direction: column; gap: 4px; }
+.rx-card { background: var(--card); border-radius: var(--r-md); padding: 16px 18px; display: flex; flex-direction: column; gap: 4px; }
 .rx-card h4 { margin: 0; font-size: 16.5px; font-weight: 700; }
 .rx-card p { margin: 0; color: var(--ink-2); font-size: 15px; }
 .rx-ex { font-size: 18px; line-height: 1.9; margin-top: 4px; }
 .rx-traps { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 10px; }
-.rx-trap { display: flex; flex-direction: column; align-items: flex-start; gap: 6px; text-align: left; padding: 16px 18px; border: 0; border-radius: 20px; background: var(--card); cursor: pointer; color: var(--ink); transition: transform .45s var(--spring-pop), box-shadow .3s ease; }
+.rx-trap { display: flex; flex-direction: column; align-items: flex-start; gap: 6px; text-align: left; padding: 16px 18px; border: 0; border-radius: var(--r-md); background: var(--card); cursor: pointer; color: var(--ink); transition: transform .45s var(--spring-pop), box-shadow .3s ease; }
 .rx-trap:hover { box-shadow: 0 0 0 1.5px var(--sep); }
 .rx-trap:active { transform: scale(.97); }
 .tr-bad { position: relative; font-size: 21px; color: var(--bad-ink); line-height: 1.8; }
-.tr-bad::after { content: ""; position: absolute; left: 0; right: 0; top: 60%; height: 2.5px; border-radius: 2px; background: var(--bad); transform: scaleX(0); transform-origin: left; transition: transform .45s cubic-bezier(.6, 0, .3, 1); }
+.tr-bad::after { content: ""; position: absolute; left: 0; right: 0; top: 60%; height: 2.5px; border-radius: var(--r-full); background: var(--bad); transform: scaleX(0); transform-origin: left; transition: transform .45s cubic-bezier(.6, 0, .3, 1); }
 .rx-trap.open .tr-bad::after { transform: scaleX(1); }
 .tr-more { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .55s var(--spring-soft); width: 100%; }
 .tr-in { overflow: hidden; min-height: 0; display: flex; flex-direction: column; gap: 4px; }
@@ -891,7 +913,7 @@ textarea.ans { height: auto; min-height: 140px; max-width: 680px; padding: 14px 
 .tr-why { font-size: 15px; color: var(--ink-2); }
 .tr-hint { font-size: 14px; color: var(--ink-3); transition: opacity .25s ease; }
 .rx-trap.open .tr-hint { display: none; }
-.rx-full { background: var(--card); border-radius: 20px; }
+.rx-full { background: var(--card); border-radius: var(--r-lg); }
 .rx-full summary { cursor: pointer; padding: 14px 18px; font-weight: 600; list-style: none; display: flex; align-items: center; gap: 10px; user-select: none; }
 .rx-full summary::-webkit-details-marker { display: none; }
 .rx-full summary::before { content: ""; width: 8px; height: 8px; border-right: 2px solid var(--accent); border-bottom: 2px solid var(--accent); transform: rotate(-45deg); transition: transform .5s var(--spring-pop); }
@@ -900,8 +922,114 @@ textarea.ans { height: auto; min-height: 140px; max-width: 680px; padding: 14px 
 .rule-card p, .rule-card ul { margin: 8px 0; max-width: 72ch; }
 .rule-card ul { padding-left: 20px; display: grid; gap: 6px; }
 .rule-card .jp { font-size: 19px; line-height: 1.9; }
-.rule-card .ex { font-size: 20px; padding: 12px 16px; border-radius: 16px; background: var(--fill); margin-top: 12px; max-width: none; }
+.rule-card .ex { font-size: 20px; padding: 12px 16px; border-radius: var(--r-md); background: var(--fill); margin-top: 12px; max-width: none; }
 .rule-card small { font-size: 13px; color: var(--ink-2); font-family: var(--f-ui); }
+/* Andy's map: あげる red, くれる blue, もらう amber */
+.akm { --akm-ag: #E5484D; --akm-ku: #3D6BE8; --akm-mo: #D99A00; display: flex; flex-direction: column; align-items: center; gap: 12px; width: 100%; }
+.akm-seg { align-self: center; }
+.akm-seg button[aria-selected="true"] { background: var(--thumb); color: var(--ink); box-shadow: 0 1px 3px rgba(15, 17, 21, .14); }
+.akm-svg { width: 100%; max-width: 440px; height: auto; overflow: visible; }
+.akm-circle { fill: var(--accent-soft); stroke: color-mix(in srgb, var(--accent) 38%, transparent); stroke-width: 1.2; stroke-dasharray: 5 5; }
+.akm-cap { text-anchor: middle; font-family: var(--f-ui); font-size: 11px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; fill: var(--accent-ink); }
+.akm-n circle { stroke-width: 2; }
+.akm-me circle { fill: var(--accent); stroke: var(--accent); }
+.akm-me text:not(.akm-ru) { fill: #FFFFFF; }
+.akm-ci circle { fill: var(--card); stroke: var(--accent); }
+.akm-a circle, .akm-b circle { fill: var(--card); stroke: var(--seg); }
+.akm-n text { text-anchor: middle; font-family: var(--f-jp); font-size: 17px; font-weight: 700; fill: var(--ink); }
+.akm-n .akm-ru { font-family: var(--f-ui); font-size: 12px; font-weight: 600; fill: var(--ink-2); }
+.akm-me .akm-ru { fill: rgba(255, 255, 255, .8); }
+.akm-e path { fill: none; stroke-width: 7; stroke-linecap: round; }
+.akm-e text { font-size: 14px; font-weight: 700; }
+.akm-e.akm-ag path { stroke: var(--akm-ag); } .akm-e.akm-ag text { fill: var(--akm-ag); }
+.akm-e.akm-ku path { stroke: var(--akm-ku); } .akm-e.akm-ku text { fill: var(--akm-ku); }
+.akm-e.akm-mo path { stroke: var(--akm-mo); stroke-width: 5; } .akm-e.akm-mo text { fill: var(--akm-mo); }
+.akm-hd-ag { fill: var(--akm-ag); } .akm-hd-ku { fill: var(--akm-ku); } .akm-hd-mo { fill: var(--akm-mo); }
+.akm-e { transition: opacity .35s ease; }
+.akm-e.off { opacity: .12; }
+.akm-txt { width: 100%; max-width: 560px; display: flex; flex-direction: column; gap: 8px; text-align: left; }
+.akm-txt p { margin: 0; font-size: 16px; line-height: 1.55; text-wrap: pretty; }
+.akm-ex { display: flex; flex-direction: column; gap: 2px; padding: 10px 14px; border-radius: var(--r-md); background: var(--fill); }
+.akm-ex .jp { font-size: 18px; line-height: 1.8; }
+.akm-ex small { font-size: 14.5px; color: var(--ink-2); line-height: 1.45; }
+.akm-ex.ok { box-shadow: inset 3px 0 0 var(--ok); }
+.akm-ex.no .jp { text-decoration: line-through; text-decoration-color: var(--bad); text-decoration-thickness: 1.5px; color: var(--ink-2); }
+.akm-ex.no { box-shadow: inset 3px 0 0 var(--bad); }
+.akm-more { margin: 10px 0; border-radius: var(--r-md); background: var(--fill); }
+.akm-more summary { cursor: pointer; padding: 12px 16px; font-weight: 600; color: var(--accent-ink); }
+.akm-more .akm { padding: 0 12px 14px; }
+.aks { --akm-ag: #E5484D; --akm-ku: #3D6BE8; display: flex; flex-direction: column; align-items: center; gap: 12px; width: 100%; }
+.aks-svg { width: 100%; max-width: 440px; height: auto; overflow: visible; }
+.aks-zone { fill: var(--fill); }
+.aks-zone.in { fill: var(--accent-soft); }
+.aks-zt { text-anchor: middle; font-family: var(--f-ui); font-size: 11.5px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; fill: var(--ink-3); }
+.aks-zt.in { fill: var(--accent-ink); }
+.aks-p { transition: opacity .4s ease; }
+.aks-p.hid { opacity: 0; }
+.aks-p.dim { opacity: .22; }
+.aks-p.ghost { opacity: .32; }
+.aks-n circle { stroke-width: 1.5; fill: var(--card); stroke: var(--seg); }
+.aks-n.akm-me circle { fill: var(--accent); stroke: var(--accent); }
+.aks-n.akm-me text:not(.akm-ru) { fill: #FFFFFF; }
+.aks-n.akm-me .akm-ru { fill: rgba(255, 255, 255, .82); }
+.aks-n.akm-ci circle { stroke: color-mix(in srgb, var(--accent) 55%, transparent); }
+.aks-n text { text-anchor: middle; font-family: var(--f-jp); font-size: 17px; font-weight: 700; fill: var(--ink); }
+.aks-n .akm-ru { font-family: var(--f-ui); font-size: 11px; font-weight: 600; fill: var(--ink-2); }
+.aks-e path { fill: none; stroke-width: 4.5; stroke-linecap: round; }
+.aks-e.bad path { stroke-dasharray: 8 7; }
+.aks-e text { text-anchor: middle; font-size: 13.5px; font-weight: 700; }
+.aks-e.akm-ag path { stroke: var(--akm-ag); } .aks-e.akm-ag text { fill: var(--akm-ag); }
+.aks-e.akm-ku path { stroke: var(--akm-ku); } .aks-e.akm-ku text { fill: var(--akm-ku); }
+.aks-x circle { fill: var(--card); stroke: var(--bad); stroke-width: 2; }
+.aks-e.bad .aks-x path, .aks-x path { stroke: var(--bad); stroke-width: 2.8; stroke-dasharray: none; stroke-linecap: round; fill: none; }
+.aks-cap { display: flex; flex-direction: column; align-items: center; gap: 2px; min-height: 76px; text-align: center; }
+.aks-cap .jp { font-size: 19px; line-height: 1.9; }
+.aks-ru { font-size: 16px; color: var(--ink-2); text-wrap: balance; }
+.aks-sum { margin-top: 8px; padding: 8px 14px; border-radius: var(--r-md); background: var(--fill); font-size: 15.5px; font-weight: 600; color: var(--ink); text-wrap: balance; }
+.aks-nav { display: flex; align-items: center; gap: 14px; }
+.aks-dots { display: flex; gap: 6px; }
+.aks-dots i { width: 7px; height: 7px; border-radius: var(--r-full); background: var(--seg); transition: width .25s ease, background-color .25s ease; }
+.aks-dots i.on { width: 20px; background: var(--accent); }
+.iv-html { width: 100%; max-width: 640px; text-align: left; }
+.akc { display: grid; gap: 10px; }
+.akc-c { padding: 12px 16px 12px 18px; border-radius: var(--r-md); background: var(--fill); box-shadow: inset 4px 0 0 var(--akc, var(--accent)); }
+.akc-c.ag { --akc: #E5484D; } .akc-c.ku { --akc: #3D6BE8; } .akc-c.mo { --akc: #D99A00; }
+.akc-c h4 { margin: 0; font-size: 19px; font-weight: 700; }
+.akc-c p { margin: 4px 0 0; font-size: 15.5px; line-height: 1.55; color: var(--ink-2); text-wrap: pretty; }
+.akc-c .akc-m { font-size: 16.5px; font-weight: 600; color: var(--ink); }
+.akc-c .jp { color: var(--ink); }
+.akc-q { margin: 12px 0 0; font-size: 16px; line-height: 1.55; font-weight: 600; text-align: center; text-wrap: balance; }
+.tp { background: var(--card); border-radius: var(--r-xl); padding: clamp(18px, 2.6vw, 26px) 0 clamp(16px, 2.4vw, 22px); display: flex; flex-direction: column; gap: 12px; }
+.tp-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; padding: 0 clamp(18px, 2.6vw, 26px); }
+.tp-n { font-size: 13px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-3); white-space: nowrap; }
+.tp-tabs { display: flex; gap: 6px; padding: 0 clamp(18px, 2.6vw, 26px); overflow-x: auto; scrollbar-width: none; }
+.tp-tabs::-webkit-scrollbar { display: none; }
+.tp-tab { flex: none; min-height: 40px; padding: 0 15px; border: 0; border-radius: var(--r-full); background: var(--fill-2); color: var(--ink-2); font-size: 15px; font-weight: 600; cursor: pointer; white-space: nowrap; transition: background-color .25s, color .25s; }
+.tp-tab[aria-selected="true"] { background: var(--accent-soft); color: var(--accent-ink); box-shadow: inset 0 0 0 1.5px var(--accent-ring); }
+.tp-body { padding-bottom: 4px; touch-action: pan-y; }
+.tp-body .tbl { margin: 10px 0; }
+.tp-m { margin: 12px 0; padding: 14px 16px 6px; border-radius: var(--r-md); background: var(--fill); }
+.tp-m h4 { margin: 0; font-size: 21px; font-weight: 700; color: var(--accent-ink); }
+.tp-m p { margin: 6px 0; }
+.tp-m .ex { background: var(--card); margin-top: 8px; }
+.tp-tr { margin-top: 4px !important; font-size: 15.5px; color: var(--ink-2); }
+.tp-cases { display: grid; grid-template-columns: minmax(0, 1fr); gap: 10px; margin: 12px 0; }
+.tp-case { min-width: 0; }
+.tp-case .ex { white-space: normal; overflow-wrap: anywhere; }
+@media (min-width: 760px) { .tp-cases { grid-template-columns: repeat(2, minmax(0, 1fr)); } .tp-case:first-child { grid-column: 1 / -1; } }
+.tp-case { padding: 12px 16px 14px; border-radius: var(--r-md); background: var(--fill); }
+.tp-case h4 { margin: 0; font-size: 19px; font-weight: 700; color: var(--accent-ink); }
+.tp-case p { margin: 4px 0; }
+.tp-case .ex { background: var(--card); margin-top: 8px; font-size: 18px; padding: 8px 12px; }
+.tp-ord { display: block; margin-top: 2px; font-family: var(--f-ui); font-size: 14px; font-weight: 600; color: var(--accent-ink); }
+.tp-scale { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 8px; margin: 14px 0 6px; font-size: 16px; }
+.tp-scale span { padding: 8px 14px; border-radius: var(--r-md); background: var(--fill); text-align: center; line-height: 1.4; }
+.tp-scale span:last-of-type { background: var(--accent-soft); color: var(--accent-ink); }
+.tp-scale small { display: block; font-family: var(--f-ui); font-size: 12.5px; color: var(--ink-2); }
+.tp-scale i { font-style: normal; color: var(--ink-3); }
+.tp-acts { display: flex; justify-content: center; gap: 10px; padding: 0 clamp(18px, 2.6vw, 26px); }
+.tp-acts [hidden] { display: none; }
+@media (max-width: 520px) { .tp-scale { flex-direction: column; } .tp-scale i { transform: rotate(90deg); } }
 .tbl { overflow-x: auto; margin: 12px 0; }
 table { border-collapse: collapse; width: 100%; font-size: 15.5px; }
 th, td { border-bottom: 1px solid var(--sep); padding: 8px 14px 8px 0; text-align: left; vertical-align: top; }
@@ -910,22 +1038,22 @@ td.jp { font-size: 19px; line-height: 1.85; }
 table.days th { width: 2.5em; color: var(--accent-ink); font-variant-numeric: tabular-nums; }
 .rule-go { align-self: flex-start; margin-top: 6px; }
 .chat { display: flex; flex-direction: column; gap: 10px; width: 100%; max-width: 620px; margin: 0 auto; }
-.bub { max-width: 82%; padding: 12px 16px; border-radius: 20px; font-size: clamp(18px, 2.2vw, 22px); line-height: 1.7; }
+.bub { max-width: 82%; padding: 12px 16px; border-radius: var(--r-md); font-size: clamp(18px, 2.2vw, 22px); line-height: 1.7; }
 .bub.a { align-self: flex-start; background: var(--fill); border-bottom-left-radius: 6px; }
 .bub.b { align-self: flex-end; background: var(--accent); color: #FFFFFF; border-bottom-right-radius: 6px; }
 .bub.b rt { color: rgba(255, 255, 255, .8); }
-.bub mark { color: inherit; border-radius: .25em; padding: 0 .1em; background: linear-gradient(rgba(255, 255, 255, .26), rgba(255, 255, 255, .26)) no-repeat 0 100% / 0% 100%; animation: hl .7s ease 1.5s forwards; }
+.bub mark { color: inherit; border-radius: var(--r-xs); padding: 0 .1em; background: linear-gradient(rgba(255, 255, 255, .26), rgba(255, 255, 255, .26)) no-repeat 0 100% / 0% 100%; animation: hl .7s ease 1.5s forwards; }
 .chat .d-note { align-self: center; }
 .fq-days { display: grid; grid-template-columns: repeat(auto-fill, minmax(84px, 1fr)); gap: 8px; width: 100%; margin-top: 4px; }
 .fc { height: 64px; border: 0; padding: 0; background: none; cursor: pointer; perspective: 600px; }
 .fc-in { position: relative; display: block; width: 100%; height: 100%; transform-style: preserve-3d; transition: transform .7s var(--spring); }
 .fc.flip .fc-in { transform: rotateY(180deg); }
-.fc-f, .fc-b { position: absolute; inset: 0; display: grid; place-items: center; border-radius: 14px; backface-visibility: hidden; -webkit-backface-visibility: hidden; font-family: var(--f-jp); }
+.fc-f, .fc-b { position: absolute; inset: 0; display: grid; place-items: center; border-radius: var(--r-lg); backface-visibility: hidden; -webkit-backface-visibility: hidden; font-family: var(--f-jp); }
 .fc-f { background: var(--fill-2); font-size: 22px; color: var(--ink); }
 .fc-b { background: var(--accent-soft); color: var(--accent-ink); font-size: 17px; font-weight: 700; transform: rotateY(180deg); }
 
 /* skills & gaps */
-.sk-card { background: var(--card); border-radius: 24px; padding: clamp(16px, 2.6vw, 26px) clamp(16px, 3vw, 28px); }
+.sk-card { background: var(--card); border-radius: var(--r-xl); padding: clamp(16px, 2.6vw, 26px) clamp(16px, 3vw, 28px); }
 .sk-h { margin: 0 0 4px; font-size: 19px; font-weight: 700; }
 .sk-p { margin: 0 0 8px; color: var(--ink-2); font-size: 15px; max-width: 64ch; }
 .sk-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 360px), 1fr)); column-gap: 28px; }
@@ -933,15 +1061,15 @@ table.days th { width: 2.5em; color: var(--accent-ink); font-variant-numeric: ta
 .sk-top, .sk-bot { display: flex; justify-content: space-between; align-items: center; gap: 6px 12px; flex-wrap: wrap; }
 .sk-l { min-width: 0; font-size: 16px; font-weight: 600; }
 .sk-m { font-size: 14px; color: var(--ink-2); font-variant-numeric: tabular-nums; }
-.bar { height: 8px; border-radius: 4px; background: var(--fill-2); overflow: hidden; }
-.bar i { display: block; height: 100%; border-radius: 4px; background: var(--ink-3); transform-origin: left; animation: grow 1s var(--spring-soft) both; animation-delay: calc(var(--i, 0) * 30ms); }
-.st-chip { font-size: 12.5px; font-weight: 600; padding: 2px 9px; border-radius: 999px; background: var(--fill-2); color: var(--ink-2); white-space: nowrap; }
+.bar { height: 8px; border-radius: var(--r-full); background: var(--fill-2); overflow: hidden; }
+.bar i { display: block; height: 100%; border-radius: var(--r-full); background: var(--ink-3); transform-origin: left; animation: grow 1s var(--spring-soft) both; animation-delay: calc(var(--i, 0) * 30ms); }
+.st-chip { font-size: 12.5px; font-weight: 600; padding: 2px 9px; border-radius: var(--r-full); background: var(--fill-2); color: var(--ink-2); white-space: nowrap; }
 .sk-row.good .bar i { background: var(--ok); } .sk-row.good .st-chip { background: var(--ok-soft); color: var(--ok); }
 .sk-row.warn .bar i { background: var(--warn); } .sk-row.warn .st-chip { background: var(--warn-soft); color: var(--warn); }
 .sk-row.bad .bar i { background: var(--bad); } .sk-row.bad .st-chip { background: var(--bad-soft); color: var(--bad-ink); }
 .sk-row.few .bar i { background: var(--accent); }
 .tiles { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
-.tile-n { background: var(--card); border-radius: 22px; padding: 16px 18px; display: flex; flex-direction: column; gap: 2px; }
+.tile-n { background: var(--card); border-radius: var(--r-md); padding: 16px 18px; display: flex; flex-direction: column; gap: 2px; }
 .tile-n b { font-size: 34px; line-height: 1.1; font-variant-numeric: tabular-nums; }
 .tile-n > span { font-size: 14px; color: var(--ink-2); }
 .g-sec { display: flex; flex-direction: column; gap: 12px; padding-top: 12px; }
@@ -962,26 +1090,26 @@ table.days th { width: 2.5em; color: var(--accent-ink); font-variant-numeric: ta
 
 /* handwriting pad */
 .pad { width: 100%; max-width: 680px; overflow: hidden; display: grid; gap: 10px; }
-.pad-paper { position: relative; border-radius: 20px; background: var(--fill); box-shadow: inset 0 0 0 1px var(--sep); }
+.pad-paper { position: relative; border-radius: var(--r-lg); background: var(--fill); box-shadow: inset 0 0 0 1px var(--sep); }
 .pad-paper::after { content: ""; position: absolute; left: 18px; right: 18px; top: 50%; border-top: 1.5px dashed var(--seg); pointer-events: none; }
 .pad canvas { position: relative; z-index: 1; display: block; width: 100%; height: 210px; touch-action: none; cursor: crosshair; }
 .pen .pad canvas { height: 280px; }
 .pad-hint { position: absolute; inset: 0; display: grid; place-items: center; padding: 0 16px; text-align: center; color: var(--ink-3); font-size: 16px; pointer-events: none; transition: opacity .35s ease, transform .5s var(--spring); }
 .pad.inked .pad-hint { opacity: 0; transform: scale(.96); }
 .pad-bar { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; justify-content: center; }
-.pad-go.busy::before { content: ""; width: 13px; height: 13px; border-radius: 50%; border: 2px solid currentColor; border-right-color: transparent; animation: spin .7s linear infinite; margin-right: 8px; display: inline-block; vertical-align: -2px; }
+.pad-go.busy::before { content: ""; width: 13px; height: 13px; border-radius: var(--r-full); border: 2px solid currentColor; border-right-color: transparent; animation: spin .7s linear infinite; margin-right: 8px; display: inline-block; vertical-align: -2px; }
 .pad-res:empty { display: none; }
 .pad-res { display: grid; gap: 8px; justify-items: center; font-size: 15px; color: var(--ink-2); }
 .pad-wait { display: flex; align-items: center; gap: 8px; color: var(--ink); }
 .pad-out .big { font-family: var(--f-jp); font-size: 23px; color: var(--ink); }
 .pad-alts { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; justify-content: center; }
-.chipbtn { font-family: var(--f-jp); font-size: 19px; line-height: 1.5; color: var(--ink); border: 0; background: var(--fill-2); border-radius: 999px; padding: 4px 14px; cursor: pointer; min-height: 42px; transition: transform .4s var(--spring-pop), background-color .2s; }
+.chipbtn { font-family: var(--f-jp); font-size: 19px; line-height: 1.5; color: var(--ink); border: 0; background: var(--fill-2); border-radius: var(--r-full); padding: 4px 14px; cursor: pointer; min-height: 42px; transition: transform .4s var(--spring-pop), background-color .2s; }
 .chipbtn:active { transform: scale(.94); }
 .chipbtn.on { background: var(--accent-soft); color: var(--accent-ink); }
 
 /* toast */
 .kbd-keep { position: fixed; left: 0; top: 0; width: 1px; height: 20px; padding: 0; border: 0; margin: 0; opacity: 0; color: transparent; caret-color: transparent; background: transparent; font-size: 16px; pointer-events: none; z-index: -1; }
-.toast { position: fixed; left: 50%; bottom: calc(22px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); width: max-content; max-width: min(480px, calc(100vw - 32px)); background: var(--ink); color: var(--card); padding: 12px 18px; border-radius: 16px; font-size: 15.5px; line-height: 1.45; z-index: 40; box-shadow: 0 18px 44px -14px rgba(0, 0, 0, .45); }
+.toast { position: fixed; left: 50%; bottom: calc(22px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%); width: max-content; max-width: min(480px, calc(100vw - 32px)); background: var(--ink); color: var(--card); padding: 12px 18px; border-radius: var(--r-md); font-size: 15.5px; line-height: 1.45; z-index: 40; box-shadow: 0 18px 44px -14px rgba(0, 0, 0, .45); }
 @supports ((-webkit-backdrop-filter: blur(1px)) or (backdrop-filter: blur(1px))) {
   .toast { background: color-mix(in srgb, var(--ink) 88%, transparent); -webkit-backdrop-filter: blur(14px) saturate(1.4); backdrop-filter: blur(14px) saturate(1.4); }
 }
@@ -991,8 +1119,8 @@ table.days th { width: 2.5em; color: var(--accent-ink); font-variant-numeric: ta
 .foot a { color: inherit; text-underline-offset: 2px; }
 @media (max-width: 640px) { .foot p + p { text-align: left; } }
 /* mixed tests: which topic the question is from */
-.q-topic { display: inline-flex; align-items: center; gap: 7px; margin-bottom: -10px; padding: 3px 12px 3px 4px; border-radius: 999px; background: color-mix(in srgb, var(--t) 12%, transparent); color: var(--ink); font-size: 14px; font-weight: 600; }
-.q-topic b { width: 22px; height: 22px; border-radius: 50%; background: var(--t); color: #FFFFFF; display: grid; place-items: center; font-family: var(--f-jp); font-size: 12px; }
+.q-topic { display: inline-flex; align-items: center; gap: 7px; margin-bottom: -10px; padding: 3px 12px 3px 4px; border-radius: var(--r-full); background: color-mix(in srgb, var(--t) 12%, transparent); color: var(--ink); font-size: 14px; font-weight: 600; }
+.q-topic b { width: 22px; height: 22px; border-radius: var(--r-full); background: var(--t); color: #FFFFFF; display: grid; place-items: center; font-family: var(--f-jp); font-size: 12px; }
 .q-topic .jp { font-family: var(--f-jp); }
 
 @media (max-width: 640px) {
@@ -2908,17 +3036,15 @@ const SECTIONS16 = [
 </ul>
 <p class="ex jp">「{友達|ともだち}がお{弁当|べんとう}を{作|つく}ってくれました。」</p>`,
   blocks: [
-    { key: 'a', kind: 'type', title: 'Сделай для кого-то', ask: 'Поставь глагол в て-форму и добавь あげる, くれる или もらう, как сказано.', lead: 'Сначала て-форма, потом あげる, くれる или もらう в нужной форме. Можно печатать ромадзи.', tags: ['tea-form'], form: '', chip: 'て-форма + …', items: [
-      { id: 'ag-f1', q: '{書|か}く', chip: 'て-форма + あげた', a: ['{書|か}いてあげた'], ex: 'く → いて: 書いて + あげた.', trap: [{ n: '{書|か}きてあげた', t: 'て-форма от 書く — 書いて: く → いて.' }, { n: '{書|か}いたあげた', t: 'Перед あげる — て-форма, не た-форма: 書いてあげた.' }] },
-      { id: 'ag-f2', q: '{読|よ}む', chip: 'て-форма + くれた', a: ['{読|よ}んでくれた'], ex: 'む → んで: 読んで + くれた.', trap: [{ n: '{読|よ}んてくれた', t: 'После ん — で: 読んで.' }, { n: '{読|よ}みてくれた', t: 'て-форма от 読む — 読んで: む → んで.' }] },
-      { id: 'ag-f3', q: '{直|なお}す', chip: 'て-форма + もらった', a: ['{直|なお}してもらった'], ex: 'す → して. もらう — годан: もらった.', trap: [{ n: '{直|なお}してもらいた', t: 'Прошедшее от もらう — もらった: う → った.' }, { n: '{直|なお}ってもらった', t: 'て-форма от 直す «исправить» — 直して. 直って — от 直る «исправиться».' }] },
-      { id: 'ag-f4', q: '{待|ま}つ', chip: 'て-форма + くれた', a: ['{待|ま}ってくれた'], ex: 'つ → って.', trap: [{ n: '{待|ま}ちてくれた', t: 'て-форма от 待つ — 待って: つ → って.' }, { n: '{待|ま}ってくれった', t: 'くれる — ичидан: る → た, くれた.' }] },
-      { id: 'ag-f5', q: '{貸|か}す', chip: 'て-форма + あげる', a: ['{貸|か}してあげる'], ex: 'す → して.', trap: [{ n: '{貸|か}ってあげる', t: 'て-форма от 貸す — 貸して: す → して. 買って — от 買う «покупать».' }] },
-      { id: 'ag-f6', q: '{来|く}る', chip: 'て-форма + くれた', a: ['{来|き}てくれた'], ex: '来る → 来て, читается きて.', trap: [{ n: '(く|こ)てくれた', t: 'て-форма от 来る читается きて: 来てくれた.' }, { n: '{来|く}ってくれた', t: '来る — неправильный глагол: 来て (きて).' }] },
-      { id: 'ag-f7', q: '{案内|あんない}する', chip: 'て-форма + もらった', a: ['{案内|あんない}してもらった'], ex: 'する → して, もらう → もらった.', trap: [{ n: '{案内|あんない}してもらいた', t: 'Прошедшее от もらう — もらった.' }] },
-      { id: 'ag-f8', q: '{連|つ}れて{行|い}く', chip: 'て-форма + あげた', a: ['{連|つ}れて{行|い}ってあげた'], ex: 'Меняется последний глагол: 行く → 行って, это исключение.', trap: [{ n: '{連|つ}れて{行|い}いてあげた', t: '行く — исключение: 行って, не 行いて.' }] },
-      { id: 'ag-f9', q: '{教|おし}える', chip: 'て-форма + もらいたい', a: ['{教|おし}えてもらいたい[です]'], ex: 'Ичидан: る → て. もらう → もらいたい: «хочу, чтобы научили».', trap: [{ n: '{教|おし}えてもらうたい', t: 'たい присоединяют к ます-основе: もらい + たい.' }, { n: '{教|おし}えてくれたい', t: '«Хочу, чтобы меня научили» — もらいたい. くれたい так не говорят.' }] },
-      { id: 'ag-f10', q: '{撮|と}る', chip: 'て-форма + くれました', a: ['{撮|と}ってくれました'], ex: '撮る — годан на る: る → って.', trap: [{ n: '{撮|と}りてくれました', t: 'て-форма от 撮る — 撮って.' }, { n: '{撮|と}てくれました', t: '撮る — годан: る → って, 撮って.' }] }
+    { key: 'a', kind: 'type', title: 'Сделай для кого-то', ask: 'Впиши форму. Кто делает и для кого — видно по предложению.', lead: 'Сначала て-форма, потом あげる, くれる или もらう в нужной форме. Можно печатать ромадзи.', tags: ['tea-form'], form: '', chip: 'て-форма + …', items: [
+      { id: 'ag-f1', q: '{友達|ともだち}に{地図|ちず}を（{書|か}く）＿', mean: 'Я нарисовал другу схему дороги — помог ему.', chip: 'て-форма + あげた', a: ['{書|か}いてあげた'], ex: 'く → いて: 書いて + あげた.', trap: [{ n: '{書|か}きてあげた', t: 'て-форма от 書く — 書いて: く → いて.' }, { n: '{書|か}いたあげた', t: 'Перед あげる — て-форма, не た-форма: 書いてあげた.' }] },
+      { id: 'ag-f2', q: '{子|こ}どもの{時|とき}、{母|はは}が{絵本|えほん}を（{読|よ}む）＿', mean: 'В детстве мама читала мне книжки — для меня, с любовью.', chip: 'て-форма + くれた', a: ['{読|よ}んでくれた'], ex: 'む → んで: 読んで + くれた.', trap: [{ n: '{読|よ}んてくれた', t: 'После ん — で: 読んで.' }, { n: '{読|よ}みてくれた', t: 'て-форма от 読む — 読んで: む → んで.' }] },
+      { id: 'ag-f3', q: '{先生|せんせい}に{作文|さくぶん}を（{直|なお}す）＿', mean: 'Я попросил учителя, и он исправил мне сочинение.', chip: 'て-форма + もらった', a: ['{直|なお}してもらった'], ex: 'す → して. もらう — годан: もらった.', trap: [{ n: '{直|なお}してもらいた', t: 'Прошедшее от もらう — もらった: う → った.' }, { n: '{直|なお}ってもらった', t: 'て-форма от 直す «исправить» — 直して. 直って — от 直る «исправиться».' }] },
+      { id: 'ag-f4', q: '{友達|ともだち}が{駅|えき}で{一時間|いちじかん}も（{待|ま}つ）＿', mean: 'Друг ждал меня на станции целый час — и я ему благодарен.', chip: 'て-форма + くれた', a: ['{待|ま}ってくれた'], ex: 'つ → って.', trap: [{ n: '{待|ま}ちてくれた', t: 'て-форма от 待つ — 待って: つ → って.' }, { n: '{待|ま}ってくれった', t: 'くれる — ичидан: る → た, くれた.' }] },
+      { id: 'ag-f6', q: '{友達|ともだち}が{誕生日|たんじょうび}パーティーに（{来|く}る）＿', mean: 'Друзья пришли ко мне на день рождения — я этому рад.', chip: 'て-форма + くれた', a: ['{来|き}てくれた'], ex: '来る → 来て, читается きて.', trap: [{ n: '(く|こ)てくれた', t: 'て-форма от 来る читается きて: 来てくれた.' }, { n: '{来|く}ってくれた', t: '来る — неправильный глагол: 来て (きて).' }] },
+      { id: 'ag-f8', q: '{弟|おとうと}を{動物園|どうぶつえん}に（{連|つ}れて{行|い}く）＿', mean: 'Я сводил младшего брата в зоопарк — сам он бы не дошёл.', chip: 'て-форма + あげた', a: ['{連|つ}れて{行|い}ってあげた'], ex: 'Меняется последний глагол: 行く → 行って, это исключение.', trap: [{ n: '{連|つ}れて{行|い}いてあげた', t: '行く — исключение: 行って, не 行いて.' }] },
+      { id: 'ag-f9', q: '{日本人|にほんじん}の{友達|ともだち}に{漢字|かんじ}を（{教|おし}える）＿', mean: 'Хочу, чтобы японский друг научил меня кандзи.', chip: 'て-форма + もらいたい', a: ['{教|おし}えてもらいたい[です]'], ex: 'Ичидан: る → て. もらう → もらいたい: «хочу, чтобы научили».', trap: [{ n: '{教|おし}えてもらうたい', t: 'たい присоединяют к ます-основе: もらい + たい.' }, { n: '{教|おし}えてくれたい', t: '«Хочу, чтобы меня научили» — もらいたい. くれたい так не говорят.' }] },
+      { id: 'ag-f10', q: '{知|し}らない{人|ひと}が{写真|しゃしん}を（{撮|と}る）＿', mean: 'Незнакомый человек нас сфотографировал — любезно, и мы ему благодарны.', chip: 'て-форма + くれました', a: ['{撮|と}ってくれました'], ex: '撮る — годан на る: る → って.', trap: [{ n: '{撮|と}りてくれました', t: 'て-форма от 撮る — 撮って.' }, { n: '{撮|と}てくれました', t: '撮る — годан: る → って, 撮って.' }] }
     ]},
     { key: 'b', kind: 'choice', title: 'Кто для кого?', ask: 'Выбери предложение, которое подходит к схеме или ситуации.', lead: 'От тебя — あげる, к тебе — くれる; если тот, кто делает, — с に, то もらう.', tags: ['tea-dir'], items: [
       { id: 'ag-u1', q: '<i>Схема:</i> ユキさん → {私|わたし}・お{弁当|べんとう}を{作|つく}る', opts: ['ユキさんがお{弁当|べんとう}を{作|つく}ってくれた。', 'ユキさんがお{弁当|べんとう}を{作|つく}ってあげた。', 'ユキさんにお{弁当|べんとう}を{作|つく}ってくれた。', 'ユキさんにお{弁当|べんとう}を{作|つく}ってあげた。'], ok: [0], tags: ['tea-dir', 'tea-ni'], ex: 'Помощь идёт к тебе — くれた, а Юки, которая делает, — с が. ユキさんが…あげた значит, что Юки сделала обед кому-то другому, а ユキさんに…あげた — что это ты сделал обед для Юки. ユキさんに…くれた не говорят: с くれる тот, кто делает, — が.' },
@@ -2989,16 +3115,16 @@ const SECTIONS16 = [
 <p class="ex jp">「すみませんが、これにサインしていただけませんか。」「はい、わかりました。」</p>`,
   blocks: [
     { key: 'a', kind: 'type', title: 'Формы просьбы', ask: 'Сделай из глагола просьбу в нужной форме.', lead: 'て-форма + くれない？ / くれませんか / もらえませんか / いただけませんか. Какая нужна — написано в задании.', tags: ['req-form'], form: '', chip: 'просьба', items: [
-      { id: 'ir-f1', q: '{貸|か}す', chip: 'очень вежливо: ～ていただけませんか', a: ['{貸|か}していただけませんか'], ex: '貸して + いただけませんか.', alt: [{ n: '{貸|か}してもらえませんか', s: 1, t: 'Тоже вежливо и верно. Самый вежливый вариант — いただけませんか.' }, { n: '{貸|か}していただけますか', s: 1, t: 'Тоже верно и вежливо.' }], trap: [{ n: '{貸|か}していただきませんか', t: 'Нужна форма «могу»: いただける → いただけません. いただきません — «не получаю».' }, { n: '{貸|か}ってくれませんか', t: 'て-форма от 貸す — 貸して: す → して.' }] },
-      { id: 'ir-f2', q: '{書|か}く', chip: 'другу: ～てくれない？', a: ['{書|か}いてくれない'], ex: 'く → いて: 書いてくれない？', alt: [{ n: '{書|か}いてくれる', s: 1, t: 'Тоже по-дружески. くれない？ звучит чуть мягче.' }], trap: [{ n: '{書|か}きてくれない', t: 'て-форма от 書く — 書いて.' }] },
-      { id: 'ir-f3', q: '{待|ま}つ', chip: 'очень вежливо: ～ていただけませんか', a: ['{待|ま}っていただけませんか'], ex: 'つ → って: 待っていただけませんか.', alt: [{ n: '{待|ま}ってもらえませんか', s: 1, t: 'Тоже вежливо и верно.' }, { n: '{待|ま}っていただけますか', s: 1, t: 'Тоже верно и вежливо.' }], trap: [{ n: '{待|ま}っていただきませんか', t: 'Нужна форма «могу»: いただけませんか.' }, { n: '{待|ま}ちていただけませんか', t: 'て-форма от 待つ — 待って.' }] },
-      { id: 'ir-f4', q: '{見|み}せる', chip: 'вежливо: ～てくれませんか', a: ['{見|み}せてくれませんか'], ex: 'Ичидан: る → て.', trap: [{ n: '{見|み}せってくれませんか', t: '見せる — ичидан: る → て, 見せて.' }] },
-      { id: 'ir-f5', q: '{説明|せつめい}する', chip: 'очень вежливо: ～ていただけませんか', a: ['{説明|せつめい}していただけませんか'], ex: 'する → して.', alt: [{ n: '{説明|せつめい}してもらえませんか', s: 1, t: 'Тоже вежливо и верно.' }, { n: '{説明|せつめい}していただけますか', s: 1, t: 'Тоже верно и вежливо.' }], trap: [{ n: '{説明|せつめい}していただきませんか', t: 'Нужна форма «могу»: いただけませんか.' }] },
-      { id: 'ir-f6', q: '{来|く}る', chip: 'другу: ～てくれない？', a: ['{来|き}てくれない'], ex: '来る → 来て (きて).', alt: [{ n: '{来|き}てくれる', s: 1, t: 'Тоже по-дружески.' }], trap: [{ n: '(く|こ)てくれない', t: 'て-форма от 来る читается きて.' }] },
-      { id: 'ir-f7', q: '{撮|と}る', chip: 'очень вежливо: ～ていただけませんか', a: ['{撮|と}っていただけませんか'], ex: '撮る — годан: 撮って.', alt: [{ n: '{撮|と}ってもらえませんか', s: 1, t: 'Тоже вежливо и верно.' }, { n: '{撮|と}っていただけますか', s: 1, t: 'Тоже верно и вежливо.' }], trap: [{ n: '{撮|と}りていただけませんか', t: 'て-форма от 撮る — 撮って.' }] },
-      { id: 'ir-f8', q: '{読|よ}む', chip: 'вежливо: ～てくれませんか', a: ['{読|よ}んでくれませんか'], ex: 'む → んで.', trap: [{ n: '{読|よ}んてくれませんか', t: 'После ん — で: 読んで.' }] },
-      { id: 'ir-f9', q: '{直|なお}す', chip: 'вежливо, через もらう: ～てもらえませんか', a: ['{直|なお}してもらえませんか'], ex: 'もらう → もらえる (форма «могу») → もらえませんか.', trap: [{ n: '{直|なお}してもらいませんか', t: 'Нужна форма «могу»: もらえる → もらえませんか. もらいませんか — «не получим ли?».' }] },
-      { id: 'ir-f10', q: '{送|おく}る', chip: 'другу, через もらう: ～てもらえない？', a: ['{送|おく}ってもらえ(ない|る)'], ex: '送って + もらえない？ — по-дружески.', trap: [{ n: '{送|おく}ってもらわない', t: 'Нужна форма «могу»: もらえない？ もらわない — «не получу».' }] }
+      { id: 'ir-f1', q: '{先生|せんせい}、この{辞書|じしょ}を（{貸|か}す）＿。', mean: 'Учитель, не могли бы вы одолжить мне этот словарь?', chip: 'очень вежливо: ～ていただけませんか', a: ['{貸|か}していただけませんか'], ex: '貸して + いただけませんか.', alt: [{ n: '{貸|か}してもらえませんか', s: 1, t: 'Тоже вежливо и верно. Самый вежливый вариант — いただけませんか.' }, { n: '{貸|か}していただけますか', s: 1, t: 'Тоже верно и вежливо.' }], trap: [{ n: '{貸|か}していただきませんか', t: 'Нужна форма «могу»: いただける → いただけません. いただきません — «не получаю».' }, { n: '{貸|か}ってくれませんか', t: 'て-форма от 貸す — 貸して: す → して.' }] },
+      { id: 'ir-f2', q: 'ねえ、ここに{名前|なまえ}を（{書|か}く）＿？', mean: 'Слушай, напишешь тут своё имя?', chip: 'другу: ～てくれない？', a: ['{書|か}いてくれない'], ex: 'く → いて: 書いてくれない？', alt: [{ n: '{書|か}いてくれる', s: 1, t: 'Тоже по-дружески. くれない？ звучит чуть мягче.' }], trap: [{ n: '{書|か}きてくれない', t: 'て-форма от 書く — 書いて.' }] },
+      { id: 'ir-f3', q: '{社長|しゃちょう}、{少|すこ}し（{待|ま}つ）＿。', mean: 'Директор, не могли бы вы немного подождать?', chip: 'очень вежливо: ～ていただけませんか', a: ['{待|ま}っていただけませんか'], ex: 'つ → って: 待っていただけませんか.', alt: [{ n: '{待|ま}ってもらえませんか', s: 1, t: 'Тоже вежливо и верно.' }, { n: '{待|ま}っていただけますか', s: 1, t: 'Тоже верно и вежливо.' }], trap: [{ n: '{待|ま}っていただきませんか', t: 'Нужна форма «могу»: いただけませんか.' }, { n: '{待|ま}ちていただけませんか', t: 'て-форма от 待つ — 待って.' }] },
+      { id: 'ir-f4', q: 'すみません、その{地図|ちず}を（{見|み}せる）＿。', mean: 'Простите, не покажете мне эту карту?', chip: 'вежливо: ～てくれませんか', a: ['{見|み}せてくれませんか'], ex: 'Ичидан: る → て.', trap: [{ n: '{見|み}せってくれませんか', t: '見せる — ичидан: る → て, 見せて.' }] },
+      { id: 'ir-f5', q: '{先生|せんせい}、もう{一度|いちど}（{説明|せつめい}する）＿。', mean: 'Учитель, не могли бы вы объяснить ещё раз?', chip: 'очень вежливо: ～ていただけませんか', a: ['{説明|せつめい}していただけませんか'], ex: 'する → して.', alt: [{ n: '{説明|せつめい}してもらえませんか', s: 1, t: 'Тоже вежливо и верно.' }, { n: '{説明|せつめい}していただけますか', s: 1, t: 'Тоже верно и вежливо.' }], trap: [{ n: '{説明|せつめい}していただきませんか', t: 'Нужна форма «могу»: いただけませんか.' }] },
+      { id: 'ir-f6', q: '{明日|あした}、うちに（{来|く}る）＿？', mean: 'Не зайдёшь ко мне завтра?', chip: 'другу: ～てくれない？', a: ['{来|き}てくれない'], ex: '来る → 来て (きて).', alt: [{ n: '{来|き}てくれる', s: 1, t: 'Тоже по-дружески.' }], trap: [{ n: '(く|こ)てくれない', t: 'て-форма от 来る читается きて.' }] },
+      { id: 'ir-f7', q: 'すみません、もう{一枚|いちまい}（{撮|と}る）＿。', mean: 'Простите, не могли бы вы сделать ещё один снимок?', chip: 'очень вежливо: ～ていただけませんか', a: ['{撮|と}っていただけませんか'], ex: '撮る — годан: 撮って.', alt: [{ n: '{撮|と}ってもらえませんか', s: 1, t: 'Тоже вежливо и верно.' }, { n: '{撮|と}っていただけますか', s: 1, t: 'Тоже верно и вежливо.' }], trap: [{ n: '{撮|と}りていただけませんか', t: 'て-форма от 撮る — 撮って.' }] },
+      { id: 'ir-f8', q: 'ケンさん、このメールを（{読|よ}む）＿。', mean: 'Кен, прочитаешь, пожалуйста, это письмо?', chip: 'вежливо: ～てくれませんか', a: ['{読|よ}んでくれませんか'], ex: 'む → んで.', trap: [{ n: '{読|よ}んてくれませんか', t: 'После ん — で: 読んで.' }] },
+      { id: 'ir-f9', q: 'すみません、この{自転車|じてんしゃ}を（{直|なお}す）＿。', mean: 'Простите, не могли бы вы починить этот велосипед?', chip: 'вежливо, через もらう: ～てもらえませんか', a: ['{直|なお}してもらえませんか'], ex: 'もらう → もらえる (форма «могу») → もらえませんか.', trap: [{ n: '{直|なお}してもらいませんか', t: 'Нужна форма «могу»: もらえる → もらえませんか. もらいませんか — «не получим ли?».' }] },
+      { id: 'ir-f10', q: 'ねえ、{駅|えき}まで{車|くるま}で（{送|おく}る）＿？', mean: 'Слушай, не подбросишь меня до станции?', chip: 'другу, через もらう: ～てもらえない？', a: ['{送|おく}ってもらえ(ない|る)'], ex: '送って + もらえない？ — по-дружески.', trap: [{ n: '{送|おく}ってもらわない', t: 'Нужна форма «могу»: もらえない？ もらわない — «не получу».' }] }
     ]},
     { key: 'b', kind: 'choice', title: 'Кому как сказать?', ask: 'Выбери, как сказать в этой ситуации.', lead: 'Друг — くれない？, коллега — くれませんか, незнакомый — くれませんか или いただけませんか, начальник и клиент — いただけませんか. ～てください — прямое указание.', tags: ['req-level'], items: [
       { id: 'ir-u1', q: '<i>Ты просишь директора подписать документ.</i>', opts: ['{社長|しゃちょう}、これにサインしていただけませんか。', '{社長|しゃちょう}、これにサインしてくれない？', '{社長|しゃちょう}、これにサインしてください。', '{社長|しゃちょう}、これにサインしてあげませんか。'], ok: [0], ex: 'Начальника просят очень вежливо — いただけませんか. くれない？ — так просят друга, してください — уже указание, а あげませんか — «не подпишете ли (для кого-то)?», будто подпись нужна не тебе.' },
@@ -3056,17 +3182,17 @@ const SECTIONS16 = [
 </ul>
 <p class="ex jp">「{週末|しゅうまつ}、{台風|たいふう}が{来|こ}ないといいんですが。」「そうだといいですね。」</p>`,
   blocks: [
-    { key: 'a', kind: 'type', title: 'Пожелание', ask: 'Сделай пожелание — собеседнику или о своём, как сказано.', lead: 'Какая концовка нужна — написано в задании. Существительное и な-прилагательное — с だ.', tags: ['hope-form'], form: '', chip: 'пожелание', items: [
-      { id: 'ii-f1', q: '{明日|あした}{晴|は}れる', chip: 'другому: ～といいですね', a: ['[{明日|あした}]{晴|は}れるといい(ですね|ね)'], ex: '晴れる + といいですね.', trap: [{ n: '[{明日|あした}]{晴|は}れたといい(ですね|ね)', t: 'Завтрашняя погода ещё впереди — настоящее время: 晴れる.' }] },
-      { id: 'ii-f2', q: 'パーティーが{楽|たの}しい', chip: 'другому: ～といいですね', a: ['[パーティーが]{楽|たの}しいといい(ですね|ね)'], ex: 'い-прилагательное — как есть.', trap: [{ n: '[パーティーが]{楽|たの}しいだといい(ですね|ね)', t: 'い-прилагательное — без だ: 楽しいといい.' }] },
-      { id: 'ii-f3', q: 'いい{天気|てんき}', chip: 'другому: ～といいですね', a: ['いい{天気|てんき}だといい(ですね|ね)'], ex: 'Существительное + だ + といい.', trap: [{ n: 'いい{天気|てんき}といい(ですね|ね)', t: 'После существительного нужна だ: いい天気だといい.' }, { n: 'いい{天気|てんき}のといい(ですね|ね)', t: 'Существительное + だ: いい天気だといい.' }] },
-      { id: 'ii-f4', q: '{雨|あめ}が{降|ふ}らない', chip: 'другому: ～といいですね', a: ['[{雨|あめ}が]{降|ふ}らないといい(ですね|ね)'], ex: 'Отрицание тоже простое: 降らない + といい.' },
-      { id: 'ii-f5', q: '{日本|にほん}に{行|い}く', chip: 'другому: ～といいですね', a: ['[{日本|にほん}に]{行|い}けるといい(ですね|ね)'], ex: 'Поехать или нет — зависит от человека: надеются на возможность, 行ける.', trap: [{ n: '[{日本|にほん}に]{行|い}くといい(ですね|ね)', t: 'Поехать — зависит от человека, поэтому нужна форма «могу»: 行ける. 行くといいですよ звучит как совет «съезди».' }] },
-      { id: 'ii-f6', q: '{部屋|へや}が{静|しず}か', chip: 'другому: ～といいですね', a: ['[{部屋|へや}が]{静|しず}かだといい(ですね|ね)'], ex: 'な-прилагательное + だ.', trap: [{ n: '[{部屋|へや}が]{静|しず}かといい(ですね|ね)', t: 'な-прилагательное — с だ: 静かだといい.' }, { n: '[{部屋|へや}が]{静|しず}かなといい(ですね|ね)', t: 'Перед といい — だ, не な: 静かだといい.' }] },
-      { id: 'ii-f7', q: '{仕事|しごと}が{早|はや}く{終|お}わる', chip: 'о себе: ～といいんですが', a: ['[{仕事|しごと}が][{早|はや}く]{終|お}わるといいん(ですが|ですけど|だけど)'], ex: 'О себе — といいんですが.', trap: [{ n: '[{仕事|しごと}が][{早|はや}く]{終|お}わるといい(ですね|ね)', t: 'Это пожелание другому. О себе — といいんですが.' }] },
-      { id: 'ii-f8', q: '{富士山|ふじさん}が{見|み}える', chip: 'о себе: ～といいんですが', a: ['[{富士山|ふじさん}が]{見|み}えるといいん(ですが|ですけど|だけど)'], ex: '見える «быть видным» случается само: форма «могу» не нужна.' },
-      { id: 'ii-f9', q: '{休|やす}みを{取|と}る', chip: 'о себе: ～といいんですが', a: ['[{休|やす}み(が|を)]{取|と}れるといいん(ですが|ですけど|だけど)'], ex: 'Взять отпуск — зависит от тебя: 取れる.', trap: [{ n: '[{休|やす}み(が|を)]{取|と}るといいん(ですが|ですけど|だけど)', t: 'Взять отпуск — зависит от тебя, поэтому надеются на возможность: 取れる.' }] },
-      { id: 'ii-f10', q: '{電車|でんしゃ}が{遅|おく}れない', chip: 'о себе: ～といいんですが', a: ['[{電車|でんしゃ}が]{遅|おく}れないといいん(ですが|ですけど|だけど)'], ex: 'Отрицание + といいんですが.' }
+    { key: 'a', kind: 'type', title: 'Пожелание', ask: 'Сделай пожелание. Кому оно — собеседнику или о своём — видно из ситуации.', lead: 'Собеседнику — といいですね, о своём — といいんですが или といいな. Существительное и な-прилагательное — с だ.', tags: ['hope-form'], form: '', chip: 'пожелание', items: [
+      { id: 'ii-f1', q: '<i>Друг завтра едет на море.</i> {明日|あした}{晴|は}れる', mean: 'Надеюсь, завтра будет ясно — желаю тебе.', a: ['[{明日|あした}]{晴|は}れるといい(ですね|ね)'], ex: '晴れる + といいですね.', trap: [{ n: '[{明日|あした}]{晴|は}れるといい(んですが|んですけど|んだけど|なあ|な)', t: 'Так говорят о своём. Здесь пожелание другу — といいですね.' }, { n: '[{明日|あした}]{晴|は}れたといい(ですね|ね)', t: 'Завтрашняя погода ещё впереди — настоящее время: 晴れる.' }] },
+      { id: 'ii-f2', q: '<i>Подруга идёт на вечеринку.</i> パーティーが{楽|たの}しい', mean: 'Надеюсь, будет весело.', a: ['[パーティーが]{楽|たの}しいといい(ですね|ね)'], ex: 'い-прилагательное — как есть.', trap: [{ n: '[パーティーが]{楽|たの}しいといい(んですが|んですけど|んだけど|なあ|な)', t: 'Так говорят о своём. Здесь пожелание другу — といいですね.' }, { n: '[パーティーが]{楽|たの}しいだといい(ですね|ね)', t: 'い-прилагательное — без だ: 楽しいといい.' }] },
+      { id: 'ii-f3', q: '<i>Друг завтра играет в теннис.</i> いい{天気|てんき}', mean: 'Хорошо бы погода была хорошая.', a: ['いい{天気|てんき}だといい(ですね|ね)'], ex: 'Существительное + だ + といい.', trap: [{ n: 'いい{天気|てんき}だといい(んですが|んですけど|んだけど|なあ|な)', t: 'Так говорят о своём. Здесь пожелание другу — といいですね.' }, { n: 'いい{天気|てんき}といい(ですね|ね)', t: 'После существительного нужна だ: いい天気だといい.' }, { n: 'いい{天気|てんき}のといい(ですね|ね)', t: 'Существительное + だ: いい天気だといい.' }] },
+      { id: 'ii-f4', q: '<i>У друга в воскресенье барбекю.</i> {雨|あめ}が{降|ふ}らない', mean: 'Надеюсь, дождя не будет.', a: ['[{雨|あめ}が]{降|ふ}らないといい(ですね|ね)'], ex: 'Отрицание тоже простое: 降らない + といい.', trap: [{ n: '[{雨|あめ}が]{降|ふ}らないといい(んですが|んですけど|んだけど|なあ|な)', t: 'Так говорят о своём. Здесь пожелание другу — といいですね.' }] },
+      { id: 'ii-f5', q: '<i>Друг мечтает побывать в Японии.</i> {日本|にほん}に{行|い}く', mean: 'Надеюсь, у тебя получится поехать.', a: ['[{日本|にほん}に]{行|い}けるといい(ですね|ね)'], ex: 'Поехать или нет — зависит от человека: надеются на возможность, 行ける.', trap: [{ n: '[{日本|にほん}に]{行|い}けるといい(んですが|んですけど|んだけど|なあ|な)', t: 'Так говорят о своём. Здесь пожелание другу — といいですね.' }, { n: '[{日本|にほん}に]{行|い}くといい(ですね|ね)', t: 'Поехать — зависит от человека, поэтому нужна форма «могу»: 行ける. 行くといいですよ звучит как совет «съезди».' }] },
+      { id: 'ii-f6', q: '<i>Друг переезжает в новую квартиру.</i> {部屋|へや}が{静|しず}か', mean: 'Надеюсь, там будет тихо.', a: ['[{部屋|へや}が]{静|しず}かだといい(ですね|ね)'], ex: 'な-прилагательное + だ.', trap: [{ n: '[{部屋|へや}が]{静|しず}かだといい(んですが|んですけど|んだけど|なあ|な)', t: 'Так говорят о своём. Здесь пожелание другу — といいですね.' }, { n: '[{部屋|へや}が]{静|しず}かといい(ですね|ね)', t: 'な-прилагательное — с だ: 静かだといい.' }, { n: '[{部屋|へや}が]{静|しず}かなといい(ですね|ね)', t: 'Перед といい — だ, не な: 静かだといい.' }] },
+      { id: 'ii-f7', q: '<i>Вечером у тебя концерт, а работы много.</i> {仕事|しごと}が{早|はや}く{終|お}わる', mean: 'Хорошо бы закончить пораньше… но не знаю.', a: ['[{仕事|しごと}が][{早|はや}く]{終|お}わるといい(んですが|んですけど|んだけど|なあ|な)'], ex: 'О себе — といいんですが.', trap: [{ n: '[{仕事|しごと}が][{早|はや}く]{終|お}わるといい(ですね|ね)', t: 'Это пожелание другому. О себе — といいんですが.' }] },
+      { id: 'ii-f8', q: '<i>Ты едешь в Хаконэ.</i> {富士山|ふじさん}が{見|み}える', mean: 'Надеюсь, будет видно Фудзи…', a: ['[{富士山|ふじさん}が]{見|み}えるといい(んですが|んですけど|んだけど|なあ|な)'], ex: '見える «быть видным» случается само: форма «могу» не нужна.' },
+      { id: 'ii-f9', q: '<i>Ты хочешь в отпуск в августе.</i> {休|やす}みを{取|と}る', mean: 'Хорошо бы получилось взять отпуск…', a: ['[{休|やす}み(が|を)]{取|と}れるといい(んですが|んですけど|んだけど|なあ|な)'], ex: 'Взять отпуск — зависит от тебя: 取れる.', trap: [{ n: '[{休|やす}み(が|を)]{取|と}るといい(んですが|んですけど|んだけど|なあ|な)', t: 'Взять отпуск — зависит от тебя, поэтому надеются на возможность: 取れる.' }] },
+      { id: 'ii-f10', q: '<i>Утром у тебя важная встреча.</i> {電車|でんしゃ}が{遅|おく}れない', mean: 'Надеюсь, поезд не опоздает…', a: ['[{電車|でんしゃ}が]{遅|おく}れないといい(んですが|んですけど|んだけど|なあ|な)'], ex: 'Отрицание + といいんですが.' }
     ]},
     { key: 'b', kind: 'choice', title: 'Кому надежда?', ask: 'Выбери фразу, которая подходит к ситуации.', lead: 'Кому говоришь и чьё это действие — от этого зависит форма.', tags: ['hope-use'], items: [
       { id: 'ii-u1', q: '<i>Ты сам очень хочешь попасть на концерт, но билетов почти нет.</i>', opts: ['コンサートに{行|い}けるといいんですが。', 'コンサートに{行|い}けるといいですね。', 'コンサートに{行|い}くといいんですが。', 'コンサートに{行|い}くといいですね。'], ok: [0], tags: ['hope-use', 'hope-pot'], ex: 'О себе — といいんですが, а пойти или нет зависит от тебя — 行ける. 行けるといいですね — пожелание другому, а 行くといいですね звучит как совет «сходи-ка».' },
@@ -3122,18 +3248,18 @@ const SECTIONS16 = [
 <p class="ex jp">「{家|いえ}を{出|で}る{時|とき}、『{行|い}ってきます』と{言|い}います。」</p>`,
   blocks: [
     { key: 'a', kind: 'type', title: 'Перед 時', ask: 'Поставь слово перед 時 в нужной форме.', lead: 'Глагол и い-прилагательное — как есть. な-прилагательное — + な, существительное — + の.', tags: ['toki-form'], form: '', chip: 'форма перед 時', items: [
-      { id: 'tk-f1', q: 'ひま', a: ['(ひま|{暇|ひま})な{時|とき}'], ex: 'ひま — な-прилагательное: ひまな時.', trap: [{ n: '(ひま|{暇|ひま})の{時|とき}', t: 'ひま — な-прилагательное: ひまな時.' }, { n: '(ひま|{暇|ひま}){時|とき}', t: 'な-прилагательному перед 時 нужна な.' }] },
-      { id: 'tk-f2', q: '{子|こ}ども', a: ['{子|こ}どもの{時|とき}'], ex: 'Существительное + の.', trap: [{ n: '{子|こ}どもな{時|とき}', t: '子ども — существительное: の.' }, { n: '{子|こ}ども{時|とき}', t: 'Существительному перед 時 нужна の.' }] },
-      { id: 'tk-f3', q: 'さびしい', a: ['(さびしい|{寂|さび}しい){時|とき}'], ex: 'い-прилагательное — прямо перед 時.', trap: [{ n: '(さびしい|{寂|さび}しい)の{時|とき}', t: 'い-прилагательное — прямо перед 時, без の.' }, { n: '(さびしい|{寂|さび}しい)な{時|とき}', t: 'い-прилагательное — без な.' }] },
-      { id: 'tk-f4', q: '{病気|びょうき}', a: ['{病気|びょうき}の{時|とき}'], ex: '病気 — существительное: の.', trap: [{ n: '{病気|びょうき}な{時|とき}', t: '病気 — существительное: 病気の時.' }] },
-      { id: 'tk-f5', q: '{元気|げんき}', a: ['{元気|げんき}な{時|とき}'], ex: '元気 — な-прилагательное.', trap: [{ n: '{元気|げんき}の{時|とき}', t: '元気 — な-прилагательное: 元気な時.' }] },
-      { id: 'tk-f6', q: '{眠|ねむ}い', a: ['{眠|ねむ}い{時|とき}'], ex: 'い-прилагательное — как есть.', trap: [{ n: '{眠|ねむ}いの{時|とき}', t: 'い-прилагательное — прямо перед 時.' }] },
-      { id: 'tk-f7', q: '{大学生|だいがくせい}', a: ['{大学生|だいがくせい}の{時|とき}'], ex: 'Существительное + の.' },
-      { id: 'tk-f8', q: '{静|しず}か', a: ['{静|しず}かな{時|とき}'], ex: 'な-прилагательное + な.', trap: [{ n: '{静|しず}かの{時|とき}', t: '静か — な-прилагательное: 静かな時.' }] },
-      { id: 'tk-f9', q: '{寒|さむ}かった', a: ['{寒|さむ}かった{時|とき}'], ex: 'Прошедшее い-прилагательного — тоже как есть.', trap: [{ n: '{寒|さむ}いだった{時|とき}', t: 'Прошедшее от 寒い — 寒かった, без だ.' }] },
-      { id: 'tk-f11', q: '{病気|びょうき}だった', a: ['{病気|びょうき}だった{時|とき}'], ex: 'Прошедшее существительного — だった, の не нужна.', trap: [{ n: '{病気|びょうき}だったの{時|とき}', t: 'Перед 時 прошедшее ставят как есть: 病気だった時.' }, { n: '{病気|びょうき}の{時|とき}だった', t: 'Прошедшее — внутри: 病気だった時.' }] },
-      { id: 'tk-f12', q: '{料理|りょうり}をしている', a: ['[{料理|りょうり}を]している{時|とき}'], ex: '～ている — «пока…»: している時.', trap: [{ n: '[{料理|りょうり}を]しているの{時|とき}', t: 'Глагол — прямо перед 時, без の.' }] },
-      { id: 'tk-f10', q: 'ひまだった', a: ['(ひま|{暇|ひま})だった{時|とき}'], ex: 'В прошедшем な не нужна: ひまだった時.', trap: [{ n: '(ひま|{暇|ひま})なだった{時|とき}', t: 'В прошедшем な не нужна: ひまだった時.' }, { n: '(ひま|{暇|ひま})だったの{時|とき}', t: 'Перед 時 прошедшее ставят как есть: ひまだった時.' }] }
+      { id: 'tk-f1', q: '（ひま）＿、{何|なに}をしますか。', mean: 'Что ты делаешь, когда свободен?', a: ['(ひま|{暇|ひま})な{時|とき}'], ex: 'ひま — な-прилагательное: ひまな時.', trap: [{ n: '(ひま|{暇|ひま})の{時|とき}', t: 'ひま — な-прилагательное: ひまな時.' }, { n: '(ひま|{暇|ひま}){時|とき}', t: 'な-прилагательному перед 時 нужна な.' }] },
+      { id: 'tk-f2', q: '（{子|こ}ども）＿、{犬|いぬ}を{飼|か}っていました。', mean: 'В детстве у меня была собака.', a: ['{子|こ}どもの{時|とき}'], ex: 'Существительное + の.', trap: [{ n: '{子|こ}どもな{時|とき}', t: '子ども — существительное: の.' }, { n: '{子|こ}ども{時|とき}', t: 'Существительному перед 時 нужна の.' }] },
+      { id: 'tk-f3', q: '（さびしい）＿、{母|はは}に{電話|でんわ}します。', mean: 'Когда мне одиноко, я звоню маме.', a: ['(さびしい|{寂|さび}しい){時|とき}'], ex: 'い-прилагательное — прямо перед 時.', trap: [{ n: '(さびしい|{寂|さび}しい)の{時|とき}', t: 'い-прилагательное — прямо перед 時, без の.' }, { n: '(さびしい|{寂|さび}しい)な{時|とき}', t: 'い-прилагательное — без な.' }] },
+      { id: 'tk-f4', q: '（{病気|びょうき}）＿、{会社|かいしゃ}を{休|やす}みます。', mean: 'Когда болею, не хожу на работу.', a: ['{病気|びょうき}の{時|とき}'], ex: '病気 — существительное: の.', trap: [{ n: '{病気|びょうき}な{時|とき}', t: '病気 — существительное: 病気の時.' }] },
+      { id: 'tk-f5', q: '（{元気|げんき}）＿、{走|はし}りに{行|い}きます。', mean: 'Когда есть силы, хожу на пробежку.', a: ['{元気|げんき}な{時|とき}'], ex: '元気 — な-прилагательное.', trap: [{ n: '{元気|げんき}の{時|とき}', t: '元気 — な-прилагательное: 元気な時.' }] },
+      { id: 'tk-f6', q: '（{眠|ねむ}い）＿、コーヒーを{飲|の}みます。', mean: 'Когда хочется спать, пью кофе.', a: ['{眠|ねむ}い{時|とき}'], ex: 'い-прилагательное — как есть.', trap: [{ n: '{眠|ねむ}いの{時|とき}', t: 'い-прилагательное — прямо перед 時.' }] },
+      { id: 'tk-f7', q: '（{大学生|だいがくせい}）＿、{東京|とうきょう}に{住|す}んでいました。', mean: 'Когда был студентом, я жил в Токио.', a: ['{大学生|だいがくせい}の{時|とき}'], ex: 'Существительное + の.' },
+      { id: 'tk-f8', q: '{家|いえ}が（{静|しず}か）＿、{本|ほん}を{読|よ}みます。', mean: 'Когда дома тихо, я читаю.', a: ['{静|しず}かな{時|とき}'], ex: 'な-прилагательное + な.', trap: [{ n: '{静|しず}かの{時|とき}', t: '静か — な-прилагательное: 静かな時.' }] },
+      { id: 'tk-f9', q: '（{寒|さむ}かった）＿、{温泉|おんせん}に{入|はい}りました。', mean: 'Когда было холодно, мы сходили в онсэн.', a: ['{寒|さむ}かった{時|とき}'], ex: 'Прошедшее い-прилагательного — тоже как есть.', trap: [{ n: '{寒|さむ}いだった{時|とき}', t: 'Прошедшее от 寒い — 寒かった, без だ.' }] },
+      { id: 'tk-f11', q: '（{病気|びょうき}だった）＿、{母|はは}が{来|き}てくれました。', mean: 'Когда я болел, ко мне приехала мама.', a: ['{病気|びょうき}だった{時|とき}'], ex: 'Прошедшее существительного — だった, の не нужна.', trap: [{ n: '{病気|びょうき}だったの{時|とき}', t: 'Перед 時 прошедшее ставят как есть: 病気だった時.' }, { n: '{病気|びょうき}の{時|とき}だった', t: 'Прошедшее — внутри: 病気だった時.' }] },
+      { id: 'tk-f12', q: '（{料理|りょうり}をしている）＿、{友達|ともだち}が{来|き}ました。', mean: 'Пока я готовил, пришёл друг.', a: ['[{料理|りょうり}を]している{時|とき}'], ex: '～ている — «пока…»: している時.', trap: [{ n: '[{料理|りょうり}を]しているの{時|とき}', t: 'Глагол — прямо перед 時, без の.' }] },
+      { id: 'tk-f10', q: '{昨日|きのう}（ひまだった）＿、{映画|えいが}を{見|み}ました。', mean: 'Вчера, когда было время, я посмотрел фильм.', a: ['(ひま|{暇|ひま})だった{時|とき}'], ex: 'В прошедшем な не нужна: ひまだった時.', trap: [{ n: '(ひま|{暇|ひま})なだった{時|とき}', t: 'В прошедшем な не нужна: ひまだった時.' }, { n: '(ひま|{暇|ひま})だったの{時|とき}', t: 'Перед 時 прошедшее ставят как есть: ひまだった時.' }] }
     ]},
     { key: 'b', kind: 'choice', title: 'До или после?', ask: 'Выбери фразу, которая подходит к ситуации.', lead: 'Перед 時: 〜る — ещё не случилось, 〜た — уже случилось. Конец предложения — когда всё было или будет.', tags: ['toki-tense'], items: [
       { id: 'tk-u1', q: '<i>Ты купил SIM-карту в аэропорту Нарита, уже прилетев в Японию.</i>', opts: ['{日本|にほん}に{行|い}った{時|とき}、{空港|くうこう}でSIMカードを{買|か}いました。', '{日本|にほん}に{行|い}く{時|とき}、{空港|くうこう}でSIMカードを{買|か}いました。', '{日本|にほん}に{行|い}った{時|とき}、{空港|くうこう}でSIMカードを{買|か}います。', '{日本|にほん}に{行|い}く{時|とき}、{空港|くうこう}でSIMカードを{買|か}います。'], ok: [0], ex: 'Купил уже в Японии — 行った時: поездка к тому моменту случилась. 行く時 значит, что купил до вылета, в своём аэропорту. А 買います — о будущем, а это уже было.' },
@@ -3191,16 +3317,16 @@ const SECTIONS16 = [
 <p class="ex jp">「{遅|おそ}くなってすみませんでした。」「{大丈夫|だいじょうぶ}だよ。」</p>`,
   blocks: [
     { key: 'a', kind: 'type', title: 'Извинение и спасибо', ask: 'Сделай извинение или благодарность, как сказано.', lead: 'て-форма + すみませんでした / ごめん. Не сделал — なくて. «Спасибо, что…» — ～てくれてありがとう.', tags: ['sumi-form'], form: '', chip: 'извинение', items: [
-      { id: 'sm-f1', q: '{遅|おく}れる', chip: 'простите: ～てすみませんでした', a: ['{遅|おく}れてすみませんでした'], ex: 'Ичидан: 遅れて + すみませんでした.', trap: [{ n: '{遅|おく}れってすみませんでした', t: '遅れる — ичидан: 遅れて.' }] },
-      { id: 'sm-f2', q: '{電話|でんわ}しない', chip: 'простите: ～てすみませんでした', a: ['{電話|でんわ}しなくてすみませんでした'], ex: 'ない → なくて.', trap: [{ n: '{電話|でんわ}しないですみませんでした', t: 'て-форма отрицания для извинения — なくて: しなくて.' }] },
-      { id: 'sm-f3', q: 'うるさい', chip: 'простите: ～てすみません', a: ['うるさくてすみません[でした]'], ex: 'い-прилагательное: い → くて.', trap: [{ n: 'うるさいてすみません[でした]', t: 'い-прилагательное: い → くて, うるさくて.' }] },
-      { id: 'sm-f4', q: '{行|い}けない', chip: 'другу: ～てごめん', a: ['{行|い}けなくてごめん[ね]'], ex: 'ない → なくて: «прости, что не смог пойти».', trap: [{ n: '{行|い}けないでごめん[ね]', t: 'Извиняются с なくて: 行けなくてごめん.' }] },
-      { id: 'sm-f5', q: '{宿題|しゅくだい}を{忘|わす}れる', chip: 'простите: ～てすみませんでした', a: ['[{宿題|しゅくだい}を]{忘|わす}れてすみませんでした'], ex: '忘れる — ичидан: 忘れて.' },
-      { id: 'sm-f6', q: '{言|い}わない', chip: 'другу: ～てごめん', a: ['{言|い}わなくてごめん[ね]'], ex: 'ない → なくて.', trap: [{ n: '{言|い}わないでごめん[ね]', t: 'なくて, а не ないで: 言わなくてごめん.' }] },
-      { id: 'sm-f7', q: '{手伝|てつだ}う', chip: 'спасибо: ～てくれてありがとう', a: ['{手伝|てつだ}ってくれてありがとう[ございます|ございました]'], ex: 'Помогли тебе — 手伝ってくれて + ありがとう.', trap: [{ n: '{手伝|てつだ}ってありがとう[ございます|ございました]', t: 'Благодарят за помощь себе — нужна くれて: 手伝ってくれてありがとう.' }, { n: '{手伝|てつだ}ってあげてありがとう[ございます|ございました]', t: 'Помогли тебе — くれて, не あげて.' }] },
-      { id: 'sm-f8', q: '{待|ま}つ', chip: 'спасибо: ～てくれてありがとう', a: ['{待|ま}ってくれてありがとう[ございます|ございました]'], ex: 'つ → って.', trap: [{ n: '{待|ま}ちてくれてありがとう[ございます|ございました]', t: 'て-форма от 待つ — 待って.' }] },
-      { id: 'sm-f9', q: '{迎|むか}えに{来|く}る', chip: 'спасибо: ～てくれてありがとう', a: ['{迎|むか}えに{来|き}てくれてありがとう[ございます|ございました]'], ex: '来る → 来て (きて).', trap: [{ n: '{迎|むか}えに(く|こ)てくれてありがとう[ございます|ございました]', t: 'て-форма от 来る читается きて.' }] },
-      { id: 'sm-f10', q: '{遅|おそ}くなる', chip: 'простите: ～てすみません', a: ['{遅|おそ}くなってすみません[でした]'], ex: 'なる — годан: なって.', trap: [{ n: '{遅|おそ}くなりてすみません[でした]', t: 'て-форма от なる — なって.' }] }
+      { id: 'sm-f1', q: '<i>После урока извиняешься перед учителем за опоздание.</i> {遅|おく}れる', mean: 'Простите, что опоздал.', chip: 'простите: ～てすみませんでした', a: ['{遅|おく}れてすみませんでした'], ex: 'Ичидан: 遅れて + すみませんでした.', trap: [{ n: '{遅|おく}れってすみませんでした', t: '遅れる — ичидан: 遅れて.' }] },
+      { id: 'sm-f2', q: '<i>Обещал позвонить клиенту — и не позвонил.</i> {電話|でんわ}しない', mean: 'Простите, что не позвонил.', chip: 'простите: ～てすみませんでした', a: ['{電話|でんわ}しなくてすみませんでした'], ex: 'ない → なくて.', trap: [{ n: '{電話|でんわ}しないですみませんでした', t: 'て-форма отрицания для извинения — なくて: しなくて.' }] },
+      { id: 'sm-f3', q: '<i>Вечером у тебя шумно, сосед стучит в стену.</i> うるさい', mean: 'Простите за шум.', chip: 'простите: ～てすみません', a: ['うるさくてすみません[でした]'], ex: 'い-прилагательное: い → くて.', trap: [{ n: 'うるさいてすみません[でした]', t: 'い-прилагательное: い → くて, うるさくて.' }] },
+      { id: 'sm-f4', q: '<i>Не смог прийти к другу на день рождения.</i> {行|い}けない', mean: 'Прости, что не смог прийти.', chip: 'другу: ～てごめん', a: ['{行|い}けなくてごめん[ね]'], ex: 'ない → なくて: «прости, что не смог пойти».', trap: [{ n: '{行|い}けないでごめん[ね]', t: 'Извиняются с なくて: 行けなくてごめん.' }] },
+      { id: 'sm-f5', q: '<i>Говоришь учителю: забыл домашнее задание.</i> {宿題|しゅくだい}を{忘|わす}れる', mean: 'Простите, что забыл домашнее задание.', chip: 'простите: ～てすみませんでした', a: ['[{宿題|しゅくだい}を]{忘|わす}れてすみませんでした'], ex: '忘れる — ичидан: 忘れて.' },
+      { id: 'sm-f6', q: '<i>Не сказал подруге, что уезжаешь.</i> {言|い}わない', mean: 'Прости, что не сказал.', chip: 'другу: ～てごめん', a: ['{言|い}わなくてごめん[ね]'], ex: 'ない → なくて.', trap: [{ n: '{言|い}わないでごめん[ね]', t: 'なくて, а не ないで: 言わなくてごめん.' }] },
+      { id: 'sm-f7', q: '<i>Друг помог тебе с переездом.</i> {手伝|てつだ}う', mean: 'Спасибо, что помог.', chip: 'спасибо: ～てくれてありがとう', a: ['{手伝|てつだ}ってくれてありがとう[ございます|ございました]'], ex: 'Помогли тебе — 手伝ってくれて + ありがとう.', trap: [{ n: '{手伝|てつだ}ってありがとう[ございます|ございました]', t: 'Благодарят за помощь себе — нужна くれて: 手伝ってくれてありがとう.' }, { n: '{手伝|てつだ}ってあげてありがとう[ございます|ございました]', t: 'Помогли тебе — くれて, не あげて.' }] },
+      { id: 'sm-f8', q: '<i>Ты опоздал, а подруга тебя ждала.</i> {待|ま}つ', mean: 'Спасибо, что подождала.', chip: 'спасибо: ～てくれてありがとう', a: ['{待|ま}ってくれてありがとう[ございます|ございました]'], ex: 'つ → って.', trap: [{ n: '{待|ま}ちてくれてありがとう[ございます|ございました]', t: 'て-форма от 待つ — 待って.' }] },
+      { id: 'sm-f9', q: '<i>Папа приехал за тобой на станцию.</i> {迎|むか}えに{来|く}る', mean: 'Спасибо, что приехал за мной.', chip: 'спасибо: ～てくれてありがとう', a: ['{迎|むか}えに{来|き}てくれてありがとう[ございます|ございました]'], ex: '来る → 来て (きて).', trap: [{ n: '{迎|むか}えに(く|こ)てくれてありがとう[ございます|ございました]', t: 'て-форма от 来る читается きて.' }] },
+      { id: 'sm-f10', q: '<i>Ты поздно ответил коллеге на письмо.</i> {遅|おそ}くなる', mean: 'Простите, что так поздно.', chip: 'простите: ～てすみません', a: ['{遅|おそ}くなってすみません[でした]'], ex: 'なる — годан: なって.', trap: [{ n: '{遅|おそ}くなりてすみません[でした]', t: 'て-форма от なる — なって.' }] }
     ]},
     { key: 'b', kind: 'choice', title: 'Что сказать?', ask: 'Выбери, что сказать в этой ситуации.', lead: 'За сделанное — て + すみません, за несделанное — なくて. Благодаришь за помощь — てくれてありがとう. И смотри, кому говоришь.', tags: ['sumi-use'], items: [
       { id: 'sm-u1', q: '<i>Ты обещал написать коллеге, но не написал. Извинись.</i>', opts: ['{連絡|れんらく}しなくてすみませんでした。', '{連絡|れんらく}してすみませんでした。', '{連絡|れんらく}しないですみませんでした。', '{連絡|れんらく}してくれてありがとうございました。'], ok: [0], tags: ['sumi-use', 'sumi-form'], ex: 'Не сделал — なくて: 連絡しなくて. 連絡して — «простите, что написал». しないで — не та форма для извинения, а くれてありがとう — благодарность коллеге за то, что он написал.' },
@@ -3358,7 +3484,14 @@ const INTRO16 = {
 
 const RULEX16 = {
   w1: {
-    lead: 'Выбери пример и посмотри, куда идёт помощь.',
+    lead: 'Выбери, кто помогает, кому и что делает, — и посмотри, какой глагол подходит и что получается. В скобках — то, что обычно не говорят.', widget: 'give',
+    acts: [
+      { label: '{本|ほん}を{読|よ}む', ag: '{G}は{R}に{本|ほん}を{読|よ}んであげました。', ku: '{G}は{R}に{本|ほん}を{読|よ}んでくれました。', kuMe: '{G}は（{私|わたし}に）{本|ほん}を{読|よ}んでくれました。', mo: '{R}は{G}に{本|ほん}を{読|よ}んでもらいました。', ru: '{Gn} почитал{Ge} {Rd} книжку', ruMo: '{Rn} попросил{Re} {Ga} почитать книжку' },
+      { label: '{日本語|にほんご}を{教|おし}える', ag: '{G}は{R}に{日本語|にほんご}を{教|おし}えてあげました。', ku: '{G}は{R}に{日本語|にほんご}を{教|おし}えてくれました。', kuMe: '{G}は（{私|わたし}に）{日本語|にほんご}を{教|おし}えてくれました。', mo: '{R}は{G}に{日本語|にほんご}を{教|おし}えてもらいました。', ru: '{Gn} научил{Ge} {Ra} японскому', ruMo: '{Rn} попросил{Re} {Ga} научить {Rp} японскому' },
+      { label: '{傘|かさ}を{貸|か}す', ag: '{G}は{R}に{傘|かさ}を{貸|か}してあげました。', ku: '{G}は{R}に{傘|かさ}を{貸|か}してくれました。', kuMe: '{G}は（{私|わたし}に）{傘|かさ}を{貸|か}してくれました。', mo: '{R}は{G}に{傘|かさ}を{貸|か}してもらいました。', ru: '{Gn} одолжил{Ge} {Rd} зонт', ruMo: '{Rn} попросил{Re} {Ga} одолжить зонт' },
+      { label: '{駅|えき}まで{送|おく}る', ag: '{G}は{R}を{駅|えき}まで{送|おく}ってあげました。', ku: '{G}は{R}を{駅|えき}まで{送|おく}ってくれました。', kuMe: '{G}は（{私|わたし}を）{駅|えき}まで{送|おく}ってくれました。', mo: '{R}は{G}に{駅|えき}まで{送|おく}ってもらいました。', ru: '{Gn} проводил{Ge} {Ra} до станции', ruMo: '{Rn} попросил{Re} {Ga} проводить {Rp} до станции' },
+      { label: '{料理|りょうり}する', ag: '{G}は{R}のために{料理|りょうり}してあげました。', ku: '{G}は{R}のために{料理|りょうり}してくれました。', kuMe: '{G}は（{私|わたし}のために）{料理|りょうり}してくれました。', mo: '{R}は{G}に{料理|りょうり}してもらいました。', ru: '{Gn} приготовил{Ge} ужин для {Rg}', ruMo: '{Rn} попросил{Re} {Ga} приготовить ужин' }
+    ],
     words: [
       { label: 'あげる', lines: ['a={私|わたし}は b={友達|ともだち}に c={町|まち}を{案内|あんない}して d=あげた || От меня — あげた, кому — に'] },
       { label: 'くれる', lines: ['a={友達|ともだち}が c={町|まち}を{案内|あんない}して d=くれた || Мне — くれた, тот, кто делает, — が', 'a +x=（{私|わたし}に） c d || 私に обычно не говорят: くれた и так значит «мне»'] },
@@ -3500,6 +3633,148 @@ SECTIONS16.forEach(s => { s.lesson = 16; SECTIONS.push(s); });
 Object.assign(SKILLS, SKILLS16);
 Object.assign(INTRO, INTRO16);
 Object.assign(RULEX, RULEX16);
+
+/* ===== Lesson 16 theory in pages (rule pane: «Объяснение» with «Дальше» / «Назад»); closer to Andy's lecture ===== */
+const S16 = id => SECTIONS16.find(s => s.id === id);
+S16('w1').pages = [
+  { h: 'Смысл', html: `
+<p><b>Помощь — как подарок.</b> В уроке 14 мы давали вещи. Теперь даём действие: て-форма глагола + あげる, くれる или もらう. Направление то же, что у подарков, но добавляется отношение: кто кому сделал одолжение и кто за это благодарен.</p>
+<details class="akm-more"><summary>Полная карта Энди: кто кому и каким глаголом</summary><div class="akm-host"></div></details>
+<div class="tp-m"><h4 class="jp">～てあげる</h4><p><b>«Сделал для него — это моя услуга».</b> Человеку было трудно или он не мог сам — и ты помог. Помощь идёт от тебя наружу или между другими людьми. К тебе и твоей семье あげる не идёт никогда.</p>
+<p class="ex jp">ユキさんを{仕事|しごと}に{連|つ}れて{行|い}ってあげた。</p><p class="tp-tr">«Я взял Юки с собой на работу» — сама она бы не добралась.</p></div>
+<div class="tp-m"><h4 class="jp">～てくれる</h4><p><b>«Был так добр, что сделал (мне)».</b> Помощь идёт к тебе или к твоим близким. {私|わたし}に почти не говорят: くれた и так значит «мне». Когда что-то сделали для тебя, японцы почти всегда говорят ～てくれた.</p>
+<p class="ex jp">ユキさんが{料理|りょうり}してくれた。</p><p class="tp-tr">«Юки приготовила (для меня)» — тепло. А ユキさんが{料理|りょうり}した — сухой факт, будто тебе всё равно.</p></div>
+<div class="tp-m"><h4 class="jp">～てもらう</h4><p><b>«Мне сделали: я попросил — и человек сделал».</b> Так почти всегда. Реже — без просьбы, но с настоящей пользой для тебя. Тот, кто помог, — с に.</p>
+<p class="ex jp">{友達|ともだち}に{写真|しゃしん}を{撮|と}ってもらった。</p><p class="tp-tr">«Я попросил друга, и он меня сфотографировал». А {先生|せんせい}にほめてもらった — «учитель меня похвалил»: не просил, но это приятно и важно.</p></div>
+<p><b>Одно событие с двух сторон.</b> ユキさんが{傘|かさ}を{貸|か}してくれた — смотрим на Юки: она была добра. {私|わたし}はユキさんに{傘|かさ}を{貸|か}してもらった — смотрим на себя: «я попросил, и мне одолжили».</p>` },
+  { h: 'Как строится', html: `
+<div class="tbl"><table>
+<tr><th></th><th>Кто делает</th><th>Для кого</th><th>Пример</th></tr>
+<tr><td class="jp">あげる</td><td>я или кто-то (は/が)</td><td>другой (に)</td><td class="jp">{私|わたし}は<wbr>ユキに<wbr>{傘|かさ}を<wbr>{貸|か}してあげた</td></tr>
+<tr><td class="jp">くれる</td><td>другой (が)</td><td>я, мои близкие</td><td class="jp">ユキが<wbr>{傘|かさ}を<wbr>{貸|か}してくれた</td></tr>
+<tr><td class="jp">もらう</td><td>другой (に)</td><td>я (は)</td><td class="jp">{私|わたし}は<wbr>ユキに<wbr>{傘|かさ}を<wbr>{貸|か}してもらった</td></tr>
+</table></div>
+<ul>
+<li><b>Частицы глагола не меняются.</b> <span class="jp">お{昼|ひる}を{作|つく}る</span> → <span class="jp">お{昼|ひる}を{作|つく}ってあげた</span>. <span class="jp">ユキさんを{仕事|しごと}に{連|つ}れて{行|い}く</span> → <span class="jp">ユキさんを{仕事|しごと}に{連|つ}れて{行|い}ってあげた</span>: человек с を, потому что так у глагола 連れて行く.</li>
+<li><b>«Для кого».</b> Если у глагола есть место для человека (教える, 貸す, 読む — кому), это に: <span class="jp">{弟|おとうと}に{本|ほん}を{読|よ}んであげた</span>. Если места нет (料理する, 掃除する), говорят のために: <span class="jp">ユキさんが{僕|ぼく}のために{料理|りょうり}してくれた</span>.</li>
+<li><b>Два に в одном предложении</b> — у них разная работа: <span class="jp">これに{社長|しゃちょう}にサインしてもらいたい</span>. これに — на чём подписать, 社長に — кто подпишет. Вместо に у того, кто делает, бывает から: <span class="jp">{社長|しゃちょう}から{印刷|いんさつ}{会社|がいしゃ}に{電話|でんわ}してもらいたい</span> — «хочу, чтобы директор позвонил в типографию»; 印刷会社に — куда звонить.</li>
+<li><b>Спряжение.</b> あげる и くれる — ичидан: あげた, くれた, くれない. もらう — годан: もらった, もらいたい («хочу, чтобы сделали»), もらえる.</li>
+<li><b>Старшим.</b> Старшему в лицо ～てあげます не говорят: звучит «так и быть, помогу». Предлагают ～ましょうか: <span class="jp">{持|も}ちましょうか</span>.</li>
+<li><b>もらう о двух чужих людях.</b> Обычно もらう — о себе и своих, и Энди советует так и держаться. В рассказе можно встать на сторону другого человека: <span class="jp">ユキさんはリサさんに{日本語|にほんご}を{教|おし}えてもらった</span>.</li>
+</ul>
+<p class="ex jp">「{友達|ともだち}がお{弁当|べんとう}を{作|つく}ってくれました。」</p>` }
+  ,{ h: 'Как выбрать и тонкости', html: `
+<div class="tp-m"><h4>くれる или もらう?</h4><p>Факт один, разница — чья сторона важнее. Хочешь подчеркнуть доброту и инициативу другого — <b>くれる</b>. Хочешь сказать, что тебе оказали услугу и, может быть, ты сам об этом позаботился, — <b>もらう</b>.</p>
+<p class="ex jp">{友達|ともだち}が{引|ひ}っ{越|こ}しを{手伝|てつだ}ってくれた。</p><p class="tp-tr">«Друг помог мне с переездом» — в центре друг и его доброта.</p>
+<p class="ex jp">{友達|ともだち}に{引|ひ}っ{越|こ}しを{手伝|てつだ}ってもらった。</p><p class="tp-tr">«Мне помог с переездом друг» — в центре результат для меня, часто по моей просьбе.</p></div>
+<p><b>Если сомневаешься</b>, спроси себя по порядку:</p>
+<ul>
+<li>Кто в начале предложения? Тот, кто помогает (が) — くれる. Тот, кому помогли (は) — もらう.</li>
+<li>Была ли просьба или ты сам всё устроил? Да — скорее もらう.</li>
+<li>Это благодарность за чужую инициативу? Да — くれる.</li>
+<li>Перед помощником стоит に? Это примета もらう.</li>
+</ul>
+<div class="tp-m"><h4>Упрёк: ～てくれなかった</h4><p>Отрицание くれる звучит как обида: «ты должен был сделать это для меня — и не сделал».</p>
+<p class="ex jp">なんで{教|おし}えてくれなかったの？</p><p class="tp-tr">«Почему ты мне не сказал?»</p></div>
+<div class="tp-m"><h4>Вежливость — забегая вперёд</h4><p>У каждого глагола есть вежливая пара для старших. Их проходят в уроке 19, но узнавать полезно уже сейчас.</p>
+<div class="tbl"><table>
+<tr><th>Направление</th><th>Грубо</th><th>Обычно</th><th>Вежливо</th></tr>
+<tr><td>я → другому</td><td class="jp">～てやる</td><td class="jp">～てあげる</td><td class="jp">～てさしあげる</td></tr>
+<tr><td>другой → мне</td><td>—</td><td class="jp">～てくれる</td><td class="jp">～てくださる</td></tr>
+<tr><td>я получаю</td><td>—</td><td class="jp">～てもらう</td><td class="jp">～ていただく</td></tr>
+</table></div>
+<p>～てやる говорят о детях, животных или грубо. Учителю: <span class="jp">{先生|せんせい}が{説明|せつめい}してくださった</span> — «учитель (любезно) объяснил мне».</p></div>
+<p><b>Где легко ошибиться:</b></p>
+<ul>
+<li>あげる, когда помогли тебе. Тебе — всегда くれる или もらう.</li>
+<li>～てあげる в лицо тому, кому помогаешь, особенно старшему: звучит свысока. Лучше <span class="jp">{手伝|てつだ}いましょうか</span>.</li>
+<li>くれる о начальнике в вежливом разговоре звучит фамильярно — вежливо くださる. И もらう о старших лучше заменять на いただく.</li>
+<li>Переводить ～てくれた просто «помог»: теряется благодарность. Лучше «помог мне», «был так добр».</li>
+</ul>` }
+];
+S16('w1').rule = S16('w1').pages.map(p => p.html).join('\n');
+
+S16('w2').pages = [
+  { h: 'Кого как просить', html: S16('w2').rule },
+  { h: 'Почему いただけませんか так вежливо', html: `
+<ul>
+<li><b>いただく</b> — вежливое «получать», как в いただきます. いただける — «могу получить». <span class="jp">いただけませんか</span> — дословно «нельзя ли мне получить это от вас?».</li>
+<li>Ты не говоришь человеку «сделайте». Ты спрашиваешь, можно ли тебе получить от него услугу. Вопрос с «не» легко позволяет ответить «нет, не получится». Поэтому так просят начальника, учителя, клиента.</li>
+<li><span class="jp">～てください</span> — прямо: «сделайте». Выхода у человека нет: просьба почти как указание.</li>
+<li><span class="jp">～てくれませんか</span> — «не сделаете ли?». Выход есть: можно отказаться. Поэтому Энди считает её мягче, чем ～てください, хотя в Genki они стоят на одном уровне.</li>
+</ul>
+<div class="tp-scale jp"><span>～てくれない？<small>друзьям, семье</small></span><i>→</i><span>～てください<small>прямо</small></span><i>→</i><span>～てくれませんか<br>～てもらえませんか<small>вежливо</small></span><i>→</i><span>～ていただけませんか<small>очень вежливо</small></span></div>
+<p class="ex jp">「すみませんが、もう{一度|いちど}{説明|せつめい}していただけませんか。」</p>` }
+];
+S16('w3').pages = [
+  { h: 'Форма и кому', html: S16('w3').rule },
+  { h: 'Почему о себе — といいんですが', html: `
+<ul>
+<li>Сказать о себе прямо: «хорошо будет, если со мной случится…» — по-японски слишком в лоб. Звучит, будто ты уверен или требуешь.</li>
+<li><b>が или けど обрывают фразу:</b> «хорошо бы…, но кто знает». Конец собеседник договорит сам: «…но, может, и не выйдет». Поэтому о своих надеждах говорят <span class="jp">といいんですが</span> или <span class="jp">といいんだけど</span>, сам себе — <span class="jp">といいなあ</span>. После けど можно и назвать, что мешает: <span class="jp">パーティーに{行|い}けるといいんだけど、{今週|こんしゅう}すごく{忙|いそが}しい</span>.</li>
+<li><b>Пожелание другому</b> — <span class="jp">といいですね</span>: ね ищет согласия, звучит как тёплое «желаю тебе». О себе <span class="jp">{楽|たの}しいといいですね</span> не говорят.</li>
+<li><b>Ответ на чужую надежду</b> — <span class="jp">そうだといいですね</span> «хорошо бы так», «и я надеюсь».</li>
+<li><b>Форма «могу».</b> Если надеешься на то, что человек делает сам, нужна форма «могу» из урока 13. Сам пойти может каждый — надеются на то, что получится: <span class="jp">{行|い}けるといいんだけど</span>, <span class="jp">{食|た}べられるといいんだけど</span>. Если это случается само (дождь, письмо, автобус), форма обычная: <span class="jp">{雨|あめ}が{降|ふ}るといいんだけど</span>.</li>
+</ul>
+<p class="ex jp">「{次|つぎ}の{休|やす}みは{楽|たの}しいといいですね。」「パーティーに{行|い}けるといいんだけど…」</p>` }
+];
+S16('w4').pages = [
+  { h: 'Форма перед 時', html: S16('w4').rule },
+  { h: 'Что раньше, что позже', html: `
+<p>Время перед {時|とき} показывает только одно: случилось ли это к моменту главного события. А время в конце предложения — когда всё было: 〜ました — было, 〜ます — будет или бывает всегда.</p>
+<div class="tp-cases"><div class="tp-case"><h4 class="jp">～る{時|とき}</h4><p>Событие с 時 ещё впереди: главное — <b>раньше</b> или в то же время.</p><p class="ex jp">この{車|くるま}を{買|か}う{時|とき}、{銀行|ぎんこう}からお{金|かね}を{借|か}りました。</p><span class="tp-ord">① занял деньги → ② купил машину</span></div><div class="tp-case"><h4 class="jp">～た{時|とき}</h4><p>Событие с 時 уже случилось: главное — <b>после</b>.</p><p class="ex jp">ピザを{食|た}べた{時|とき}、{嬉|うれ}しかった。</p><span class="tp-ord">① съел пиццу → ② обрадовался</span></div><div class="tp-case"><h4 class="jp">～ている{時|とき}</h4><p>Главное случилось <b>посреди</b> длящегося действия.</p><p class="ex jp">テレビを{見|み}ている{時|とき}、{電話|でんわ}が{来|き}た。</p><span class="tp-ord">смотрю телевизор… — и тут звонок</span></div><div class="tp-case"><h4>Два настоящих</h4><p>Привычка; порядок такой же, как у ～る時.</p><p class="ex jp">{寝|ね}る{時|とき}、{歯|は}を{磨|みが}きます。</p><span class="tp-ord">① чищу зубы → ② ложусь</span></div><div class="tp-case"><h4>Прилагательное, сущ.</h4><p>Состояние в то время.</p><p class="ex jp">{寂|さび}しい{時|とき}、{母|はは}に{電話|でんわ}します。</p><span class="tp-ord">когда грустно — звоню маме</span></div></div>
+<ul>
+<li>С прошедшим в конце: <span class="jp">{日本|にほん}に{行|い}く{時|とき}、{空港|くうこう}で{両替|りょうがえ}しました</span> — поменял деньги ещё по дороге. <span class="jp">{日本|にほん}に{行|い}った{時|とき}、{着物|きもの}を{買|か}います</span> — «когда буду в Японии, куплю кимоно»: перед 時 прошедшее, хотя всё ещё впереди.</li>
+<li>Энди собрал это в «пиццевое стихотворение»: <span class="jp">{行|い}く{時|とき}、ピザを{食|た}べます</span> (поем до или по дороге) — <span class="jp">{行|い}った{時|とき}、ピザを{食|た}べます</span> (поем, когда буду там) — <span class="jp">{悲|かな}しい{時|とき}、ピザを{食|た}べます</span> (когда грустно — всегда ем пиццу).</li>
+</ul>` }
+];
+S16('w5').pages = [
+  { h: 'Извинение и спасибо', html: S16('w5').rule },
+  { h: 'なくて, вежливость и 本当に', html: `
+<p><b>Как получить なくて.</b> Возьми простое отрицание и обращайся с ним как с い-прилагательным: убери い и добавь くて.</p>
+<div class="tbl"><table>
+<tr><th>Глагол</th><th>Отрицание</th><th>なくて</th></tr>
+<tr><td class="jp">{買|か}う</td><td class="jp">{買|か}わない</td><td class="jp">{買|か}わなくて</td></tr>
+<tr><td class="jp">{食|た}べる</td><td class="jp">{食|た}べない</td><td class="jp">{食|た}べなくて</td></tr>
+<tr><td class="jp">する</td><td class="jp">しない</td><td class="jp">しなくて</td></tr>
+<tr><td class="jp">{来|く}る</td><td class="jp">{来|こ}ない</td><td class="jp">{来|こ}なくて</td></tr>
+<tr><td class="jp">{行|い}ける</td><td class="jp">{行|い}けない</td><td class="jp">{行|い}けなくて</td></tr>
+</table></div>
+<p class="ex jp">ピザを{買|か}わなくてごめん。</p><p class="tp-tr">«Прости, что не купил пиццу». Не путай с ないで: {食|た}べないで — «не ешь!» или «не поев».</p>
+<ul>
+<li><b>Насколько извиняться.</b> <span class="jp">すみませんでした</span> — начальнику, учителю, клиенту. <span class="jp">ごめんなさい</span> — на ступень проще, но не грубо: знакомым, семье, детям. <span class="jp">ごめん</span> — самым близким: друзьям, семье.</li>
+<li>Тон важнее слова: ごめん, брошенное легко, не звучит как извинение.</li>
+<li><b>本当に.</b> Этого нет в Genki, но так говорят всегда, когда виноват всерьёз: <span class="jp">ピザを{買|か}わなくて{本当|ほんとう}にすみませんでした</span>. 本当に ставят между て-формой и すみません. Можно и без て-формы: <span class="jp">{本当|ほんとう}にすみませんでした</span>.</li>
+</ul>` }
+];
+
+/* «Как решать» in two pages where the meaning has to come before the form */
+Object.assign(INTRO16.w1a, {
+  h: 'Зачем это нужно',
+  text: 'В японском мало сказать, что человек что-то сделал. Важно, для кого он это сделал и как к этому относится тот, кто говорит.\n= {友達|ともだち}が{手伝|てつだ}った — «друг помог»: просто факт\n= {友達|ともだち}が{手伝|てつだ}ってくれた — «друг помог мне», и я ему благодарен\nДля этого к て-форме добавляют те же глаголы, что в уроке 14: あげる, くれる, もらう. Только теперь «дарят» не вещь, а действие — помощь, услугу, одолжение.',
+  lines: ['a={友達|ともだち}が b={手伝|てつだ}った || Просто факт: друг помог', 'a !b={手伝|てつだ}って +c=くれた || くれた: помог мне — и я благодарен'],
+  slides: [
+    { h: 'Куда идёт помощь', widget: 'akm-steps', text: 'Помощь «дарят», как вещь в уроке 14. Листай схему стрелками.' },
+    { h: 'Одно событие — две стороны', text: 'Юки одолжила тебе зонт. Сказать можно с двух сторон.\n- ユキが{傘|かさ}を{貸|か}してくれた — смотрим на Юки: она сделала это для тебя по своей доброте.\n- {私|わたし}はユキに{傘|かさ}を{貸|か}してもらった — смотрим на себя: тебе одолжили, часто потому, что ты попросил.',
+      lines: ['a=ユキが b={傘|かさ}を c={貸|か}して d=くれた || В центре Юки и её доброта', '!a={私|わたし}は +e=ユキに b c !d=もらった || В центре я: мне одолжили, я попросил'] },
+    { h: 'Что слышит собеседник', html: `<div class="akc">
+<div class="akc-c ag"><h4 class="jp">～てあげる</h4><p class="akc-m">«Я сделал это для него».</p><p>Ты оказываешь услугу, и это слышно. О себе другу рассказывать можно: <span class="jp">{弟|おとうと}に{本|ほん}を{読|よ}んであげた</span>. Но в лицо тому, кому помогаешь, особенно старшему, звучит как «так и быть, сделаю тебе одолжение». Им говорят <span class="jp">{手伝|てつだ}いましょうか</span>.</p></div>
+<div class="akc-c ku"><h4 class="jp">～てくれる</h4><p class="akc-m">«Сделал для меня, и мне приятно».</p><p>Это не громкое «огромное спасибо», а обычная тёплая благодарность. Японцы говорят так почти всегда, когда им помогли: без くれる фраза звучит холодно, будто тебе всё равно. Сильнее благодарят словами: <span class="jp">{本当|ほんとう}にありがとう</span>. Старшим — вежливое くださる (урок 19).</p></div>
+<div class="akc-c mo"><h4 class="jp">～てもらう</h4><p class="akc-m">«Мне сделали — я получил помощь».</p><p>В центре ты и результат для тебя. Часто ты сам попросил или всё устроил: <span class="jp">{友達|ともだち}に{引|ひ}っ{越|こ}しを{手伝|てつだ}ってもらった</span>. Благодарность тоже слышна, но тише, чем в くれる. Тот, кто помог, — с に. О старших — вежливое いただく.</p></div>
+</div>
+<p class="akc-q">Как выбрать: хочешь подчеркнуть доброту другого — くれる. Хочешь сказать, что тебе оказали услугу, может быть, по твоей просьбе, — もらう.</p>` },
+    { h: 'Как решать', text: '= て-форма + あげる / くれる / もらう\n- あげる и くれる спрягаются как ичидан: あげた, くれた. もらう — как годан: もらった, もらいたい.\n- Тот, кто помог, при もらう стоит с に: ユキに{貸|か}してもらった.\n- Частицы глагола остаются: ユキを{駅|えき}まで{送|おく}ってあげた.\n- Сначала реши, кто для кого делает, потом строй форму.',
+      lines: ['a={待|ま}つ || Глагол', '!a={待|ま}って || て-форма', 'a +b=くれた || + くれた: подождал меня, и я благодарен'] }
+  ]
+});
+delete INTRO16.w1a.gen; delete INTRO16.w1a.words; delete INTRO16.w1a.miru;
+Object.assign(INTRO16.w4b, {
+  h: 'Ещё не случилось или уже',
+  slides: [{ h: 'Примеры', text: 'Перед 時 настоящее — событие ещё впереди, главное идёт раньше. Прошедшее — событие уже случилось.\n- この{車|くるま}を{買|か}う{時|とき}、お{金|かね}を{借|か}りました — сначала занял, потом купил.\n- ピザを{食|た}べた{時|とき}、{嬉|うれ}しかった — сначала поел, потом обрадовался.\n- テレビを{見|み}ている{時|とき}、{電話|でんわ}が{来|き}た — звонок посреди просмотра.',
+    lines: ['a={車|くるま}を{買|か}う b={時|とき}、 c=お{金|かね}を{借|か}りました || ① занял → ② купил', '!a=ピザを{食|た}べた b !c={嬉|うれ}しかった || ① поел → ② обрадовался'] }]
+});
+/* the lesson 14 map of gifts, one tap away */
+['w1a', 'w1b'].forEach(k => { const b = S16('w1').blocks.find(x => x.key === k.slice(2)); if (b) b.link = { to: 'u3', label: 'Как давать и получать вещи — урок 14' }; });
 
 /* ===== Trainer «Счёт»: numbers, time, dates, counters (not a Genki lesson; shown in the lesson menu as a trainer) ===== */
 // lesson ids from 100 up are trainers: their tag, header label and name replace «第N課» / «Урок N»
@@ -5445,7 +5720,7 @@ function allKeys(it, max = 10) {
 }
 const trapsText = it => (it.trap || []).slice(0, 4).map(t => `«${plainK(t.n)}» — ${plainQ(t.t)}`).join('; ');
 // the section's theory as the learner saw it, in plain text
-const ruleText = sec => plainQ(String(sec.rule || '').replace(/<\/(p|li|tr|h\d)>/g, '\n').replace(/<(td|th)[^>]*>/g, ' ')).replace(/[ \t]+/g, ' ').replace(/\n\s*/g, '\n').trim().slice(0, 2200);
+const ruleText = sec => plainQ(String(sec.pages ? sec.pages.map(p => p.html).join('\n') : sec.rule || '').replace(/<\/(p|li|tr|h\d)>/g, '\n').replace(/<(td|th)[^>]*>/g, ' ')).replace(/[ \t]+/g, ' ').replace(/\n\s*/g, '\n').trim().slice(0, 2200);
 function taskText(it) {
   const refs = it.a ? allKeys(it).join(' / ') : '';
   if (it.kind === 'free') return `Тип задания: свободный ответ на вопрос.
@@ -5856,18 +6131,50 @@ function gvJudge(g, r) {
     ['もらう', mo, `${R.jp}は${G.jp}からプレゼントをもらいました。`]
   ];
 }
-function buildGive(chips, stage) {
-  let g = 2, r = 0, raf = 0;
-  const row = (grp, lab) => `<span class="fq-l">${lab}</span><div class="fq-row">${GV_P.map((p, i) => `<button type="button" class="rx-chip jp" data-g="${grp}" data-i="${i}">${rb(p.jp)}</button>`).join('')}</div>`;
-  chips.innerHTML = row('g', 'Кто даёт') + row('r', 'Кому') + `<button type="button" class="link gv-swap">${ICON.replay}Поменять местами</button>`;
+// the same map for help (lesson 16): its own people (a friend and the boss instead of strangers), an action is picked too,
+// and each line gets its Russian sense; state 2 = possible, but with a caveat
+const GV_PT = [
+  { jp: '{私|わたし}', ru: 'я', me: true, inner: true, x: 78, y: 66, f: { n: 'я', d: 'мне', a: 'меня', g: 'меня', p: 'меня', e: '' } },
+  { jp: '{妹|いもうと}', ru: 'сестра', inner: true, x: 78, y: 140, f: { n: 'сестра', d: 'сестре', a: 'сестру', g: 'сестры', p: 'её', e: 'а' } },
+  { jp: 'ユキさん', ru: 'подруга', inner: false, x: 252, y: 66, f: { n: 'Юки', d: 'Юки', a: 'Юки', g: 'Юки', p: 'её', e: 'а' } },
+  { jp: '{社長|しゃちょう}', ru: 'директор', inner: false, boss: true, x: 252, y: 140, f: { n: 'директор', d: 'директору', a: 'директора', g: 'директора', p: 'его', e: '' } }
+];
+function gvJudgeTe(g, r, act) {
+  const G = GV_PT[g], R = GV_PT[r];
+  const fill = t => t.replace(/\{([GR])([ndagpe])\}/g, (m, w, k) => (w === 'G' ? G : R).f[k]).replace(/^./, c => c.toUpperCase());
+  const jp = t => t.replace(/\{G\}/g, G.jp).replace(/\{R\}/g, R.jp);
+  const ag = R.inner && !G.me ? [0, R.me ? 'あげる к тебе не идёт. Тебе помогли — くれた.' : 'К твоим близким あげる не идёт: звучит, будто сестра тебе чужая. Скажи くれた.']
+    : R.me ? [0, 'あげる к тебе не идёт. Тебе помогли — くれた.']
+    : G.me && R.boss ? [2, 'Другу так рассказать можно. Но в лицо директору ～てあげます не говорят: «так и быть, помогу». Предложи: ～ましょうか.']
+    : [1, (G.me ? 'Помогаешь ты' : G.inner ? 'Помогает твоя сестра' : 'Помогают друг другу другие люди') + '. あげる — «сделать одолжение»: помочь тому, кто сам бы не справился.'];
+  const ku = G.me ? [0, 'くれる никогда не идёт от тебя. Ты делаешь — あげた.']
+    : !R.inner ? [0, `くれる — только к тебе и твоим. ${R.jp === 'ユキさん' ? 'Юки' : 'Директор'} тебе не родня — あげた.`]
+    : [1, (R.me ? 'Помогли тебе' : 'Помогли твоей сестре — ты благодарен, как за себя') + '. くれる — «был так добр, что сделал».' + (R.me ? ' 私に обычно не говорят: くれる и так значит «мне».' : '') + (G.boss ? ' Директору вежливее くださった — это будет в уроке 19.' : '')];
+  const mo = G.me ? [0, 'もらう — про того, кто получил помощь. «Получили помощь от меня» не говорят. Скажи あげた.']
+    : G.inner && !R.inner ? [2, `Странно: ты встаёшь на сторону ${R.jp === 'ユキさん' ? 'Юки' : 'директора'}, а не сестры. Лучше {妹|いもうと}が…てあげた.`]
+    : !R.inner ? [2, 'Можно, если рассказываешь со стороны получателя. В разговоре чаще あげた.']
+    : [1, 'Глазами того, кому помогли: «попросил — и сделали» или «получил помощь». Кто делал — с に.' + (G.boss ? ' Вежливее — いただいた (урок 19).' : '')];
+  const tr = t => `«${fill(t)}»`;
+  return [
+    ['てあげる', ag, jp(act.ag), tr(act.ru)],
+    ['てくれる', ku, jp(R.me && act.kuMe ? act.kuMe : act.ku), tr(act.ru)],
+    ['てもらう', mo, jp(act.mo), tr(act.ruMo || act.ru)]
+  ];
+}
+function buildGive(chips, stage, R) {
+  const acts = R && R.acts, PP = acts ? GV_PT : GV_P;
+  let g = 2, r = 0, a = 0, raf = 0;
+  const row = (grp, lab) => `<span class="fq-l">${lab}</span><div class="fq-row">${PP.map((p, i) => `<button type="button" class="rx-chip jp" data-g="${grp}" data-i="${i}">${rb(p.jp)}</button>`).join('')}</div>`;
+  const actRow = acts ? `<span class="fq-l">Что делает</span><div class="fq-row">${acts.map((x, i) => `<button type="button" class="rx-chip jp gv-act" data-a="${i}">${rb(x.label)}</button>`).join('')}</div>` : '';
+  chips.innerHTML = row('g', acts ? 'Кто делает' : 'Кто даёт') + row('r', acts ? 'Для кого' : 'Кому') + actRow + `<button type="button" class="link gv-swap">${ICON.replay}Поменять местами</button>`;
   const node = (p, i) => `<g class="gv-n${p.inner ? ' in' : ''}" data-i="${i}" transform="translate(${p.x} ${p.y})"><rect x="-44" y="-18" width="88" height="36" rx="18"/><text class="jp" y="6">${esc(plainQ(p.jp))}</text><text class="gv-ru" y="33">${esc(p.ru)}</text></g>`;
-  stage.innerHTML = `<div class="gv"><svg class="gv-map" viewBox="0 0 310 194" role="img" aria-label="Кто кому даёт"><rect class="gv-in" x="10" y="8" width="136" height="180" rx="28"/><text class="gv-cap" x="78" y="30">свой круг</text><path class="gv-ln" d=""/><path class="gv-hd" d="M-7,-5 L1,0 L-7,5"/><rect class="gv-gift" x="-5" y="-5" width="10" height="10" rx="3"/>${GV_P.map(node).join('')}</svg><div class="gv-rows" aria-live="polite"></div></div>`;
+  stage.innerHTML = `<div class="gv"><svg class="gv-map" viewBox="0 0 310 194" role="img" aria-label="Кто кому даёт"><rect class="gv-in" x="10" y="8" width="136" height="180" rx="28"/><text class="gv-cap" x="78" y="30">свой круг</text><path class="gv-ln" d=""/><path class="gv-hd" d="M-7,-5 L1,0 L-7,5"/><rect class="gv-gift" x="-5" y="-5" width="10" height="10" rx="3"/>${PP.map(node).join('')}</svg><div class="gv-rows" aria-live="polite"></div></div>`;
   const svg = $('.gv-map', stage), ln = $('.gv-ln', svg), hd = $('.gv-hd', svg), gift = $('.gv-gift', svg), rows = $('.gv-rows', stage);
   const edge = (p, ux, uy) => { const t = Math.min(46 / Math.max(Math.abs(ux), 1e-6), 20 / Math.max(Math.abs(uy), 1e-6)); return [p.x + ux * t, p.y + uy * t]; };
   const render = anim => {
-    $$('.rx-chip', chips).forEach(x => x.setAttribute('aria-pressed', String(+x.dataset.i === (x.dataset.g === 'g' ? g : r))));
+    $$('.rx-chip', chips).forEach(x => x.setAttribute('aria-pressed', String(x.dataset.a != null ? +x.dataset.a === a : +x.dataset.i === (x.dataset.g === 'g' ? g : r))));
     $$('.gv-n', svg).forEach(n => { const i = +n.dataset.i; n.classList.toggle('giv', i === g); n.classList.toggle('rec', i === r); });
-    const A0 = GV_P[g], B0 = GV_P[r], dx = B0.x - A0.x, dy = B0.y - A0.y, L0 = Math.hypot(dx, dy) || 1, ux = dx / L0, uy = dy / L0;
+    const A0 = PP[g], B0 = PP[r], dx = B0.x - A0.x, dy = B0.y - A0.y, L0 = Math.hypot(dx, dy) || 1, ux = dx / L0, uy = dy / L0;
     const [x1, y1] = edge(A0, ux, uy), [x2, y2] = edge(B0, -ux, -uy), bend = dy === 0 ? -26 : dx === 0 ? 46 : 18;
     const cx = (x1 + x2) / 2 - uy * bend, cy = (y1 + y2) / 2 + ux * bend;
     ln.setAttribute('d', `M${x1.toFixed(1)},${y1.toFixed(1)} Q${cx.toFixed(1)},${cy.toFixed(1)} ${x2.toFixed(1)},${y2.toFixed(1)}`);
@@ -5887,10 +6194,11 @@ function buildGive(chips, stage) {
       };
       raf = requestAnimationFrame(tick);
     } else { ln.style.strokeDasharray = ''; ln.style.strokeDashoffset = ''; hd.style.opacity = 1; gift.style.opacity = 0; }
-    rows.innerHTML = gvJudge(g, r).map(([v, [ok, why], jp]) => `<div class="gv-r ${ok ? 'ok' : 'no'}"><span class="gv-v jp">${v}</span><span class="gv-ic">${ok ? ICON.check : ICON.close}</span><span class="gv-b">${ok ? `<span class="gv-s jp">${rb(jp)}</span>` : ''}<span class="gv-w">${ty(why)}</span></span></div>`).join('');
+    rows.innerHTML = (acts ? gvJudgeTe(g, r, acts[a]) : gvJudge(g, r)).map(([v, [ok, why], jp, ru]) => `<div class="gv-r ${ok === 2 ? 'warn' : ok ? 'ok' : 'no'}"><span class="gv-v jp">${v}</span><span class="gv-ic">${ok === 2 ? '!' : ok ? ICON.check : ICON.close}</span><span class="gv-b">${ok ? `<span class="gv-s jp">${rb(jp)}</span>${ru ? `<span class="gv-tr">${esc(ru)}</span>` : ''}` : ''}<span class="gv-w">${ty(why)}</span></span></div>`).join('');
     if (anim && !RM) $$('.gv-r', rows).forEach((x, i) => A(x, [{ opacity: 0, transform: 'translateY(8px)' }, { opacity: 1, transform: 'none' }], { duration: 520, easing: SP.easing, delay: 320 + i * 90, fill: 'backwards' }));
   };
   $$('.rx-chip', chips).forEach(x => { x.onclick = () => {
+    if (x.dataset.a != null) { if (+x.dataset.a === a) return; a = +x.dataset.a; render(true); return; }
     const i = +x.dataset.i;
     if (x.dataset.g === 'g') { if (i === g) return; if (i === r) r = g; g = i; } else { if (i === r) return; if (i === g) g = r; r = i; }
     render(true);
@@ -6065,19 +6373,143 @@ function buildCount(R, chips, stage) {
   render(false);
   return () => render(true);
 }
+/* the same idea in five steps, on a map of two zones: «свои» (you and your family) and «чужие»; people not yet in the story stay faint */
+const AKS = [
+  { add: ['ku1'], jp: 'ユキが{傘|かさ}を{貸|か}してくれた', ru: 'Юки одолжила тебе зонт. くれた говорит: это сделали для тебя, и тебе приятно.' },
+  { add: ['ag1'], jp: 'ユキに{傘|かさ}を{貸|か}してあげた', ru: 'Ты одолжил ей зонт. あげた говорит: это твоя услуга ей.' },
+  { add: ['imo', 'ku2'], jp: 'ユキが{妹|いもうと}に{傘|かさ}を{貸|か}してくれた', ru: 'Семья — это «свои», как ты сам. Юки помогла сестре — тоже くれた.' },
+  { add: ['lisa', 'ag2'], jp: 'ユキがリサに{傘|かさ}を{貸|か}してあげた', ru: 'Между чужими людьми — あげる.' },
+  { add: ['x1', 'x2'], ru: 'あげる не входит к «своим». くれる от «своих» не выходит.', last: true }
+];
+function akmSteps() {
+  const el = h('div', 'aks');
+  const arrow = (id, k, d, lx, ly, txt, bad, rot, an) => `<g class="aks-p aks-e akm-${k}${bad ? ' bad' : ''}" data-id="${id}"><path d="${d}" marker-end="url(#aks-h-${k})"/><text class="jp" x="${lx}" y="${ly}"${rot ? ` transform="rotate(${rot} ${lx} ${ly})"` : ''}${an ? ` style="text-anchor:${an}"` : ''}>${txt}</text>${bad ? `<g class="aks-x" transform="translate(${bad})"><circle r="13"/><path d="M-5 -5 L5 5 M5 -5 L-5 5"/></g>` : ''}</g>`;
+  const node = (id, x, y, jp, ru, cls) => `<g class="aks-p aks-n ${cls || ''}" data-id="${id}"><circle cx="${x}" cy="${y}" r="33"/><text class="jp" x="${x}" y="${y + 2}">${jp}</text><text class="akm-ru" x="${x}" y="${y + 19}">${ru}</text></g>`;
+  el.innerHTML = `<svg class="aks-svg" viewBox="0 0 400 252" role="img" aria-label="Куда идёт помощь: схема по шагам"><defs>${['ag', 'ku'].map(k => `<marker id="aks-h-${k}" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="3.2" markerHeight="3.2" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" class="akm-hd-${k}"/></marker>`).join('')}</defs>
+<rect class="aks-zone in" x="4" y="4" width="148" height="244" rx="24"/><text class="aks-zt in" x="78" y="28">うち · свои</text>
+<rect class="aks-zone" x="248" y="4" width="148" height="244" rx="24"/><text class="aks-zt" x="322" y="28">そと · чужие</text>
+${arrow('ag1', 'ag', 'M118 78 H280', 200, 68, 'あげる')}${arrow('ku1', 'ku', 'M282 108 H120', 200, 127, 'くれる')}
+${arrow('ku2', 'ku', 'M292 122 L118 184', 196, 172, 'くれる', null, -19.6)}${arrow('ag2', 'ag', 'M322 130 V158', 340, 149, 'あげる', null, 0, 'start')}
+${arrow('x1', 'ag', 'M282 78 H120', 160, 66, 'あげる', '228 78')}${arrow('x2', 'ku', 'M118 108 H280', 160, 128, 'くれる', '228 108')}
+${node('me', 78, 94, '私', 'я', 'akm-me')}${node('imo', 78, 196, '妹', 'сестра', 'akm-ci')}${node('yuki', 322, 94, 'ユキ', 'подруга')}${node('lisa', 322, 196, 'リサ', 'знакомая')}
+</svg><div class="aks-cap" aria-live="polite"></div><div class="aks-nav"><button type="button" class="d-nav aks-prev" aria-label="Предыдущий шаг"><svg viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></svg></button><span class="aks-dots">${AKS.map(() => '<i></i>').join('')}</span><button type="button" class="d-nav aks-next" aria-label="Следующий шаг"><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></button></div>`;
+  const svg = $('.aks-svg', el), cap = $('.aks-cap', el);
+  let cur = -1;
+  const show = (i, anim) => {
+    cur = i;
+    const seen = new Set(['me', 'yuki']), now = new Set(AKS[i].add), last = !!AKS[i].last;
+    for (let k = 0; k <= i; k++) AKS[k].add.forEach(x => seen.add(x));
+    $$('.aks-p', svg).forEach(g => {
+      const id = g.dataset.id, isE = g.classList.contains('aks-e'), fresh = now.has(id);
+      // people who are not in the story yet stay as faint outlines; on the last step the allowed arrows step aside for the two forbidden ones
+      g.classList.toggle('hid', isE && (!seen.has(id) || (last && !fresh)));
+      g.classList.toggle('ghost', !isE && !seen.has(id));
+      g.classList.toggle('dim', isE && seen.has(id) && !fresh && !last);
+      if (fresh && anim && !RM) {
+        const pth = isE && $('path', g);
+        if (pth && pth.getTotalLength) { const L = pth.getTotalLength(); A(pth, [{ strokeDashoffset: L, strokeDasharray: `${L} ${L}` }, { strokeDashoffset: 0, strokeDasharray: `${L} ${L}` }], { duration: 640, easing: 'cubic-bezier(.2,.8,.2,1)' }); }
+        else A(g, [{ opacity: .3 }, { opacity: 1 }], { duration: 420, easing: SP.easing });
+      }
+    });
+    const st = AKS[i];
+    cap.innerHTML = `${st.jp ? `<span class="jp">${rb(st.jp)}</span>` : ''}<span class="aks-ru">${ty(st.ru)}</span>${last ? '<span class="aks-sum">あげる — от тебя наружу. くれる — к тебе и твоим. Обратно они не ходят.</span>' : ''}`;
+    $$('.aks-dots i', el).forEach((d, k) => d.classList.toggle('on', k === i));
+    $('.aks-prev', el).disabled = i === 0; $('.aks-next', el).disabled = i === AKS.length - 1;
+  };
+  $('.aks-prev', el).onclick = () => cur > 0 && show(cur - 1, false);
+  $('.aks-next', el).onclick = () => cur < AKS.length - 1 && show(cur + 1, true);
+  show(0, true);
+  return el;
+}
+/* Andy's map of giving and doing favours: you, your circle, two strangers; あげる / くれる / もらう light up their own arrows */
+const AKM = {
+  all: { t: 'Три глагола — три взгляда на одну и ту же помощь. Выбери глагол, чтобы увидеть, куда он может идти.' },
+  ag: { t: '<b>～てあげる</b> — помощь идёт <b>от тебя</b>: ты или твои близкие делаете что-то для другого, или чужие люди помогают друг другу. Смысл — «сделал одолжение». К тебе и к твоему кругу あげる не идёт никогда.',
+    ok: '{弟|おとうと}に{本|ほん}を{読|よ}んであげた', okr: '«Я почитал брату книжку» — сделал ему приятное.', no: '{友達|ともだち}が{私|わたし}に{本|ほん}を{読|よ}んであげた', nor: 'К тебе あげる не идёт — тут нужно くれた.' },
+  ku: { t: '<b>～てくれる</b> — помощь идёт <b>к тебе</b> или к твоим близким. Смысл — «был так добр, что сделал для меня»: в нём слышна благодарность. 私に обычно не говорят — くれる и так значит «мне».',
+    ok: '{友達|ともだち}が{駅|えき}まで{送|おく}ってくれた', okr: '«Друг проводил меня до станции» — и я ему благодарен.', no: '{私|わたし}が{友達|ともだち}を{駅|えき}まで{送|おく}ってくれた', nor: 'От тебя くれる не идёт — тут нужно あげた.' },
+  mo: { t: '<b>～てもらう</b> — то же событие <b>глазами того, кто получил</b> помощь: «я попросил — и мне сделали» или «мне сделали, и это мне на пользу». Начинаем с себя (私は), а тот, кто помог, — с に. Стрелка ведёт к тому, кто получил.',
+    ok: '{私|わたし}は{友達|ともだち}に{駅|えき}まで{送|おく}ってもらった', okr: '«Я попросил друга проводить меня до станции» — и он проводил.', no: '{友達|ともだち}は{私|わたし}に{送|おく}ってもらった', nor: 'Так получится, что это друг попросил тебя. Помощь получил ты — 私は友達に…もらった.' }
+};
+function akmMap() {
+  const el = h('div', 'akm');
+  const N = { me: [100, 90, 'わたし', 'я'], ci: [100, 270, 'うち', 'свои'], a: [320, 90, '{他人|たにん}A', 'чужой'], b: [320, 270, '{他人|たにん}B', 'чужой'] };
+  // [kind, path, label x, label y, anchor]
+  const E = [
+    ['ag', 'M146 78 H272', 209, 68, 'middle'], ['ku', 'M274 102 H148', 209, 121, 'middle'],
+    ['ag', 'M88 136 V222', 78, 184, 'end'], ['ku', 'M112 224 V138', 122, 184, 'start'],
+    ['ku', 'M274 258 H148', 209, 248, 'middle'], ['ag', 'M146 282 H272', 209, 301, 'middle'],
+    ['ag', 'M308 136 V222', 298, 184, 'end'], ['ag', 'M332 224 V138', 342, 184, 'start'],
+    ['mo', 'M326 46 C304 -6 116 -6 102 42', 209, 4, 'middle'], ['mo', 'M58 262 C2 226 2 134 54 98', 8, 184, 'middle', -90], ['mo', 'M326 316 C304 368 116 368 102 320', 209, 370, 'middle']
+  ];
+  const lab = { ag: 'あげる', ku: 'くれる', mo: 'もらう' };
+  const node = ([x, y, jp, ru], k) => `<g class="akm-n akm-${k}"><circle cx="${x}" cy="${y}" r="42"/><text class="jp" x="${x}" y="${y + 2}">${esc(plainQ(jp))}</text><text class="akm-ru" x="${x}" y="${y + 21}">${esc(ru)}</text></g>`;
+  el.innerHTML = `<div class="segc akm-seg" role="tablist" aria-label="Какой глагол показать">${[['all', 'Все'], ['ag', 'あげる'], ['ku', 'くれる'], ['mo', 'もらう']].map(([k, l]) => `<button type="button" role="tab" data-k="${k}" class="${k === 'all' ? '' : 'jp'}">${l}</button>`).join('')}</div>
+<svg class="akm-svg" viewBox="-16 -18 452 404" role="img" aria-label="Схема: кто кому делает одолжение"><defs>${['ag', 'ku', 'mo'].map(k => `<marker id="akm-h-${k}" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" class="akm-hd-${k}"/></marker>`).join('')}</defs>
+<rect class="akm-circle" x="40" y="30" width="120" height="306" rx="60"/><text class="akm-cap" x="100" y="-4">свой круг</text>
+${E.map(([k, d, lx, ly, an, rot], i) => `<g class="akm-e akm-${k}" data-i="${i}"><path d="${d}" marker-end="url(#akm-h-${k})"/><text class="jp" x="${lx}" y="${ly}" text-anchor="${an}"${rot ? ` transform="rotate(${rot} ${lx} ${ly})" dy="-6"` : ''}>${lab[k]}</text></g>`).join('')}
+${Object.entries(N).map(([k, v]) => node(v, k)).join('')}</svg>
+<div class="akm-txt" aria-live="polite"></div>`;
+  const svg = $('.akm-svg', el), txt = $('.akm-txt', el);
+  const show = (k, anim) => {
+    $$('.akm-seg button', el).forEach(b => b.setAttribute('aria-selected', String(b.dataset.k === k)));
+    $$('.akm-e', svg).forEach(g => {
+      const on = k === 'all' || g.classList.contains('akm-' + k);
+      g.classList.toggle('off', !on);
+      const pth = $('path', g);
+      if (on && anim && !RM && pth.getTotalLength) { const L = pth.getTotalLength(); A(pth, [{ strokeDasharray: `${L} ${L}`, strokeDashoffset: L }, { strokeDasharray: `${L} ${L}`, strokeDashoffset: 0 }], { duration: 620, easing: 'cubic-bezier(.2,.8,.2,1)' }); }
+    });
+    const m = AKM[k];
+    txt.innerHTML = `<p>${ty(m.t)}</p>${m.ok ? `<div class="akm-ex ok"><span class="jp">${rb(m.ok)}</span><small>${ty(m.okr)}</small></div><div class="akm-ex no"><span class="jp">${rb(m.no)}</span><small>${ty(m.nor)}</small></div>` : ''}`;
+  };
+  $$('.akm-seg button', el).forEach(b => { b.onclick = () => show(b.dataset.k, true); });
+  show('all', false);
+  return el;
+}
+// theory in pages: «Дальше» / «Назад», dots and a swipe; each page keeps its own heading
+function theoryPager(pages) {
+  const el = h('section', 'tp');
+  el.innerHTML = `<div class="tp-head"><h2 class="rx-t">Объяснение</h2><span class="tp-n"></span></div><div class="tp-tabs" role="tablist" aria-label="Страницы объяснения">${pages.map((p, i) => `<button type="button" class="tp-tab" role="tab" data-i="${i}">${i + 1}. ${ty(esc(p.h))}</button>`).join('')}</div><div class="tp-body rule-card"></div><div class="tp-acts"><button type="button" class="btnp sec tp-prev"><span class="iv-back">${ICON.arrow}</span>Назад</button><button type="button" class="btnp tp-next">Дальше ${ICON.arrow}</button></div>`;
+  const body = $('.tp-body', el);
+  let cur = -1;
+  const page = (i, dir) => {
+    if (i < 0 || i >= pages.length || i === cur) return;
+    const paint = () => {
+      cur = i;
+      body.innerHTML = ty(pages[i].html);
+      $$('.akm-host', body).forEach(x => x.replaceWith(akmMap()));
+      $$('.tp-tab', el).forEach((b, k) => b.setAttribute('aria-selected', String(k === i)));
+      $('.tp-n', el).textContent = `${i + 1} из ${pages.length}`;
+      $('.tp-prev', el).hidden = i === 0; $('.tp-next', el).hidden = i === pages.length - 1;
+    };
+    if (cur < 0 || RM) { paint(); return; }
+    const a = A(body, [{ opacity: 1, transform: 'none' }, { opacity: 0, transform: `translateX(${-dir * 28}px)` }], { duration: 140, easing: 'cubic-bezier(.4,0,1,1)', fill: 'forwards' });
+    const after = () => { paint(); if (a) a.cancel(); A(body, [{ opacity: 0, transform: `translateX(${dir * 28}px)` }, { opacity: 1, transform: 'none' }], { duration: SP.duration, easing: SP.easing }); if (el.getBoundingClientRect().top < 0) el.scrollIntoView({ block: 'start', behavior: RM ? 'auto' : 'smooth' }); };
+    if (a) a.finished.then(after, after); else after();
+  };
+  $('.tp-next', el).onclick = () => page(cur + 1, 1);
+  $('.tp-prev', el).onclick = () => page(cur - 1, -1);
+  $$('.tp-tab', el).forEach((b, k) => { b.onclick = () => page(k, k > cur ? 1 : -1); });
+  let x0 = null, y0 = 0;
+  body.addEventListener('touchstart', e => { const t = e.touches[0]; x0 = t.clientX; y0 = t.clientY; }, { passive: true });
+  body.addEventListener('touchend', e => { if (x0 == null) return; const t = e.changedTouches[0], dx = t.clientX - x0, dy = t.clientY - y0; x0 = null; if (Math.abs(dx) > 56 && Math.abs(dx) > Math.abs(dy) * 1.5) page(cur + (dx < 0 ? 1 : -1), dx < 0 ? 1 : -1); }, { passive: true });
+  page(0, 1);
+  return el;
+}
 function ruleView(sec) {
   const R = RULEX[sec.id], wrap = h('div', 'rx');
   if (!R) { wrap.innerHTML = `<div class="rx-hero"><div class="rule-card" style="padding:0">${ty(sec.rule || '')}</div></div>`; wrap._replay = () => {}; return wrap; }
   wrap.innerHTML = `<section class="rx-hero"><div class="rx-head"><h2 class="rx-t">Как это работает</h2><p class="rx-lead">${ty(esc(R.lead))}</p></div><div class="rx-chips" role="group" aria-label="Примеры"></div><div class="rx-stage"></div></section>
 <h3 class="g-h">Главное</h3><div class="rx-cards">${R.cards.map(c => `<article class="rx-card"><h4>${esc(c.t)}</h4><p>${ty(c.d)}</p><div class="jp rx-ex">${c.ex.split(' · ').map(x => (plainQ(x).length <= 12 ? `<span class="nw">${rb(x)}</span>` : rb(x))).join(' · ')}</div></article>`).join('')}</div>
 <h3 class="g-h">Частые ошибки · нажми на карточку</h3><div class="rx-traps">${R.traps.map(t => `<button type="button" class="rx-trap" aria-expanded="false"><span class="tr-bad jp">${rb(t.bad)}</span><span class="tr-more"><span class="tr-in"><span class="tr-good jp">${rb(t.good)}</span><span class="tr-why">${ty(t.why)}</span></span></span><span class="tr-hint">Где ошибка? Нажми, чтобы проверить</span></button>`).join('')}</div>
-<details class="rx-full"><summary>Полная таблица и примеры</summary><div class="rule-card">${ty(sec.rule || '')}</div></details>
+${sec.pages ? '' : `<details class="rx-full"><summary>Полная таблица и примеры</summary><div class="rule-card">${ty(sec.rule || '')}</div></details>`}
 <button type="button" class="btnp rule-go">К упражнениям ${ICON.arrow}</button>`;
+  if (sec.pages) wrap.prepend(theoryPager(sec.pages));
   const chips = $('.rx-chips', wrap), stage = $('.rx-stage', wrap);
   let replay = () => {};
   if (R.widget === 'chat') replay = buildChat(R, chips, stage);
   else if (R.widget === 'freq') replay = buildFreq(chips, stage);
-  else if (R.widget === 'give') replay = buildGive(chips, stage);
+  else if (R.widget === 'give') replay = buildGive(chips, stage, R);
   else if (R.widget === 'num') replay = buildNum(R, chips, stage);
   else if (R.widget === 'clock') replay = buildClock(chips, stage);
   else if (R.widget === 'cal') replay = buildCal(chips, stage);
@@ -6096,15 +6528,16 @@ function ruleView(sec) {
     replay = () => pick(cur);
   }
   $$('.rx-trap', wrap).forEach(b => { b.onclick = () => { const o = !b.classList.contains('open'); b.classList.toggle('open', o); b.setAttribute('aria-expanded', String(o)); }; });
-  smoothDetails($('.rx-full', wrap));
+  if ($('.rx-full', wrap)) smoothDetails($('.rx-full', wrap));
   wrap._replay = () => replay();
   return wrap;
 }
+// an intro can have more pages (intro.slides: [{ h, text, lines }]): «Дальше» / «Назад», dots, a swipe; «Начать» stays reachable from every page
 function introView(run) {
   const d = run.desc, intro = INTRO[d.uid] || {};
   const v = h('div', 'intro-v');
   const n = run.items.length;
-  const paras = String(intro.text || d.lead || '').split('\n').filter(Boolean);
+  const slides = [intro, ...(intro.slides || [])], many = slides.length > 1;
   // «A + B = C»: if it has to wrap, it wraps before «=», so the result starts its own line
   // each term keeps its «+» and stays whole; a narrow screen wraps between terms; « — note» after a formula is plain text
   const fml = t => {
@@ -6114,15 +6547,61 @@ function introView(run) {
     const side = x => x.split(/\s+\+\s+/).map((y, i) => `<span class="nw">${i ? '<i class="op">+</i> ' : ''}${rb(y)}</span>`).join('');
     return `<div class="iv-f jp">${side(lhs)}${rhs ? `<span class="nw"><i class="op">=</i> <b>${rb(rhs)}</b></span>` : ''}${note ? `<span class="iv-fn">— ${ty(note)}</span>` : ''}</div>`;
   };
-  let body = '', fs = '';
-  paras.forEach(t => { if (/^=\s/.test(t)) fs += fml(t); else { if (fs) { body += `<div class="iv-fs">${fs}</div>`; fs = ''; } body += `<p class="iv-p">${ty(t)}</p>`; } });
-  if (fs) body += `<div class="iv-fs">${fs}</div>`;
+  // «:: heading» starts a small heading, «- text» a list item; everything else is a paragraph or a formula
+  const bodyOf = (sl, first) => {
+    let body = '', fs = '', ul = '';
+    const flush = () => { if (fs) { body += `<div class="iv-fs">${fs}</div>`; fs = ''; } if (ul) { body += `<ul class="iv-ul">${ul}</ul>`; ul = ''; } };
+    String(sl.text || (first ? d.lead : '') || '').split('\n').filter(Boolean).forEach(t => {
+      if (/^=\s/.test(t)) { if (ul) { body += `<ul class="iv-ul">${ul}</ul>`; ul = ''; } fs += fml(t); }
+      else if (/^-\s/.test(t)) { if (fs) { body += `<div class="iv-fs">${fs}</div>`; fs = ''; } ul += `<li>${ty(t.slice(2))}</li>`; }
+      else { flush(); body += /^::\s/.test(t) ? `<h3 class="iv-sh">${ty(t.slice(3))}</h3>` : `<p class="iv-p">${ty(t)}</p>`; }
+    });
+    flush();
+    return body;
+  };
   const lk = (BLOCK[d.uid] || {}).link;
-  v.innerHTML = `<div class="q-label">Как решать · ${n} ${plural(n, 'задание', 'задания', 'заданий')}</div><h2 class="iv-t">${esc(d.title)}</h2><div class="iv-pp">${body}</div><div class="iv-demo"></div><div class="iv-acts"><button type="button" class="btnp iv-go">Начать ${ICON.arrow}</button></div>${lk ? `<div class="q-link">${linkHTML(lk)}</div>` : ''}`;
+  const dots = many ? `<div class="iv-dots" role="tablist" aria-label="Страницы объяснения">${slides.map((s, i) => `<button type="button" class="iv-dot" role="tab" aria-label="Страница ${i + 1} из ${slides.length}${s.h ? ': ' + esc(s.h) : ''}"><i></i></button>`).join('')}</div>` : '';
+  v.innerHTML = `<div class="q-label">Как решать · ${n} ${plural(n, 'задание', 'задания', 'заданий')}</div><h2 class="iv-t">${esc(d.title)}</h2><div class="iv-sl"><div class="iv-pp"></div><div class="iv-demo"></div></div>${dots}<div class="iv-acts">${many ? `<button type="button" class="btnp sec iv-prev"><span class="iv-back">${ICON.arrow}</span>Назад</button><button type="button" class="btnp iv-next">Дальше ${ICON.arrow}</button>` : ''}<button type="button" class="btnp iv-go">Начать ${ICON.arrow}</button></div>${many ? '<button type="button" class="link iv-skip">Сразу к заданиям</button>' : ''}${lk ? `<div class="q-link">${linkHTML(lk)}</div>` : ''}`;
   bindLink(v);
-  const lines = genSteps(intro);
-  if (lines.length) $('.iv-demo', v).append(makeDemo(lines).el);
-  $('.iv-go', v).onclick = () => { run.showIntro = false; swapCard(run, 1); };
+  const sl = $('.iv-sl', v), pp = $('.iv-pp', v), demo = $('.iv-demo', v);
+  let cur = -1;
+  const page = (i, dir) => {
+    if (i < 0 || i >= slides.length || i === cur) return;
+    const paint = () => {
+      cur = i;
+      const s = slides[i];
+      pp.innerHTML = bodyOf(s, i === 0) + (s.html ? `<div class="iv-html">${ty(s.html)}</div>` : '');
+      demo.innerHTML = '';
+      if (s.widget === 'akm') demo.append(akmMap());
+      else if (s.widget === 'akm-steps') demo.append(akmSteps());
+      else { const lines = genSteps(s); if (lines.length) demo.append(makeDemo(lines).el); }
+      if (!many) return;
+      $$('.iv-dot', v).forEach((b, k) => b.setAttribute('aria-selected', String(k === i)));
+      const last = i === slides.length - 1;
+      $('.iv-prev', v).hidden = i === 0; $('.iv-next', v).hidden = last; $('.iv-go', v).hidden = !last; $('.iv-skip', v).hidden = last;
+    };
+    if (cur < 0 || RM) { paint(); return; }
+    const a = A(sl, [{ opacity: 1, transform: 'none' }, { opacity: 0, transform: `translateX(${-dir * 28}px)` }], { duration: 140, easing: 'cubic-bezier(.4,0,1,1)', fill: 'forwards' });
+    const after = () => { paint(); if (a) a.cancel(); A(sl, [{ opacity: 0, transform: `translateX(${dir * 28}px)` }, { opacity: 1, transform: 'none' }], { duration: SP.duration, easing: SP.easing }); };
+    if (a) a.finished.then(after, after); else after();
+  };
+  page(0, 1);
+  const start = () => { run.showIntro = false; swapCard(run, 1); };
+  $('.iv-go', v).onclick = start;
+  if (many) {
+    $('.iv-next', v).onclick = () => page(cur + 1, 1);
+    $('.iv-prev', v).onclick = () => page(cur - 1, -1);
+    $('.iv-skip', v).onclick = start;
+    $$('.iv-dot', v).forEach((b, k) => { b.onclick = () => page(k, k > cur ? 1 : -1); });
+    // a horizontal swipe turns the page; a vertical one scrolls as usual
+    let x0 = null, y0 = 0;
+    sl.addEventListener('touchstart', e => { const t = e.touches[0]; x0 = t.clientX; y0 = t.clientY; }, { passive: true });
+    sl.addEventListener('touchend', e => {
+      if (x0 == null) return;
+      const t = e.changedTouches[0], dx = t.clientX - x0, dy = t.clientY - y0; x0 = null;
+      if (Math.abs(dx) > 56 && Math.abs(dx) > Math.abs(dy) * 1.5) page(cur + (dx < 0 ? 1 : -1), dx < 0 ? 1 : -1);
+    }, { passive: true });
+  }
   return v;
 }
 
@@ -6977,6 +7456,8 @@ function renderFeedback(ctx, out, animate) {
   fb.append(h('div', 'fb-v fb-' + kind, `${CIRC[kind]}<span>${VERDICT[kind]}</span>`));
   if (out.ans && /[a-z]/i.test(out.ans) && it.kind !== 'choice' && it.kind !== 'order') fb.append(h('div', 'fb-row', `<span class="lbl">Твой ответ</span><span class="jp">${esc(norm(out.ans))}</span>`));
   if (out.score < 1 && out.correctHTML) fb.append(h('div', 'fb-key', `<span class="lbl">Правильно</span><span class="jp">${out.correctHTML}</span>`));
+  // what the sentence means: shown on every answer, so a right form is never left without its sense
+  if (it.mean) fb.append(h('div', 'fb-mean', `<span class="lbl">Что это значит</span><p>${ty(it.mean)}</p>`));
   if (out.note) fb.append(h('p', 'fb-note', ty(out.note)));
   if (out.alts) fb.append(h('div', 'fb-alts', out.alts));
   if (out.ex && out.ex !== out.note) fb.append(h('p', 'fb-ex', ty(out.ex)));
