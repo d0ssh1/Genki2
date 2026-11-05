@@ -467,7 +467,8 @@ svg.ic { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-wid
 .q-main .dl { display: block; text-align: left; padding-left: 3.3em; text-indent: -3.3em; }
 .q-main .dl + .dl { margin-top: .25em; }
 .q-main .dl > b { display: inline-block; min-width: 4.6em; padding-right: .5em; text-indent: 0; font-weight: 600; font-size: .72em; color: var(--ink-2); white-space: nowrap; }
-.q-main:has(.dl) { display: flex; flex-direction: column; align-items: stretch; width: 100%; max-width: 30em; }
+/* the dialogue block is as wide as its longest line and centred, so short exchanges don't hug the left edge */
+.q-main:has(.dl) { display: flex; flex-direction: column; align-items: stretch; width: fit-content; max-width: min(100%, 30em); margin-inline: auto; }
 .q-hint { font-size: 16.5px; color: var(--ink-2); margin-top: -8px; max-width: 42ch; }
 .blank { display: inline-block; min-width: 1.5em; border-bottom: .07em solid var(--accent); margin: 0 .1em; color: var(--accent-ink); transition: color .3s ease; }
 .blank:empty::after { content: "\00a0"; }
@@ -3353,7 +3354,7 @@ const SECTIONS16 = [
 <p><b>Не путай:</b> <span class="jp">{時|とき}</span> — «когда», <span class="jp">{時|じ}</span> — «час»: {三時|さんじ}.</p>
 <p class="ex jp">「{家|いえ}を{出|で}る{時|とき}、『{行|い}ってきます』と{言|い}います。」</p>`,
   blocks: [
-    { key: 'a', kind: 'type', title: 'Слово с 時', ask: 'Впиши слово из скобок вместе с 時. Перевод подскажет, что случилось раньше.', lead: 'Глагол: событие ещё впереди — 〜る時, уже случилось — 〜た時, длится — 〜ている時. な-прилагательное + な, существительное + の.', tags: ['toki-form', 'toki-tense'], items: [
+    { key: 'a', kind: 'type', title: 'Слово с 時', ask: 'Впиши слово из скобок вместе с 時. Перевод подскажет, что случилось раньше.', lead: 'Глагол: смотри на главное действие в конце. Событие с 時 случится раньше него — 〜た時, даже если всё впереди; ещё не случится — 〜る時, длится — 〜ている時. な-прилагательное + な, существительное + の.', tags: ['toki-form', 'toki-tense'], items: [
       { id: 'tk-f1', q: '<i>Что ты делаешь, когда свободен?</i> （ひま）＿、{何|なに}をしますか。', a: ['(ひま|{暇|ひま})な{時|とき}'], ex: 'ひま — な-прилагательное: ひまな時.', trap: [{ n: '(ひま|{暇|ひま})の{時|とき}', t: 'ひま — な-прилагательное: ひまな時.' }, { n: '(ひま|{暇|ひま}){時|とき}', t: 'な-прилагательному перед 時 нужна な.' }] },
       { id: 'tk-f2', q: '<i>В детстве у меня была собака.</i> （{子|こ}ども）＿、{犬|いぬ}を{飼|か}っていました。', a: ['{子|こ}どもの{時|とき}', '{子|こ}どもだった{時|とき}'], ex: 'Существительное + の: 子どもの時.', trap: [{ n: '{子|こ}どもな{時|とき}', t: '子ども — существительное: の.' }, { n: '{子|こ}ども{時|とき}', t: 'Существительному перед 時 нужна の.' }] },
       { id: 'tk-f3', q: '<i>Выходя из дома, я говорю «иттэкимас».</i> {家|いえ}を（{出|で}る）＿、『{行|い}ってきます』と{言|い}います。', a: ['[{家|いえ}を]{出|で}る{時|とき}'], ex: 'Говоришь, пока ещё не вышел: 出る時.', trap: [{ n: '[{家|いえ}を]{出|で}た{時|とき}', t: '出た時 — уже за дверью. «Иттэкимас» говорят до того, как выйти: 出る時.' }] },
@@ -3523,8 +3524,8 @@ const INTRO16 = {
   w1h: { text: 'Вспомни, кто тебе недавно помог и кому помог ты. 2–3 предложения с ～てくれた, ～てもらった и ～てあげた.',
     lines: ['a={先輩|せんぱい}がノートを{貸|か}してくれた || «Старший товарищ одолжил мне конспект»', 'x={弟|おとうと}にゲームを{買|か}ってあげた || «Я купил брату игру»'] },
   /* 二 〜ていただけませんか */
-  w2a: { text: 'Четыре просьбы — от дружеской к самой вежливой.\n= {開|あ}けて + くれない？ — другу\n= {開|あ}けて + くれませんか — вежливо\n= {開|あ}けて + もらえませんか — вежливо, через もらう\n= {開|あ}けて + いただけませんか — очень вежливо\nいただく — вежливое «получать», いただける — «могу получить».',
-    lines: ['a={開|あ}けて b=くれない？ || Другу', 'a !b=くれませんか || Вежливо', 'a !b=もらえませんか || Вежливо, через もらう', 'a !b=いただけませんか || Очень вежливо: начальнику, учителю, клиенту', 'a -c=いただきませんか || いただきません — «не получаю»: просьбы не выйдет'] },
+  w2a: { text: 'Четыре просьбы — от дружеской к самой вежливой.\n= {開|あ}けて + くれない？ — другу\n= {開|あ}けて + くれませんか — вежливо\n= {開|あ}けて + もらえませんか — вежливо, через もらう\n= {開|あ}けて + いただけませんか — очень вежливо\nいただけませんか дословно — «не могу ли я получить от вас это?». Поэтому так вежливо: ты не требуешь, а спрашиваешь, можно ли.\nЧастая ошибка — いただきませんか: это «не получаю ли я?», просьбы не выходит. Нужна форма «могу»: いただく → いただける.',
+    lines: ['a={開|あ}けて b=くれない？ || Другу', 'a !b=くれませんか || Вежливо', 'a !b=もらえませんか || Вежливо, через もらう', 'a !b=いただけませんか || Очень вежливо: начальнику, учителю, клиенту', 'a !b=いただきませんか || Частая ошибка: いただき — «получаю»', 'a !b=いただけませんか || Верно: いただけ — «могу получить»'] },
   w2b: { text: 'Подбери форму к человеку. Друг и семья — くれない？ Коллега — くれませんか. Незнакомый — くれませんか или вежливее いただけませんか. Начальник, учитель, клиент, сотрудник отеля — いただけませんか. ～てください — прямое указание.',
     lines: ['~q=«Начальнику:_проверить_отчёт» || Кому просьба', '~q +a=チェックしてくれない？ || Так — только другу', '~q !a=チェックしていただけませんか || Начальнику — очень вежливо'] },
   w2c: { text: 'Найди ошибку: в форме (いただけ, а не いただき; て-форма) или в вежливости, которая не подходит к человеку. Если всё верно — «Ошибки нет».',
@@ -3536,14 +3537,14 @@ const INTRO16 = {
   w2f: { text: 'Ты ведёшь группу туристов. Попроси трёх людей о помощи — каждого в подходящей форме.',
     lines: ['a={地図|ちず}を{見|み}せてくれない？ || Другу', 'x={荷物|にもつ}を{預|あず}かっていただけませんか || Сотруднику отеля'] },
   /* 三 〜といい */
-  w3a: { text: 'Простая форма (без です и ます) + といい — «хорошо бы…».\n= {暖|あたた}かい + といいですね — собеседнику\n= {暖|あたた}かい + といいんですが — о своём\nСуществительное и な-прилагательное — с だ: {雪|ゆき}だといい.\nЕсли исход зависит от самого человека, нужна форма «могу» из урока 13: {行|い}けるといい, {会|あ}えるといい.',
-    lines: ['a={暖|あたた}かい b=といいですね || Собеседнику', 'a !b=といいんですが || О своём', 'x={雪|ゆき} +y=だ z=といいですね || Существительное + だ', 'v={便利|べんり} y z || な-прилагательное + だ'] },
-  w3b: { text: 'Спроси себя: кому я это говорю? И это действие человека или оно случается само? Собеседнику или вам обоим — といいですね, о своём — といいんですが. Действие человека — форма «могу» (урок 13): 行ける, 出られる.',
+  w3a: { text: 'Простая форма (без です и ます) + といい — «хорошо бы…», «надеюсь…». Конец зависит от того, за кого надеешься:\n= {暖|あたた}かい + といいですね — желаешь собеседнику или вам обоим\n= {暖|あたた}かい + といいんですが — надеешься за себя, с ноткой «но кто знает»\nСуществительное и な-прилагательное — с だ: {雪|ゆき}だといい.\nЕсли надеешься, что у человека что-то получится, нужна форма «могу» из урока 13. {試合|しあい}に{出|で}るといいですね звучит как совет «тебе бы сыграть». А ты желаешь, чтобы удалось: {試合|しあい}に{出|で}られるといいですね.',
+    lines: ['a={暖|あたた}かい b=といいですね || Собеседнику', 'a !b=といいんですが || За себя, с сомнением', 'x={雪|ゆき} +y=だ z=といいですね || Существительное + だ', 'v={便利|べんり} y z || な-прилагательное + だ'] },
+  w3b: { text: 'Задай себе два вопроса.\n1. За кого надежда? Желаешь собеседнику — といいですね. Надеешься за себя — といいんですが.\n2. Это случится само или зависит от человека? Само (погода, поезд) — обычная форма: {晴|は}れるといい. Зависит от человека — форма «могу»: {行|い}けるといい, {出|で}られるといい.',
     lines: ['a={試合|しあい}に b={出|で}る c=といいですね || 出る — его действие: без «могу» звучит как совет', 'a !b={出|で}られる c || Надежда — на возможность: 出られる'] },
   w3c: { text: 'Найди ошибку: だ после существительного и な-прилагательного (но не после い-прилагательного), время перед といい и форма «могу» у действий человека. Если всё верно — «Ошибки нет».',
     lines: ['a={明日|あした}は -b={休|やす}みと c=いいですね || После существительного нужна だ', 'a +d={休|やす}みだと c || 休みだといいですね'] },
   w3d: { text: 'Диалог с пропуском: вставь «надеюсь…» в нужной форме. Смотри, о ком надежда и что стоит после пропуска: ね или けど.',
-    lines: ['a={電車|でんしゃ}が b=（{止|と}まらない） c=＿＿けど || О себе, с けど', 'a !c={止|と}まらないといいんだ || 止まらないといいんだけど'] },
+    lines: ['a={電車|でんしゃ}が b=（{止|と}まらない） c=＿＿ d=けど || За себя, с けど', 'a !c={止|と}まらないといいんだ d || 止まらないといいんだけど'] },
   w3e: { text: 'Переведи. Собеседнику или вам обоим — といいですね, о своём — といいんですが. Не совпадёт с эталоном — проверит сэнсэй.',
     lines: ['~r=«Надеюсь,_у_тебя_будет_хороший_отпуск.» || Фраза по-русски', '~r +a=いい{休|やす}みだ || Существительное + だ', '~r a +b=といいですね || Пожелание собеседнику'] },
   w3f: { text: 'Чего ты ждёшь в этом году? 2–3 надежды о себе с ～といいんですが, ～といいんだけど или ～といいな.',
@@ -3551,7 +3552,7 @@ const INTRO16 = {
   /* 四 〜時 */
   w4a: { h: 'Зачем 時', text: '{時|とき} — это «когда». С ним два события складываются в одно предложение: сначала «когда», потом что случилось.\nТак говорят о привычках, о детстве, о поездках. Русское «когда…», «в детстве», «пока…» почти всегда переводится через 時.',
     lines: ['a={寂|さび}しい b={時|とき}、 c={母|はは}に{電話|でんわ}します || «Когда грустно, звоню маме»', '!a={子|こ}どもの b !c={犬|いぬ}を{飼|か}っていました || «В детстве у меня была собака»'],
-    slides: [{ h: 'Что ставить перед 時', text: 'Само слово 時 — существительное «момент». Перед ним та же форма, что перед любым существительным: глагол и い‑прилагательное — как есть, な‑прилагательное + な, существительное + の.', lines: ['a={暑|あつ}い b={時|とき} || い-прилагательное — как есть', 'x={好|す}き +y=な b || な-прилагательное + な', 'z={雨|あめ} +w=の b || Существительное + の'] }] },
+    slides: [{ h: 'Что ставить перед 時', text: '時 значит «время, момент». Для грамматики это обычное существительное, как {人|ひと} или {本|ほん}, поэтому перед ним те же формы, что перед любым существительным: глагол и い‑прилагательное — как есть, な‑прилагательное + な, существительное + の.', lines: ['a={暑|あつ}い b={時|とき} || い-прилагательное — как есть', 'x={好|す}き +y=な b || な-прилагательное + な', 'z={雨|あめ} +w=の b || Существительное + の'] }, { h: 'Глагол: る или た', text: 'Перед 時 глагол в форме る или た. Смотри не на «сейчас», а на главное действие в конце фразы.\nСобытие с 時 случится раньше главного — た, даже если всё ещё впереди. Ещё не случилось к моменту главного — る.', lines: ['a={日本|にほん}に b={着|つ}いた c={時|とき}、 d={電話|でんわ}します || Сначала прилечу, потом позвоню — た', 'a !b={行|い}く c !d={空港|くうこう}でお{土産|みやげ}を{買|か}います || Покупаю ещё до вылета — る'] }] },
   w4b: { text: 'Глагол перед 時 стоит в настоящем или в прошедшем. Это не про «сейчас» и «вчера», а про порядок: успело ли событие с 時 случиться к тому, о чём говорится дальше.\nА когда всё происходит — вчера, каждый день или завтра, — видно по концу предложения.',
     lines: ['a={寝|ね}る b={時|とき}、 c=「おやすみ」と{言|い}う || Ещё не лёг: «おやすみ» говорят перед сном', '!a={起|お}きた b !c=「おはよう」と{言|い}う || Уже встал: «おはよう» говорят, проснувшись'] },
   w4c: { text: 'Найди ошибку: な и の перед {時|とき} или время глагола, которое не подходит к ситуации. Если всё верно — «Ошибки нет».',
@@ -7514,7 +7515,9 @@ function ruleView(sec) {
   // meaning first: why and when the construction is used, before how it is built
   // a question before the explanation: the learner guesses first, then reads why. Until it is answered
   // (or skipped) the rest of the theory stays hidden, so the cards below can't give the answer away.
-  const PQ = !PROBED.has(sec.id) && sec.probe;
+  // only on the first visit: once the section has been practised (or the question answered), theory opens straight away
+  const touched = (sec.blocks || []).some(b => (b.items || []).some(it => (P.items[it.id] || {}).n > 0));
+  const PQ = !touched && !PROBED.has(sec.id) && !(P.seen && P.seen['probe:' + sec.id]) ? sec.probe : null;
   const probe = PQ ? `<div class="rx-probe"><p class="rx-probe-h">Сначала попробуй</p><p class="rx-probe-q">${ty(esc(PQ.q))}</p><div class="rx-probe-o">${shuffle(PQ.opts.map((o, i) => [o, i])).map(([o, i]) => `<button type="button" class="opt jp" data-i="${i}">${rb(o)}</button>`).join('')}</div><p class="rx-probe-ex" hidden></p><button type="button" class="rx-probe-skip">Сразу к объяснению</button></div>` : '';
   const why = sec.why ? `<section class="rx-hero rx-why"><h2 class="rx-t">Зачем это</h2>${probe}<div class="rx-why-b"${PQ ? ' hidden' : ''}>${ty(sec.why)}</div></section>`
     : PQ ? `<section class="rx-hero rx-why">${probe}</section>` : '';
@@ -7524,7 +7527,7 @@ function ruleView(sec) {
     const body = $('.rx-why-b', wrap), exEl = $('.rx-probe-ex', pb), skip = $('.rx-probe-skip', pb);
     const open = () => {
       if (!wrap.classList.contains('rx-lock')) return;
-      PROBED.add(sec.id); wrap.classList.remove('rx-lock'); skip.remove();
+      PROBED.add(sec.id); if (!P.seen) P.seen = {}; P.seen['probe:' + sec.id] = 1; save(); wrap.classList.remove('rx-lock'); skip.remove();
       const shown = [body, ...[...wrap.children].filter(c => !c.classList.contains('rx-why'))].filter(Boolean);
       if (body) body.hidden = false;
       if (!RM) shown.forEach((el, k) => A(el, [{ opacity: 0, transform: 'translateY(8px)' }, { opacity: 1, transform: 'none' }], { duration: SP.duration, easing: SP.easing, delay: k * 40 }));
@@ -7602,7 +7605,7 @@ function introView(run) {
   };
   const lk = (BLOCK[d.uid] || {}).link;
   const dots = many ? `<div class="iv-dots" role="tablist" aria-label="Страницы объяснения">${slides.map((s, i) => `<button type="button" class="iv-dot" role="tab" aria-label="Страница ${i + 1} из ${slides.length}${s.h ? ': ' + esc(s.h) : ''}"><i></i></button>`).join('')}</div>` : '';
-  v.innerHTML = `<div class="q-label">Как решать · ${n} ${plural(n, 'задание', 'задания', 'заданий')}</div><h2 class="iv-t">${esc(d.title)}</h2><div class="iv-sl"><div class="iv-pp"></div><div class="iv-demo"></div></div>${dots}<div class="iv-acts">${many ? `<button type="button" class="btnp sec iv-prev"><span class="iv-back">${ICON.arrow}</span>Назад</button><button type="button" class="btnp iv-next">Дальше ${ICON.arrow}</button>` : ''}<button type="button" class="btnp iv-go">Начать ${ICON.arrow}</button></div>${many ? '<button type="button" class="link iv-skip">Сразу к заданиям</button>' : ''}${lk ? `<div class="q-link">${linkHTML(lk)}</div>` : ''}`;
+  v.innerHTML = `<div class="q-label">Как решать · ${n} ${plural(n, 'задание', 'задания', 'заданий')}</div><h2 class="iv-t">${esc(d.title)}</h2><div class="iv-sl"><div class="iv-pp"></div><div class="iv-demo"></div></div>${dots}<div class="iv-acts">${many ? `<button type="button" class="btnp sec iv-prev"><span class="iv-back">${ICON.arrow}</span>Назад</button><button type="button" class="btnp iv-next">Дальше ${ICON.arrow}</button>` : ''}<button type="button" class="btnp iv-go">${run.summary ? 'К итогам' : Object.keys(run.res).length ? 'Продолжить' : 'Начать'} ${ICON.arrow}</button></div>${many ? `<button type="button" class="link iv-skip">${run.summary ? 'Сразу к итогам' : 'Сразу к заданиям'}</button>` : ''}${lk ? `<div class="q-link">${linkHTML(lk)}</div>` : ''}`;
   bindLink(v);
   const sl = $('.iv-sl', v), pp = $('.iv-pp', v), demo = $('.iv-demo', v);
   let cur = -1;
@@ -7827,8 +7830,9 @@ function renderCheat(run) {
 function renderCard(run, cin) {
   cin.innerHTML = '';
   if (!run.items.length) { cin.append(h('div', 'empty-card', '<p>В этом блоке пока нет заданий.</p>')); return; }
-  if (run.summary) { cin.append(summaryView(run)); return; }
+  // the intro goes first: «Как решать» can be reopened from the summary of a finished block, and «Начать» returns there
   if (run.showIntro) { cin.append(introView(run)); return; }
+  if (run.summary) { cin.append(summaryView(run)); return; }
   const it = run.items[run.idx], r = run.res[it.id];
   const pre = run.prefill[it.id]; delete run.prefill[it.id];
   cin.append(itemView(run, it, r && r.score != null ? r : null, pre));
@@ -7946,7 +7950,7 @@ function itemView(run, it, done, prefill) {
   const sec = SEC(it.sec), topic = run.desc.kind !== 'block' && !exam && sec ? `<div class="q-topic" style="--t:${TINT[it.sec]}"><b>${sec.num}</b><span class="jp">${esc(sec.tab)}</span>${run.desc.multi ? `<i class="jp">${LTAG(it.lesson)}</i>` : ''}</div>` : '';
   v.innerHTML = `<div class="q-corner l"></div><div class="q-corner r"></div><div class="q-label">Вопрос ${pos}<span> из ${run.items.length}</span></div>${topic}${task ? `<div class="q-task">${keepJP(task)}</div>` : ''}
 ${blk.text ? `<div class="q-story jp" lang="ja">${rb(blk.text)}</div>` : ''}${pr.sit ? `<div class="q-sit">${pr.sit}</div>` : ''}<div class="q-main ${pr.jp ? 'jp sz-' + pr.size : 'ru'}" id="${pid}">${blankify(pr.main)}</div>
-${needHTML(it, pr, exam)}<div class="q-ans"></div><div class="acts"></div><div class="fb" aria-live="polite"></div>${blk.link && run.desc.kind === 'block' ? `<div class="q-link">${linkHTML(blk.link)}</div>` : ''}`;
+${needHTML(it, pr, exam)}<div class="q-ans"></div><div class="acts"></div><div class="fb" aria-live="polite"></div>`;
   bindLink(v);
   const ctx = { run, it, v, pid, done, prefill };
   ({ type: aType, prod: aType, choice: aChoice, order: aOrder, free: aFree, fix: aFix })[it.kind](ctx, $('.q-ans', v), $('.acts', v));
