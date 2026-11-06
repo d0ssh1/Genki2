@@ -740,6 +740,7 @@ textarea.ans { height: auto; min-height: 140px; max-width: 680px; padding: 14px 
 .iv-fs { max-width: 100%; min-width: 0; }
 .iv-demo { width: 100%; max-width: 640px; }
 .iv-demo:empty { display: none; }
+.iv-demo:has(.tks) { max-width: 760px; }
 .iv-acts { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-top: 4px; }
 .iv-acts [hidden], .iv-skip[hidden] { display: none; }
 /* intro with several pages */
@@ -1000,6 +1001,38 @@ textarea.ans { height: auto; min-height: 140px; max-width: 680px; padding: 14px 
 .aks-e.akm-ku path { stroke: var(--akm-ku); } .aks-e.akm-ku text { fill: var(--akm-ku); }
 .aks-x circle { fill: var(--card); stroke: var(--bad); stroke-width: 2; }
 .aks-e.bad .aks-x path, .aks-x path { stroke: var(--bad); stroke-width: 2.8; stroke-dasharray: none; stroke-linecap: round; fill: none; }
+.tks { gap: 16px; max-width: 760px; padding: 22px clamp(14px, 3vw, 28px) 18px; border-radius: var(--r-lg); background: var(--fill); }
+.tks .tks-ev { background: var(--card); }
+.tks-jp { min-height: 2.2em; font-size: 22px; line-height: 1.9; text-align: center; text-wrap: balance; }
+.tks-jp mark { background: none; color: var(--accent-ink); text-decoration: underline 2.5px color-mix(in srgb, var(--accent) 55%, transparent); text-underline-offset: 7px; }
+.tks-sum { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; font-family: var(--f-ui); }
+.tks-sum > span { display: flex; flex-direction: column; align-items: center; padding: 6px 12px; border-radius: var(--r-md); background: var(--card); font-size: 12.5px; font-weight: 600; line-height: 1.3; color: var(--ink-2); }
+.tks-sum b { font-family: var(--f-jp); font-size: 18px; line-height: 1.5; color: var(--accent-ink); }
+.tks-leg { display: flex; gap: 14px; justify-content: center; font-size: 12.5px; font-weight: 600; color: var(--ink-2); }
+.tks-k::before { content: ''; display: inline-block; width: 10px; height: 10px; margin-right: 6px; border-radius: 3px; vertical-align: -1px; background: var(--card); box-shadow: inset 0 0 0 1px var(--seg); }
+.tks-k.tk::before { background: var(--accent); }
+.tks-tl { position: relative; width: 100%; max-width: 660px; height: 200px; }
+.tks-row { position: absolute; left: 0; right: 0; height: 76px; }
+.tks-mn { top: 0; }
+.tks-tk { top: 86px; }
+.tks-ev { position: absolute; top: 0; height: 100%; box-sizing: border-box; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0; padding: 4px 10px; border-radius: var(--r-md); background: var(--fill); text-align: center; transition: left .6s cubic-bezier(.2,.8,.2,1), width .6s cubic-bezier(.2,.8,.2,1); }
+.tks .tks-tk .tks-ev { background: var(--accent-soft); }
+.tks-n { position: absolute; top: 5px; left: 9px; font-size: 13px; font-weight: 700; color: var(--ink-3); }
+.tks-tk .tks-n { color: var(--accent-ink); }
+.tks-tk .tks-ev { box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--accent) 45%, transparent); }
+.tks-w { font-size: 19px; font-weight: 600; line-height: 1.45; padding: 0 12px; }
+.tks-ev small { font-size: 13.5px; color: var(--ink-2); line-height: 1.2; }
+.tks-axis { position: absolute; left: 0; right: 0; bottom: 0; height: 22px; display: flex; justify-content: space-between; align-items: flex-end; font-size: 12px; font-weight: 600; color: var(--ink-3); border-top: 2px solid var(--seg); padding-top: 4px; }
+.tks-axis::after { content: ''; position: absolute; right: -2px; top: -7px; border: 6px solid transparent; border-left: 9px solid var(--seg); }
+.tks-q .tks-ev { opacity: .75; }
+.tks-end .tks-tl, .tks-end .tks-leg { display: none; }
+.tks-ctl { display: flex; align-items: center; gap: 10px; }
+.tks-ctl .btn2 { height: 46px; }
+.tks-flip { display: inline-flex; transform: scaleX(-1); }
+.tks-flip svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.tks-v { font-size: 17px; font-weight: 600; text-align: center; text-wrap: balance; }
+.tks-v b { color: var(--accent-ink); font-size: 19px; }
+@media (prefers-reduced-motion: reduce) { .tks-ev { transition: none; } }
 .aks-cap { display: flex; flex-direction: column; align-items: center; gap: 2px; min-height: 76px; text-align: center; }
 .aks-cap .jp { font-size: 19px; line-height: 1.9; }
 .aks-ru { font-size: 16px; color: var(--ink-2); text-wrap: balance; }
@@ -3350,7 +3383,7 @@ const SECTIONS16 = [
 <tr><td>Сущ.</td><td>+ の</td><td class="jp">{子|こ}どもの{時|とき}・{病気|びょうき}の{時|とき}・{病気|びょうき}だった{時|とき}</td></tr>
 </table></div>
 <p><b>«Пока…»</b> — <span class="jp">～ている{時|とき}</span>: <span class="jp">テレビを{見|み}ている{時|とき}、{電話|でんわ}が{来|き}た</span> — «пока я смотрел телевизор, позвонили».</p>
-<p><b>У глагола две формы</b> — 出る時 и 出た時. Как выбрать между ними, — на следующей странице.</p>
+<p><b>У глагола две формы</b> — 〜る時 и 〜た時. Как выбрать между ними, — на следующей странице.</p>
 <p><b>Не путай:</b> <span class="jp">{時|とき}</span> — «когда», <span class="jp">{時|じ}</span> — «час»: {三時|さんじ}.</p>
 <p class="ex jp">「{家|いえ}を{出|で}る{時|とき}、『{行|い}ってきます』と{言|い}います。」</p>`,
   blocks: [
@@ -3552,7 +3585,7 @@ const INTRO16 = {
   /* 四 〜時 */
   w4a: { h: 'Зачем 時', text: '{時|とき} — это «когда». С ним два события складываются в одно предложение: сначала «когда», потом что случилось.\nТак говорят о привычках, о детстве, о поездках. Русское «когда…», «в детстве», «пока…» почти всегда переводится через 時.',
     lines: ['a={寂|さび}しい b={時|とき}、 c={母|はは}に{電話|でんわ}します || «Когда грустно, звоню маме»', '!a={子|こ}どもの b !c={犬|いぬ}を{飼|か}っていました || «В детстве у меня была собака»'],
-    slides: [{ h: 'Что ставить перед 時', text: '時 значит «время, момент». Для грамматики это обычное существительное, как {人|ひと} или {本|ほん}, поэтому перед ним те же формы, что перед любым существительным: глагол и い‑прилагательное — как есть, な‑прилагательное + な, существительное + の.', lines: ['a={暑|あつ}い b={時|とき} || い-прилагательное — как есть', 'x={好|す}き +y=な b || な-прилагательное + な', 'z={雨|あめ} +w=の b || Существительное + の'] }, { h: 'Глагол: る или た', text: 'Перед 時 глагол в форме る или た. Смотри не на «сейчас», а на главное действие в конце фразы.\nСобытие с 時 случится раньше главного — た, даже если всё ещё впереди. Ещё не случилось к моменту главного — る.', lines: ['a={日本|にほん}に b={着|つ}いた c={時|とき}、 d={電話|でんわ}します || Сначала прилечу, потом позвоню — た', 'a !b={行|い}く c !d={空港|くうこう}でお{土産|みやげ}を{買|か}います || Покупаю ещё до вылета — る'] }] },
+    slides: [{ h: 'Что ставить перед 時', text: '時 значит «время, момент». Для грамматики это обычное существительное, как {人|ひと} или {本|ほん}, поэтому перед ним те же формы, что перед любым существительным: глагол и い‑прилагательное — как есть, な‑прилагательное + な, существительное + の.', lines: ['a={暑|あつ}い b={時|とき} || い-прилагательное — как есть', 'x={好|す}き +y=な b || な-прилагательное + な', 'z={雨|あめ} +w=の b || Существительное + の'] }, { h: 'Глагол: る или た', widget: 'toki', text: 'Перед 時 глагол стоит в форме 〜る или 〜た. Какую взять, зависит от того, какое из двух действий в предложении случится раньше. Разберём на примерах — нажимай «Дальше».' }] },
   w4b: { text: 'Глагол перед 時 стоит в настоящем или в прошедшем. Это не про «сейчас» и «вчера», а про порядок: успело ли событие с 時 случиться к тому, о чём говорится дальше.\nА когда всё происходит — вчера, каждый день или завтра, — видно по концу предложения.',
     lines: ['a={寝|ね}る b={時|とき}、 c=「おやすみ」と{言|い}う || Ещё не лёг: «おやすみ» говорят перед сном', '!a={起|お}きた b !c=「おはよう」と{言|い}う || Уже встал: «おはよう» говорят, проснувшись'] },
   w4c: { text: 'Найди ошибку: な и の перед {時|とき} или время глагола, которое не подходит к ситуации. Если всё верно — «Ошибки нет».',
@@ -3829,8 +3862,9 @@ S16('w3').pages = [
 S16('w4').pages = [
   { h: 'Смысл и форма', html: S16('w4').rule },
   { h: 'Глагол: る или た', html: `
-<p>Перед 時 глагол бывает в двух формах: <span class="jp">{出|で}る{時|とき}</span> и <span class="jp">{出|で}た{時|とき}</span>. По-русски обе часто звучат одинаково — «когда выходил». Разница не во времени, а в порядке событий. Чтобы выбрать, задай себе один вопрос.</p>
-<div class="tp-m"><h4>Когда происходит вторая часть, первая уже случилась?</h4><p><b>Ещё нет</b> — <span class="jp">～る{時|とき}</span>. <b>Уже да</b> — <span class="jp">～た{時|とき}</span>.</p></div>
+<p>Перед 時 глагол бывает в двух формах: <span class="jp">〜る{時|とき}</span> и <span class="jp">〜た{時|とき}</span>. По-русски обе часто звучат одинаково — «когда…». Разница не во времени, а в порядке событий. Чтобы выбрать, задай себе один вопрос.</p>
+<div class="tp-m"><h4>Когда случается главное действие, то, что перед 時, уже закончилось?</h4><p><b>Уже закончилось</b> — <span class="jp">～た{時|とき}</span>. <b>Ещё не случилось</b> — <span class="jp">～る{時|とき}</span>.</p></div>
+<div class="tks-host"></div>
 <div class="tp-cases"><div class="tp-case"><h4 class="jp">{出|で}る{時|とき}</h4><p>Ты ещё дома, стоишь в дверях. Сначала говоришь, потом выходишь.</p><p class="ex jp">{家|いえ}を{出|で}る{時|とき}、「いってきます」と{言|い}います。</p><span class="tp-ord">① «иттэкимас» → ② вышел</span></div><div class="tp-case"><h4 class="jp">{帰|かえ}った{時|とき}</h4><p>Ты уже вошёл. Сначала вернулся, потом говоришь.</p><p class="ex jp">{家|いえ}に{帰|かえ}った{時|とき}、「ただいま」と{言|い}います。</p><span class="tp-ord">① вошёл → ② «тадаима»</span></div></div>
 <p><b>А «пока»</b> — третья форма, <span class="jp">～ている{時|とき}</span>: вторая часть случается посреди длящегося действия. <span class="jp">テレビを{見|み}ている{時|とき}、{電話|でんわ}が{来|き}た</span> — звонок посреди просмотра.</p>
 <p><b>То же с поездкой.</b> <span class="jp">{日本|にほん}に{行|い}く{時|とき}、{空港|くうこう}で{両替|りょうがえ}しました</span> — деньги поменял, когда до Японии ещё не долетел: в своём аэропорту. <span class="jp">{日本|にほん}に{行|い}った{時|とき}、{着物|きもの}を{買|か}いました</span> — кимоно купил, когда уже был там.</p>
@@ -3874,9 +3908,9 @@ Object.assign(INTRO16.w1a, {
 delete INTRO16.w1a.gen; delete INTRO16.w1a.words; delete INTRO16.w1a.miru;
 Object.assign(INTRO16.w4b, {
   h: 'Глагол: る или た',
-  text: 'Перед 時 глагол бывает в двух формах — 出る時 и 出た時. Выбрать помогает один вопрос: когда происходит вторая часть, первая уже случилась? Ещё нет — 〜る時. Уже да — 〜た時.',
+  text: 'Перед 時 глагол стоит в форме 〜る時 или 〜た時. По-русски обе звучат как «когда…», поэтому выбирают по порядку событий.\nВ предложении два действия: одно перед 時, второе — главное, в конце. Спроси себя: когда случается главное действие, то, что перед 時, уже закончилось?\n- Уже закончилось — 〜た時.\n- Ещё не случилось — 〜る時.',
   lines: ['a={家|いえ}を{出|で}る b={時|とき}、 c=「いってきます」 || Ещё дома: сначала говоришь, потом выходишь', '!a={家|いえ}に{帰|かえ}った b !c=「ただいま」 || Уже вошёл: сначала вернулся, потом говоришь'],
-  slides: [{ h: 'Время — в конце', text: 'Когда всё происходит — вчера, каждый день или завтра, — показывает конец предложения. А форма перед 時 говорит только о порядке. Поэтому бывает 行った時 + будущее.',
+  slides: [{ h: 'Схема по шагам', widget: 'toki', text: 'Разберём на примерах — нажимай «Дальше».' }, { h: 'Время — в конце', text: 'Когда всё происходит — вчера, каждый день или завтра, — показывает конец предложения. А форма перед 時 говорит только о порядке. Поэтому бывает 行った時 + будущее.',
     lines: ['a={日本|にほん}に{行|い}った b={時|とき}、 c={着物|きもの}を{買|か}いました || Было: купил, уже будучи в Японии', 'a b !c={着物|きもの}を{買|か}います || Будет: куплю, когда уже буду там — всё равно 行った時', '!a={日本|にほん}に{行|い}く b !c={空港|くうこう}で{両替|りょうがえ}します || До Японии ещё не долетел — 行く時'] }]
 });
 /* the lesson 14 map of gifts, one tap away */
@@ -7434,6 +7468,68 @@ ${node('me', 78, 94, '私', 'я', 'akm-me')}${node('imo', 78, 196, '妹', 'се�
   show(0, true);
   return el;
 }
+/* 時: る or た, step by step. Two actions go onto a time line — the one with 時 (accent) and the main one at the end.
+   Which comes first decides the form; the end of the sentence alone says past or future. */
+const TKS = [
+  { jp: '{家|いえ}に（{帰|かえ}る）＿{時|とき}、「ただいま」と{言|い}います', hl: '（{帰|かえ}る）＿{時|とき}', tk: ['{帰|かえ}る', 'вернуться домой'], mn: ['ただいま', 'сказать'], ord: null,
+    v: 'Что случится раньше?',
+    ru: 'В предложении два действия: «вернуться домой» — перед 時, и «сказать ただいま» — в конце. Чтобы выбрать форму, надо понять, какое из них будет первым.' },
+  { jp: '{家|いえ}に{帰|かえ}った{時|とき}、「ただいま」と{言|い}います', hl: '{帰|かえ}った{時|とき}', tk: ['{帰|かえ}る', 'вернуться домой'], mn: ['ただいま', 'сказать'], ord: 'tk',
+    v: 'Сначала вернулся, потом сказал → {帰|かえ}った{時|とき}',
+    ru: 'Когда ты говоришь «ただいま», ты уже дома: возвращение закончилось. Если действие перед 時 к этому моменту уже закончилось, ставим 〜た.' },
+  { jp: '{家|いえ}を{出|で}る{時|とき}、「いってきます」と{言|い}います', hl: '{出|で}る{時|とき}', tk: ['{出|で}る', 'выйти из дома'], mn: ['いってきます', 'сказать'], ord: 'mn',
+    v: 'Сначала сказал, потом вышел → {出|で}る{時|とき}',
+    ru: 'Когда ты говоришь «いってきます», ты ещё дома: выйти только предстоит. Если действие перед 時 ещё не случилось, ставим 〜る.' },
+  { jp: '{日本|にほん}に{着|つ}いた{時|とき}、{電話|でんわ}します', hl: '{着|つ}いた{時|とき}', tk: ['{着|つ}く', 'прилететь'], mn: ['{電話|でんわ}する', 'позвонить'], ord: 'tk',
+    v: 'Сначала прилечу, потом позвоню → {着|つ}いた{時|とき}',
+    ru: 'Всё это будет только завтра, но к моменту звонка ты уже прилетел. Поэтому 〜た, хотя речь о будущем. Что это будущее, видно по концу фразы: します.' },
+  { jp: '{日本|にほん}に{行|い}く{時|とき}、{空港|くうこう}でお{土産|みやげ}を{買|か}います', hl: '{行|い}く{時|とき}', tk: ['{行|い}く', 'поехать в Японию'], mn: ['{買|か}う', 'купить сувениры'], ord: 'mn',
+    v: 'Сначала куплю, потом поеду → {行|い}く{時|とき}',
+    ru: 'Сувениры покупаешь в своём аэропорту, до Японии ты ещё не добрался. Поездка ещё впереди — значит, 〜る.' },
+  { jp: 'テレビを{見|み}ている{時|とき}、{電話|でんわ}が{来|き}ました', hl: '{見|み}ている{時|とき}', tk: ['{見|み}ている', 'смотреть телевизор'], mn: ['{電話|でんわ}', 'звонок'], ord: 'span',
+    v: 'Звонок — посреди просмотра → {見|み}ている{時|とき}',
+    ru: 'Ты смотрел телевизор, и в это время позвонили. Если главное случилось, пока действие перед 時 ещё шло, ставим 〜ている: «пока смотрел».' },
+  { jp: null, tk: ['〜た{時|とき}', 'уже закончилось'], mn: ['…', 'главное'], ord: 'tk', last: true,
+    v: 'Как выбрать',
+    ru: 'Спроси себя: когда случается главное действие, то, что перед 時, уже закончилось? Да — 〜た. Ещё нет — 〜る. Идёт прямо в этот момент — 〜ている. А прошлое это или будущее, показывает только конец фразы.' }
+];
+function tokiSteps(own) {
+  // own = true: the scheme sits in a theory page and steps with its own buttons; in an intro the page buttons drive it
+  const el = h('div', 'aks tks');
+  el.innerHTML = `<div class="tks-jp jp" aria-live="polite"></div><div class="tks-leg"><span class="tks-k tk">действие с 時</span><span class="tks-k mn">главное действие</span></div>
+<div class="tks-tl" role="img" aria-label="Линия времени: какое действие раньше">
+<div class="tks-row tks-mn"><div class="tks-ev"><span class="tks-n"></span><span class="tks-w jp"></span><small></small></div></div>
+<div class="tks-row tks-tk"><div class="tks-ev"><span class="tks-n"></span><span class="tks-w jp"></span><small></small></div></div>
+<div class="tks-axis"><span>раньше</span><span>позже</span></div></div>
+<div class="tks-v"></div><div class="aks-cap"><span class="aks-ru"></span></div><div class="aks-st"></div>${own ? `<div class="tks-ctl"><button type="button" class="mini tks-prev" aria-label="Предыдущий шаг"><span class="tks-flip">${ICON.arrow}</span></button><button type="button" class="btn2 tks-next">Дальше</button></div>` : ''}`;
+  const POS = { tk: [['2%', '46%'], ['52%', '46%']], mn: [['52%', '46%'], ['2%', '46%']], span: [['2%', '96%'], ['30%', '40%']], null: [['27%', '46%'], ['27%', '46%']] };
+  const evTk = $('.tks-tk .tks-ev', el), evMn = $('.tks-mn .tks-ev', el);
+  let cur = -1;
+  const show = i => {
+    cur = i; const st = TKS[i], o = st.ord;
+    const [pt, pm] = POS[o];
+    evTk.style.left = pt[0]; evTk.style.width = pt[1]; evMn.style.left = pm[0]; evMn.style.width = pm[1];
+    $('.tks-n', evTk).textContent = o === 'tk' ? '①' : o === 'mn' ? '②' : o === 'span' ? '①' : '?';
+    $('.tks-n', evMn).textContent = o === 'tk' ? '②' : o === 'mn' ? '①' : o === 'span' ? '↓' : '?';
+    $('.tks-w', evTk).innerHTML = rb(st.tk[0]); $('small', evTk).textContent = st.tk[1];
+    $('.tks-w', evMn).innerHTML = rb(st.mn[0]); $('small', evMn).textContent = st.mn[1];
+    el.classList.toggle('tks-q', o === null);
+    el.classList.toggle('tks-end', !!st.last);
+    const jpEl = $('.tks-jp', el);
+    if (st.jp) { const k = st.jp.indexOf(st.hl); jpEl.innerHTML = rb(st.jp.slice(0, k)) + `<mark>${rb(st.hl)}</mark>` + rb(st.jp.slice(k + st.hl.length)); }
+    else jpEl.innerHTML = st.last ? '<span class="tks-sum"><span>уже закончилось<b>〜た時</b></span><span>ещё не случилось<b>〜る時</b></span><span>идёт в этот момент<b>〜ている時</b></span></span>' : '';
+    $('.tks-v', el).innerHTML = st.v.includes('→') ? st.v.replace(/→ (.+)$/, (m, x) => `→ <b class="jp">${rb(x)}</b>`) : esc(st.v);
+    $('.aks-ru', el).innerHTML = ty(st.ru);
+    $('.aks-st', el).textContent = `Схема: шаг ${i + 1} из ${TKS.length}`;
+    if (!RM) A($('.tks-v', el), [{ opacity: 0, transform: 'translateY(4px)' }, { opacity: 1, transform: 'none' }], { duration: 320, easing: SP.easing });
+    if (own) { $('.tks-prev', el).disabled = i === 0; const nx = $('.tks-next', el); nx.textContent = i === TKS.length - 1 ? 'Сначала' : 'Дальше'; }
+  };
+  if (own) { $('.tks-prev', el).onclick = () => el._step(-1); $('.tks-next', el).onclick = () => { if (!el._step(1)) show(0); }; }
+  el._step = d => { const j = cur + d; if (j < 0 || j >= TKS.length) return false; show(j); return true; };
+  el._atEnd = () => cur === TKS.length - 1;
+  show(0);
+  return el;
+}
 /* Andy's map of giving and doing favours: you, your circle, two strangers; あげる / くれる / もらう light up their own arrows */
 const AKM = {
   all: { t: 'Три глагола — три взгляда на одну и ту же помощь. Выбери глагол, чтобы увидеть, куда он может идти.' },
@@ -7491,6 +7587,7 @@ function theoryPager(pages) {
       cur = i;
       body.innerHTML = ty(pages[i].html);
       $$('.akm-host', body).forEach(x => x.replaceWith(akmMap()));
+      $$('.tks-host', body).forEach(x => x.replaceWith(tokiSteps(true)));
       $$('.tp-tab', el).forEach((b, k) => b.setAttribute('aria-selected', String(k === i)));
       $('.tp-n', el).textContent = `${i + 1} из ${pages.length}`;
       $('.tp-prev', el).hidden = i === 0; $('.tp-next', el).hidden = i === pages.length - 1;
@@ -7619,24 +7716,30 @@ function introView(run) {
       if (s.widget === 'akm') demo.append(akmMap());
       else if (s.widget === 'akm-steps') demo.append(akmSteps());
       else if (s.widget === 'akm-one') demo.append(akmOne());
+      else if (s.widget === 'toki') demo.append(tokiSteps());
       else { const lines = genSteps(s); if (lines.length) demo.append(makeDemo(lines).el); }
       if (!many) return;
       $$('.iv-dot', v).forEach((b, k) => b.setAttribute('aria-selected', String(k === i)));
-      const last = i === slides.length - 1;
-      $('.iv-prev', v).hidden = i === 0; $('.iv-next', v).hidden = last; $('.iv-go', v).hidden = !last; $('.iv-skip', v).hidden = last;
+      syncBtns();
     };
     if (cur < 0 || RM) { paint(); return; }
     const a = A(sl, [{ opacity: 1, transform: 'none' }, { opacity: 0, transform: `translateX(${-dir * 28}px)` }], { duration: 140, easing: 'cubic-bezier(.4,0,1,1)', fill: 'forwards' });
     const after = () => { paint(); if (a) a.cancel(); A(sl, [{ opacity: 0, transform: `translateX(${dir * 28}px)` }, { opacity: 1, transform: 'none' }], { duration: SP.duration, easing: SP.easing }); };
     if (a) a.finished.then(after, after); else after();
   };
+  // on the last page a stepped scheme keeps «Дальше» until its last step, then «Начать» takes over
+  function syncBtns() {
+    if (!many) return;
+    const last = cur === slides.length - 1, w = $('.aks', demo), more = !!(w && w._atEnd && !w._atEnd());
+    $('.iv-prev', v).hidden = cur === 0; $('.iv-next', v).hidden = last && !more; $('.iv-go', v).hidden = !last || more; $('.iv-skip', v).hidden = last && !more;
+  }
   page(0, 1);
   const start = () => { run.showIntro = false; if (!P.seen) P.seen = {}; if (!P.seen[run.uid]) { P.seen[run.uid] = 1; save(); } swapCard(run, 1); };
   $('.iv-go', v).onclick = start;
   if (many) {
     const step = d => { const w = $('.aks', demo); return !!(w && w._step && w._step(d)); };
-    $('.iv-next', v).onclick = () => { if (!step(1)) page(cur + 1, 1); };
-    $('.iv-prev', v).onclick = () => { if (!step(-1)) page(cur - 1, -1); };
+    $('.iv-next', v).onclick = () => { if (!step(1)) page(cur + 1, 1); else syncBtns(); };
+    $('.iv-prev', v).onclick = () => { if (!step(-1)) page(cur - 1, -1); else syncBtns(); };
     $('.iv-skip', v).onclick = start;
     $$('.iv-dot', v).forEach((b, k) => { b.onclick = () => page(k, k > cur ? 1 : -1); });
     // a horizontal swipe turns the page; a vertical one scrolls as usual
